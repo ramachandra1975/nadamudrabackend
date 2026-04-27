@@ -1,361 +1,1763 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nāda Mudrā Beta V12</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#080811;--bg2:#11172b;--bg3:#1a223c;--gold:#c8a84b;--gold2:#edd58f;--cream:#f4ede1;--muted:#9e97af;--sage:#7aaa8a;--rose:#c07aa0;--border:rgba(200,168,75,.16);--border2:rgba(200,168,75,.34)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Outfit',system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2) 45%,var(--bg3));color:var(--cream);line-height:1.75;font-size:18px}
-    header,.tabs,main{position:relative}
-    header{padding:22px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
-    .brand{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold2)} .brand span{color:var(--gold);font-style:italic}
-    .sub{font-size:12px;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
-    .btn{border:1px solid var(--border2);background:rgba(255,255,255,.02);color:var(--cream);padding:9px 13px;border-radius:10px;cursor:pointer}
-    .btn:hover{border-color:var(--gold)}
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
-    .tabs{display:flex;gap:4px;overflow:auto;padding:0 18px;border-bottom:1px solid var(--border)}
-    .tab{border:none;background:none;color:var(--muted);padding:14px 16px;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer;text-transform:uppercase;font-size:12px;letter-spacing:.12em}
-    .tab.active{color:var(--gold2);border-bottom-color:var(--gold)}
-    main{max-width:1450px;margin:0 auto;padding:24px}
-    .pane{display:none}.pane.active{display:block}
-    .title{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--gold2);margin-bottom:6px}
-    .subtitle{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);font-style:italic;margin-bottom:20px}
-    .card{background:rgba(17,23,43,.92);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px}
-    .grid-2{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px}
-    .grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
-    .section-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
-    .search-row,.action-row,.chip-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    input,select,textarea{font:inherit;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:10px 12px;border-radius:10px}
-    input{flex:1;min-width:220px}
-    .swara-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
-    .swara{padding:12px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);text-align:center;cursor:pointer}
-    .swara.active{border-color:var(--gold);background:rgba(200,168,75,.12)}
-    .swara-main{font-family:'Cormorant Garamond',serif;font-size:22px}
-    .muted{color:var(--muted)}
-    .entry{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px}
-    .entry-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold2);margin-bottom:4px}
-    .entry-meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
-    .long{white-space:pre-wrap;max-height:560px;overflow:auto}
-    .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--border2);background:rgba(255,255,255,.02);cursor:pointer}
-    .chip:hover{border-color:var(--gold)}
-    .side-list{display:flex;flex-direction:column;gap:8px}.side-item{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);cursor:pointer}.side-item:hover{border-color:var(--gold)}
-    .manual-box{white-space:pre-wrap;max-height:72vh;overflow:auto}
-    .top-manual{position:fixed;top:72px;right:16px;width:min(460px,92vw);z-index:20;display:none}.top-manual.open{display:block}
-    audio{width:100%;margin-top:12px}
-    @media(max-width:980px){.grid-2{grid-template-columns:1fr}.swara-grid{grid-template-columns:repeat(4,minmax(0,1fr))}main{padding:16px}.top-manual{top:64px;right:8px}}
-    @media print{.tabs,.top-actions,.top-manual,.action-row{display:none!important}.pane{display:none!important}.pane.active{display:block!important}body{background:#fff;color:#000}.card,.entry{background:#fff;border:1px solid #ccc}.title,.entry-title,.brand{color:#000}.subtitle,.muted,.sub,.entry-meta{color:#444}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nāda Mudrā V9 — Complete Rāga Universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06060e;--bg2:#0d0b1c;--bg3:#131128;--bg4:#1a1730;
+  --gold:#c8a84b;--gold2:#e8cc80;--gold3:#f5e4b0;
+  --saffron:#d4722a;--sage:#7aaa8a;--lav:#9b8fd4;
+  --rose:#c87080;--sky:#5b9bd5;--teal:#3dbcaa;
+  --cream:#ede8dc;--muted:#7a7490;
+  --border:rgba(200,168,75,0.12);--border2:rgba(200,168,75,0.32);
+  }
+body.light-theme{
+  --bg:#f5f0e8;--bg2:#ece6d8;--bg3:#e0d9c8;--bg4:#d4ccb8;
+  --gold:#9a6e1e;--gold2:#7a5318;--gold3:#5a3c10;
+  --cream:#2a2018;--muted:#7a6a50;
+  --border:rgba(120,80,20,0.18);--border2:rgba(120,80,20,0.4);
+  --glow:rgba(180,140,60,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Outfit',system-ui,sans-serif;font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(200,168,75,.022) 39px,rgba(200,168,75,.022) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 99px,rgba(200,168,75,.012) 99px,rgba(200,168,75,.012) 100px);}
+body::after{content:'';position:fixed;top:-180px;left:50%;transform:translateX(-50%);width:1000px;height:600px;pointer-events:none;z-index:0;background:radial-gradient(ellipse,rgba(200,168,75,.07) 0%,transparent 70%);}
+.deco-clef{position:fixed;right:-40px;top:40%;transform:translateY(-50%);font-size:480px;color:rgba(200,168,75,.016);font-family:'Cormorant Garamond',serif;pointer-events:none;z-index:0;user-select:none;line-height:1;font-style:italic;}
+.deco-om{position:fixed;left:6px;bottom:60px;font-size:160px;color:rgba(155,143,212,.04);pointer-events:none;z-index:0;user-select:none;}
+
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:200;padding:14px 40px 0;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;background:rgba(6,6,14,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);}
+body.light-theme header{background:rgba(245,240,232,.97);}
+.logo{font-family:'Cinzel',serif;font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:.06em;}
+.logo em{font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:26px;}
+.logo-ver{display:inline-block;background:rgba(122,170,138,.18);border:1px solid rgba(122,170,138,.4);color:var(--sage);font-size:9px;letter-spacing:.1em;padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle;font-family:'DM Mono',monospace;}
+.logo-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:2px;}
+.hdr-btn{padding:6px 14px;border-radius:5px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .17s;}
+.hdr-btn:hover{border-color:var(--gold);color:var(--gold);}
+.lang-select{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:6px 10px;color:var(--gold2);font-family:'Outfit',sans-serif;font-size:12px;outline:none;cursor:pointer;}
+.lang-select option,.lang-select optgroup{background:var(--bg2);}
+.genre-bar{width:100%;display:flex;align-items:center;gap:7px;padding:8px 0 0;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:10px;}
+.genre-lbl{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
+.gtab{padding:3px 13px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .14s;}
+.gtab:hover{border-color:var(--border2);color:var(--cream);}
+.gtab.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.1);}
+
+/* ── NOTATION BAR ── */
+.notation-bar{position:sticky;top:102px;z-index:190;padding:7px 40px;display:flex;align-items:center;gap:16px;background:rgba(13,11,28,.97);border-bottom:1px solid var(--border);flex-wrap:wrap;backdrop-filter:blur(10px);}
+body.light-theme .notation-bar{background:rgba(236,230,216,.97);}
+.nb-group{display:flex;align-items:center;gap:8px;}
+.nb-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.ntab{padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:none;color:var(--muted);font-size:11px;cursor:pointer;transition:all .14s;font-family:'Outfit',sans-serif;}
+.ntab.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.08);}
+.nb-legend{display:flex;gap:12px;margin-left:auto;flex-wrap:wrap;}
+.nl-item{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:11px;}
+.nl-bar{width:16px;height:2px;border-radius:1px;}
+body{background:var(--bg);color:var(--cream);font-family:'Outfit',system-ui,sans-serif;font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(200,168,75,.022) 39px,rgba(200,168,75,.022) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 99px,rgba(200,168,75,.012) 99px,rgba(200,168,75,.012) 100px);}
+body::after{content:'';position:fixed;top:-180px;left:50%;transform:translateX(-50%);width:1000px;height:600px;pointer-events:none;z-index:0;background:radial-gradient(ellipse,rgba(200,168,75,.07) 0%,transparent 70%);}
+.deco-clef{position:fixed;right:-40px;top:40%;transform:translateY(-50%);font-size:480px;color:rgba(200,168,75,.016);font-family:'Cormorant Garamond',serif;pointer-events:none;z-index:0;user-select:none;line-height:1;font-style:italic;}
+.deco-om{position:fixed;left:6px;bottom:60px;font-size:160px;color:rgba(155,143,212,.04);pointer-events:none;z-index:0;user-select:none;}
+  /*========search bar-----------*/
+  .global-search-wrap{
+  padding:12px 40px 0;
+  background:rgba(13,11,28,.97);
+  border-bottom:1px solid var(--border);
+}
+
+body.light-theme .global-search-wrap{
+  background:rgba(236,230,216,.97);
+}
+.global-search-wrap .search-inp{
+  width:100%;
+}
+
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:200;padding:14px 40px 0;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;background:rgba(6,6,14,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);}
+body.light-theme header{background:rgba(245,240,232,.97);}
+.logo{font-family:'Cinzel',serif;font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:.06em;}
+.logo em{font-style:italic;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:26px;}
+.logo-ver{display:inline-block;background:rgba(122,170,138,.18);border:1px solid rgba(122,170,138,.4);color:var(--sage);font-size:9px;letter-spacing:.1em;padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle;font-family:'DM Mono',monospace;}
+.logo-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:2px;}
+.hdr-btn{padding:6px 14px;border-radius:5px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .17s;}
+.hdr-btn:hover{border-color:var(--gold);color:var(--gold);}
+.lang-select{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:6px 10px;color:var(--gold2);font-family:'Outfit',sans-serif;font-size:12px;outline:none;cursor:pointer;}
+.lang-select option,.lang-select optgroup{background:var(--bg2);}
+.genre-bar{width:100%;display:flex;align-items:center;gap:7px;padding:8px 0 0;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:10px;}
+.genre-lbl{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
+.gtab{padding:3px 13px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .14s;}
+.gtab:hover{border-color:var(--border2);color:var(--cream);}
+.gtab.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.1);}
+
+/* ── NOTATION BAR ── */
+.notation-bar{position:sticky;top:102px;z-index:190;padding:7px 40px;display:flex;align-items:center;gap:16px;background:rgba(13,11,28,.97);border-bottom:1px solid var(--border);flex-wrap:wrap;backdrop-filter:blur(10px);}
+body.light-theme .notation-bar{background:rgba(236,230,216,.97);}
+.nb-group{display:flex;align-items:center;gap:8px;}
+.nb-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.ntab{padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:none;color:var(--muted);font-size:11px;cursor:pointer;transition:all .14s;font-family:'Outfit',sans-serif;}
+.ntab.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.08);}
+.nb-legend{display:flex;gap:12px;margin-left:auto;flex-wrap:wrap;}
+.nl-item{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:11px;}
+.nl-bar{width:16px;height:2px;border-radius:1px;}
+
+/* ── MAIN ── */
+main{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:34px 40px 100px;}
+.pane{display:none;}
+.pane.on{display:block;animation:fadeUp .28s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.pg-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold2);margin-bottom:5px;letter-spacing:.02em;}
+.pg-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--muted);margin-bottom:28px;}
+.glabel{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.glabel::after{content:'';flex:1;height:1px;background:var(--border);}
+main{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:34px 40px 100px;}
+.pane{display:none;}.pane.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.pane.on{animation:fadeUp .28s ease;}
+.pg-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold2);margin-bottom:5px;letter-spacing:.02em;}
+.pg-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--muted);margin-bottom:28px;}
+.glabel{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.glabel::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── SYSTEM TOGGLE ── */
+.sys-toggle{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:22px;width:fit-content;flex-wrap:wrap;}
+.sys-btn{padding:9px 22px;background:none;border:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
+.sys-btn.on{background:rgba(200,168,75,.14);color:var(--gold2);}
+.sys-btn:not(:last-child){border-right:1px solid var(--border);}
+
+/* ── SEARCH ── */
+.search-wrap{position:relative;margin-bottom:14px;}
+.search-inp{width:100%;padding:12px 18px 12px 46px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:16px;outline:none;transition:border-color .2s;}
+.search-inp:focus{border-color:var(--gold);}
+.search-inp::placeholder{color:var(--muted);}
+.search-ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:17px;pointer-events:none;}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.flt-sel{padding:7px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'Outfit',sans-serif;font-size:13px;outline:none;cursor:pointer;}
+.flt-sel:focus,.flt-sel:hover{border-color:var(--gold);color:var(--cream);}
+.flt-sel option{background:var(--bg2);}
+.results-count{font-size:13px;color:var(--muted);font-style:italic;margin-left:auto;}
+
+/* ── RAGA LIBRARY CARDS ── */
+.raga-lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.raga-lib-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:15px 17px 13px;cursor:pointer;transition:all .17s;position:relative;overflow:hidden;}
+.raga-lib-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cc,var(--gold));opacity:.7;}
+.raga-lib-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4);}
+.rlc-sys{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em;display:block;margin-bottom:2px;}
+.rlc-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--gold2);line-height:1.15;margin-bottom:2px;font-style:italic;}
+.rlc-also{font-size:12px;color:var(--muted);margin-bottom:6px;font-style:italic;}
+.rlc-swaras{font-family:'DM Mono',monospace;font-size:11px;color:var(--cream);background:rgba(0,0,0,.3);border-radius:4px;padding:3px 8px;display:block;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rlc-tags{display:flex;gap:4px;flex-wrap:wrap;}
+.rtag{font-size:10px;padding:2px 7px;border-radius:12px;border:1px solid;opacity:.85;}
+.rtag-time{color:var(--sky);border-color:var(--sky);}
+.rtag-rasa{color:var(--rose);border-color:var(--rose);}
+.rtag-genre{color:var(--gold);border-color:var(--gold);}
+.rtag-thaat{color:var(--lav);border-color:var(--lav);}
+.rtag-sys{color:var(--teal);border-color:var(--teal);}
+.lib-empty{grid-column:1/-1;text-align:center;padding:40px;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--muted);font-style:italic;}
+
+/* ── FINDER / SWARA GRID ── */
+.creator-layout{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;}
+.swara-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-bottom:8px;}
+.sw{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:9px 2px 8px;text-align:center;cursor:pointer;transition:all .15s;user-select:none;}
+.sw:hover{border-color:var(--border2);background:var(--glow);}
+.sw.on{background:rgba(200,168,75,.14);border-color:var(--gold);box-shadow:0 0 12px rgba(200,168,75,.14);}
+.sw.on .sn{color:var(--gold2);}
+.sw.achala{border-top:2px solid rgba(122,170,138,.7);}
+.sw.komal{border-top:2px solid rgba(91,155,213,.7);}
+.sw.tivra{border-top:2px solid rgba(212,116,42,.7);}
+.sn{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--cream);display:block;line-height:1.1;}
+.sn-lang{font-size:10px;color:var(--lav);display:block;margin-top:1px;}
+.sv{font-size:9px;color:var(--muted);display:block;margin-top:2px;}
+.sw-western{font-size:9px;color:var(--gold);display:block;margin-top:1px;}
+.legend{display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.leg-bar{width:16px;height:2px;border-radius:1px;}
+.scale-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.scale-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;}
+.sc-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:3px;}
+.sc-val{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold2);min-height:24px;}
+.sc-alt{font-size:11px;color:var(--lav);margin-top:2px;font-family:'DM Mono',monospace;}
+
+/* ── BUTTONS ── */
+.act-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.btn{padding:8px 17px;border-radius:5px;border:1px solid var(--border2);background:none;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
+.btn:hover{background:rgba(200,168,75,.08);border-color:var(--gold);}
+.btn.prime{background:rgba(200,168,75,.12);border-color:var(--gold);color:var(--gold2);}
+.btn.prime:hover{background:rgba(200,168,75,.22);}
+.btn.play::before{content:'▶ ';}.btn.play.going::before{content:'■ ';}
+.btn.play.going{border-color:var(--saffron);color:var(--saffron);}
+.sage-btn{border:1px solid rgba(122,170,138,.4)!important;color:var(--sage)!important;}
+
+/* ── SIDEBAR ── */
+.sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+.sc-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:10px;}
+.q-list{display:flex;flex-direction:column;gap:4px;}
+.q-item{padding:7px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .14s;display:flex;justify-content:space-between;align-items:center;}
+.q-item:hover{border-color:var(--border2);background:var(--glow);}
+.q-name{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream);}
+.q-rasa{font-size:11px;color:var(--muted);}
+.q-conf{font-size:11px;color:var(--gold);}
+
+/* ── RAGA RESULT ── */
+.raga-result{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:24px;display:none;}
+.raga-result.on{display:block;animation:fadeUp .35s ease;}
+.rr-hero{background:linear-gradient(135deg,#0e0820 0%,#1a0e30 40%,#2a1508 100%);padding:20px 24px 16px;border-bottom:1px solid var(--border);}
+body.light-theme .rr-hero{background:linear-gradient(135deg,#f0e8d0,#e8e0f0 40%,#f8e8d0);}
+.rr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.rr-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold2);line-height:1;letter-spacing:.02em;}
+.rr-also{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--muted);margin-top:4px;}
+.rasa-badge{padding:4px 13px;border-radius:20px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid;white-space:nowrap;flex-shrink:0;}
+.conf-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);margin-top:8px;}
+.conf-bar{flex:1;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
+.conf-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .6s ease;}
+.rr-meta{display:grid;grid-template-columns:repeat(5,1fr);}
+.rr-cell{padding:10px 14px;border-right:1px solid var(--border);}
+.rr-cell:last-child{border-right:none;}
+.rr-cell-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;}
+.rr-cell-val{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--cream);}
+.rr-body{padding:16px 24px;}
+.rr-scales{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.rr-scale{background:var(--bg3);border-radius:6px;padding:10px 12px;}
+.rr-scale-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:3px;}
+.rr-scale-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold2);}
+.rr-scale-alt{font-size:11px;color:var(--lav);margin-top:3px;font-family:'DM Mono',monospace;}
+.gamaka-row{background:var(--bg3);border-radius:6px;padding:10px 12px;margin-bottom:10px;}
+.gamaka-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+.gamaka-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.gk-pill{padding:3px 10px;border-radius:12px;font-size:11px;border:1px solid rgba(155,143,212,.3);color:var(--lav);background:rgba(155,143,212,.07);}
+.rr-action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.rr-ai-btn,.rr-fav-btn,.rr-share-btn,.rr-compare-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:5px;background:none;font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;}
+.rr-ai-btn{border:1px solid rgba(155,143,212,.4);color:var(--lav);}
+.rr-ai-btn:hover{background:rgba(155,143,212,.1);}
+.rr-fav-btn{border:1px solid rgba(200,168,75,.3);color:var(--gold);}
+.rr-fav-btn:hover,.rr-fav-btn.on{background:rgba(200,168,75,.12);}
+.rr-share-btn{border:1px solid rgba(122,170,138,.3);color:var(--sage);}
+.rr-share-btn:hover{background:rgba(122,170,138,.08);}
+.rr-compare-btn{border:1px solid rgba(212,116,42,.3);color:var(--saffron);}
+.rr-compare-btn:hover{background:rgba(212,116,42,.08);}
+.rr-ai-box{background:rgba(155,143,212,.06);border:1px solid rgba(155,143,212,.2);border-radius:8px;padding:16px 18px;margin-top:10px;display:none;font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.85;color:var(--cream);white-space:pre-wrap;}
+.rr-ai-box.on{display:block;animation:fadeUp .3s ease;}
+.fav-list{display:flex;flex-direction:column;gap:4px;}
+.fav-item{padding:6px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .14s;}
+.fav-item:hover{border-color:var(--gold);background:var(--glow);}
+.fav-empty{font-size:13px;color:var(--muted);font-style:italic;}
+
+/* ── SHARE TOAST ── */
+.share-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg2);border:1px solid var(--gold);border-radius:8px;padding:10px 20px;font-size:14px;color:var(--gold2);z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
+.share-toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── DRONE ── */
+.drone-bar{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 15px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.drone-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);}
+.drone-btn{padding:5px 15px;border-radius:4px;border:1px solid rgba(122,170,138,.4);background:none;color:var(--sage);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .12s;}
+.drone-btn.on{background:rgba(122,170,138,.18);border-color:var(--sage);}
+.drone-indicator{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:background .3s;}
+.drone-indicator.on{background:var(--sage);box-shadow:0 0 8px rgba(122,170,138,.6);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ── PIANO ── */
+.piano-section{margin-bottom:20px;}
+.piano-label{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+.piano-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.piano-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 18px 14px;overflow-x:auto;}
+.piano-svg-container{min-width:600px;}
+.piano-key-white{fill:var(--cream);stroke:#888;stroke-width:.5;cursor:pointer;transition:fill .1s;}
+.piano-key-black{fill:#1a1a28;stroke:#000;stroke-width:.5;cursor:pointer;transition:fill .1s;}
+body.light-theme .piano-key-white{fill:#f5f0e0;}
+body.light-theme .piano-key-black{fill:#2a2030;}
+.piano-key-white.active{fill:var(--gold);}
+.piano-key-black.active{fill:var(--saffron);}
+.piano-note-label{font-size:7px;font-family:'DM Mono',monospace;fill:var(--muted);text-anchor:middle;pointer-events:none;}
+.piano-swara-label{font-size:8px;font-family:'Cormorant Garamond',serif;fill:var(--gold2);text-anchor:middle;pointer-events:none;font-weight:600;}
+
+/* ── MUDRA ── */
+.mudra-type-bar{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.mudra-type-btn{padding:7px 18px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .14s;}
+.mudra-type-btn:hover{border-color:var(--border2);color:var(--cream);}
+.mudra-type-btn.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.1);}
+.dance-tabs{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap;}
+.dtab{padding:4px 13px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;cursor:pointer;transition:all .14s;font-family:'Outfit',sans-serif;}
+.dtab.on{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.07);}
+.mudra-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+.mudra-card{background:var(--bg3);border-radius:9px;padding:13px 15px;border-left:3px solid;transition:all .2s;}
+.mudra-card:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.3);}
+.mc-cat{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;}
+.mc-num{font-size:10px;color:var(--muted);float:right;font-family:'DM Mono',monospace;}
+.mc-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--cream);margin-bottom:2px;line-height:1.2;}
+.mc-sanskrit{font-size:13px;color:var(--lav);margin-bottom:6px;}
+.mc-dances{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.mc-dance-tag{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid rgba(122,170,138,.3);color:var(--sage);}
+.mc-desc{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:5px;}
+.mc-usage{font-size:12px;color:var(--gold);line-height:1.5;margin-bottom:5px;}
+.mc-therapeutic{font-size:12px;color:var(--sage);line-height:1.5;border-top:1px solid rgba(122,170,138,.15);padding-top:5px;margin-top:4px;font-style:italic;}
+
+/* ── SWARA ENGINE ── */
+.swara-engine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:13px;margin-bottom:24px;}
+.sec-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color .15s;}
+.sec-card:hover{border-color:var(--border2);}
+.sec-header{padding:13px 17px 11px;border-bottom:1px solid var(--border);}
+.sec-top{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:5px;}
+.sec-carnatic{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:300;color:var(--gold2);}
+.sec-western{font-size:15px;color:var(--cream);}
+.sec-solfege{font-size:13px;color:var(--lav);}
+.sec-langs{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+.sec-lang-item{background:var(--bg3);border-radius:4px;padding:2px 7px;font-size:12px;color:var(--cream);}
+.sec-lang-label{font-size:9px;color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1px;}
+.sec-body{padding:10px 17px 13px;}
+.sec-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px;}
+.sec-row-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);white-space:nowrap;}
+.sec-row-val{font-size:13px;color:var(--cream);text-align:right;line-height:1.4;}
+.sec-row-val.gold{color:var(--gold);}
+.sec-row-val.lav{color:var(--lav);}
+.shruti-pip-row{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px;}
+.shruti-pip{width:10px;height:10px;border-radius:2px;background:var(--border);}
+.shruti-pip.active{background:var(--gold);}
+
+/* ── TALA ── */
+.tala-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;}
+.tala-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:17px 19px;}
+.tala-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;}
+.tala-name{font-family:'Cormorant Garamond',serif;font-size:23px;color:var(--gold2);}
+.tala-system{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+.tala-beats{font-size:12px;color:var(--muted);}
+.tala-desc{font-size:13px;color:var(--muted);margin-bottom:13px;line-height:1.5;}
+.beat-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.beat-pip{width:32px;height:32px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);transition:all .08s;}
+.beat-pip.active{background:var(--gold);border-color:var(--gold2);color:#000;transform:scale(1.15);}
+.beat-pip.sam{background:var(--saffron);border-color:var(--saffron);color:#fff;}
+.beat-pip.vibhag{background:var(--lav);border-color:var(--lav);color:#fff;}
+.tala-btn-row{display:flex;gap:6px;align-items:center;}
+.tala-btn{padding:5px 14px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .12s;}
+.tala-btn:hover{border-color:var(--gold);color:var(--gold);}
+.tala-btn.playing{border-color:var(--saffron);color:var(--saffron);}
+
+/* ── TIME WHEEL ── */
+.time-wheel-wrap{display:grid;grid-template-columns:1fr 310px;gap:22px;align-items:start;}
+.wheel-canvas-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;justify-content:center;}
+.wheel-info-panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.wheel-prahar-title{font-family:'Cormorant Garamond',serif;font-size:23px;color:var(--gold2);margin-bottom:3px;}
+.wheel-prahar-time{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.wheel-raga-list{display:flex;flex-direction:column;gap:5px;}
+.wheel-raga-item{padding:8px 11px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .14s;font-size:14px;}
+.wheel-raga-item:hover{border-color:var(--gold);background:var(--glow);}
+
+/* ── MELAKARTA ── */
+.mela-layout{display:flex;flex-direction:column;gap:13px;}
+.mela-chakra{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.mela-chakra-header{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.mela-chakra-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold2);}
+.mela-chakra-range{font-size:10px;color:var(--muted);margin-left:auto;font-family:'DM Mono',monospace;}
+.mela-chakra-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:7px;}
+.mela-cell{background:var(--bg3);border-radius:5px;padding:7px 5px;text-align:center;cursor:pointer;transition:all .12s;border:1px solid transparent;}
+.mela-cell:hover{border-color:var(--gold);background:rgba(200,168,75,.1);}
+.mela-cell.on{border-color:var(--gold);background:rgba(200,168,75,.18);}
+.mela-num{font-size:9px;color:var(--muted);display:block;font-family:'DM Mono',monospace;}
+.mela-n{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--cream);display:block;line-height:1.2;margin-top:1px;}
+
+/* ── THAAT ── */
+.thaat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+.thaat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.thaat-header{padding:14px 18px 11px;border-bottom:1px solid var(--border);}
+.thaat-name{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold2);margin-bottom:2px;}
+.thaat-notes{font-family:'DM Mono',monospace;font-size:12px;color:var(--lav);margin-bottom:4px;}
+.thaat-body{padding:12px 18px 15px;}
+.thaat-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px;}
+.thaat-ragas-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+.thaat-raga-chips{display:flex;flex-wrap:wrap;gap:5px;}
+.thaat-chip{padding:3px 10px;border-radius:12px;font-size:12px;border:1px solid var(--border2);color:var(--cream);cursor:pointer;transition:all .14s;}
+.thaat-chip:hover{border-color:var(--gold);color:var(--gold2);}
+
+/* ── COMPARE ── */
+.compare-layout{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:start;margin-bottom:20px;}
+.compare-panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+.compare-middle{display:flex;align-items:center;justify-content:center;padding-top:40px;}
+.compare-vs{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--muted);font-style:italic;}
+.compare-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border);}
+.compare-row:last-child{border-bottom:none;}
+.compare-row-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+.compare-val{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--cream);}
+.compare-val.diff{color:var(--saffron);}
+.compare-sel{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;outline:none;width:100%;margin-bottom:12px;}
+
+/* ── CONSTELLATION ── */
+.constellation-wrap{width:100%;aspect-ratio:1.4;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px;}
+#constellationCanvas{width:100%;height:100%;}
+.const-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.info-box{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px 16px;font-size:14px;color:var(--muted);font-style:italic;}
+
+/* ── MIND SCIENCE ── */
+.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px;margin-bottom:22px;}
+.ms-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:17px 19px;}
+.ms-icon{font-size:21px;margin-bottom:7px;}
+.ms-title{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--gold2);margin-bottom:5px;}
+.ms-body{font-size:14px;color:var(--muted);line-height:1.7;}
+.ms-body strong{color:var(--cream);}
+.ms-table{width:100%;border-collapse:collapse;margin-top:10px;}
+.ms-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:7px 11px;border-bottom:1px solid var(--border);font-weight:400;}
+.ms-table td{padding:9px 11px;font-size:14px;color:var(--cream);border-bottom:1px solid var(--border);vertical-align:top;}
+.ms-table td:first-child{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold2);}
+.ms-table tr:hover td{background:var(--glow);}
+
+/* ── HISTORY ── */
+.hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:26px;}
+.hist-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.hist-header{padding:15px 18px 11px;border-bottom:1px solid var(--border);}
+.hist-icon{font-size:22px;margin-bottom:5px;}
+.hist-title{font-family:'Cormorant Garamond',serif;font-size:23px;color:var(--gold2);margin-bottom:3px;}
+.hist-sub{font-size:13px;color:var(--muted);}
+.hist-body{padding:13px 18px 17px;}
+.hist-body p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:9px;}
+.hist-body strong{color:var(--cream);}
+.hist-table{width:100%;border-collapse:collapse;margin-top:9px;}
+.hist-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:7px 11px;border-bottom:1px solid var(--border);font-weight:400;}
+.hist-table td{padding:9px 11px;font-size:14px;color:var(--cream);border-bottom:1px solid var(--border);}
+.hist-table td:first-child{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold);}
+.hist-table tr:last-child td{border-bottom:none;}
+
+/* ── CREATOR ── */
+.creator-main{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start;}
+.creator-left{display:flex;flex-direction:column;gap:14px;}
+.creator-right{display:flex;flex-direction:column;gap:11px;}
+.rc-section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:15px 17px;}
+.rc-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:10px;}
+.rc-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.swara-mini-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.sw-mini{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:6px 2px;text-align:center;cursor:pointer;transition:all .12s;user-select:none;}
+.sw-mini:hover{border-color:var(--border2);}
+.sw-mini.on-a{background:rgba(200,168,75,.18);border-color:var(--gold);}
+.sw-mini.on-v{background:rgba(91,155,213,.18);border-color:rgba(91,155,213,.8);}
+.sw-mini .sn2{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--cream);display:block;line-height:1;}
+.sw-mini .sw2{font-size:9px;color:var(--muted);display:block;margin-top:1px;}
+.sw-mini.achala2{border-top:2px solid rgba(122,170,138,.7);}
+.sw-mini.komal2{border-top:2px solid rgba(91,155,213,.7);}
+.sw-mini.tivra2{border-top:2px solid rgba(212,116,42,.7);}
+.dual-grid-wrap{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.vaadi-row{display:flex;gap:5px;flex-wrap:wrap;}
+.vaadi-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:15px;cursor:pointer;transition:all .12s;}
+.vaadi-btn.on-vaadi{border-color:var(--gold);color:var(--gold2);background:rgba(200,168,75,.1);}
+.vaadi-btn.on-samvaadi{border-color:var(--sage);color:var(--sage);background:rgba(122,170,138,.08);}
+.gamaka-select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:5px;}
+.gk-toggle{padding:5px 9px;border-radius:5px;border:1px solid var(--border);background:none;color:var(--muted);font-size:12px;cursor:pointer;transition:all .12s;font-family:'Outfit',sans-serif;text-align:left;}
+.gk-toggle.on{border-color:var(--lav);color:var(--lav);background:rgba(155,143,212,.1);}
+.gk-toggle .gk-name{display:block;font-size:13px;}
+.gk-toggle .gk-desc{display:block;font-size:10px;color:var(--muted);margin-top:1px;}
+.text-input{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 11px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+.text-input:focus{border-color:var(--gold);}
+.form-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 11px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:14px;outline:none;cursor:pointer;width:100%;}
+.form-select option{background:var(--bg2);}
+.rc-result{background:linear-gradient(135deg,#0e0820,#1a0e30 60%,#0e1a12);border:1px solid var(--border2);border-radius:12px;padding:22px;display:none;margin-top:4px;}
+.rc-result.on{display:block;animation:fadeUp .4s ease;}
+.rc-result-name{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--gold2);margin-bottom:4px;font-style:italic;}
+.rc-result-status{font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.rc-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.rc-result-cell{background:rgba(255,255,255,.03);border-radius:6px;padding:10px 12px;}
+.rc-cell-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:3px;}
+.rc-cell-val{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream);}
+.rc-cell-val.mono{font-family:'DM Mono',monospace;font-size:12px;}
+.rc-analysis{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.85;color:var(--cream);opacity:.88;white-space:pre-wrap;border-top:1px solid var(--border);padding-top:13px;margin-top:4px;}
+.rc-download-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.rc-dl-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:5px;border:1px solid var(--border2);background:none;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
+.rc-dl-btn:hover{border-color:var(--gold);color:var(--gold);}
+.saved-raga-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;}
+.saved-raga-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold2);}
+.saved-raga-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* ── XREF ── */
+.xref-layout{display:grid;grid-template-columns:240px 1fr;gap:22px;align-items:start;}
+.xref-panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.xref-panel-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:8px;}
+.xref-panel-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.xref-swara-pills{display:flex;flex-direction:column;gap:4px;}
+.xsp{padding:6px 10px;border-radius:5px;border:1px solid var(--border);cursor:pointer;transition:all .14s;display:flex;justify-content:space-between;align-items:center;}
+.xsp:hover{border-color:var(--border2);background:var(--glow);}
+.xsp.on{border-color:var(--gold);background:rgba(200,168,75,.1);}
+.xsp-name{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--cream);}
+.xsp-note{font-size:11px;color:var(--muted);}
+.xref-results-area{display:flex;flex-direction:column;gap:14px;}
+.xref-result-section{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.xref-rs-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:8px;}
+.xref-rs-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.xref-item-list{display:flex;flex-direction:column;gap:4px;}
+.xref-item{padding:7px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .14s;display:flex;justify-content:space-between;align-items:center;}
+.xref-item:hover{border-color:var(--border2);background:var(--glow);}
+.xref-item-name{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--cream);}
+.xref-item-sub{font-size:11px;color:var(--muted);}
+.xref-empty{font-size:14px;color:var(--muted);font-style:italic;}
+
+/* ── KRITI LIBRARY ── */
+.kriti-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.kriti-count{font-size:13px;color:var(--muted);font-style:italic;}
+.kriti-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;}
+.kriti-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;transition:border-color .15s;}
+.kriti-card:hover{border-color:var(--border2);}
+.kriti-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.kriti-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--gold2);line-height:1.2;}
+.kriti-cbadge{padding:2px 9px;border-radius:12px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid;white-space:nowrap;flex-shrink:0;}
+.kriti-meta{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
+.kriti-pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;letter-spacing:.06em;}
+.kp-raga{background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.25);color:var(--gold);}
+.kp-lang{background:rgba(122,170,138,.08);border:1px solid rgba(122,170,138,.2);color:var(--sage);}
+.kp-tala{background:rgba(155,143,212,.08);border:1px solid rgba(155,143,212,.2);color:var(--lav);}
+.kp-cycle{background:rgba(212,116,42,.08);border:1px solid rgba(212,116,42,.2);color:var(--saffron);}
+.kp-genre{background:rgba(61,188,170,.08);border:1px solid rgba(61,188,170,.2);color:var(--teal);}
+.kriti-opening{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--cream);opacity:.75;border-left:2px solid var(--border2);padding-left:9px;margin-bottom:5px;line-height:1.5;}
+.kriti-translation{font-size:12px;color:var(--sage);line-height:1.5;margin-bottom:5px;font-style:italic;}
+.kriti-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:9px;}
+.kriti-actions{display:flex;gap:5px;flex-wrap:wrap;}
+.kriti-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:11px;cursor:pointer;transition:all .14s;text-decoration:none;display:inline-block;}
+.kriti-btn:hover{border-color:var(--gold);color:var(--gold2);}
+.kriti-btn.yt{border-color:rgba(255,80,80,.3);color:#ff8080;}
+.kriti-btn.yt:hover{background:rgba(255,80,80,.06);}
+.kriti-search{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:7px 11px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;outline:none;}
+.kriti-search:focus{border-color:var(--gold);}
+.kriti-search::placeholder{color:var(--muted);}
+.flt-kriti-sel{padding:7px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:'Outfit',sans-serif;font-size:13px;outline:none;cursor:pointer;}
+.flt-kriti-sel:focus{border-color:var(--gold);}
+.flt-kriti-sel option{background:var(--bg2);}
+
+/* ── HERITAGE ── */
+.arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;}
+.arch-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:border-color .15s;position:relative;overflow:hidden;}
+.arch-card:hover{border-color:var(--border2);}
+.arch-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;opacity:0;transition:opacity .15s;}
+.arch-card:hover::before{opacity:1;}
+.arch-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;margin-bottom:5px;line-height:1.3;}
+.arch-card-script{font-size:14px;color:var(--cream);opacity:.75;margin-bottom:5px;font-style:italic;font-family:'Cormorant Garamond',serif;}
+.arch-card-meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.arch-pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;letter-spacing:.06em;}
+.ap-type{background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.25);color:var(--gold);}
+.ap-raga{background:rgba(155,143,212,.08);border:1px solid rgba(155,143,212,.2);color:var(--lav);}
+.ap-lang{background:rgba(122,170,138,.08);border:1px solid rgba(122,170,138,.2);color:var(--sage);}
+.ap-source{background:rgba(212,116,42,.08);border:1px solid rgba(212,116,42,.2);color:var(--saffron);}
+.arch-card-meaning{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:5px;}
+.arch-card-meaning strong{color:var(--sage);}
+.arch-card-benefit{font-size:12px;color:var(--lav);font-style:italic;border-top:1px solid var(--border);padding-top:5px;margin-top:4px;line-height:1.5;}
+.arch-empty{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--muted);font-style:italic;padding:20px 0;text-align:center;grid-column:1/-1;}
+.arch-card.carnatic .arch-card-title{color:var(--gold2);}
+.arch-card.carnatic::before{background:var(--gold);}
+.arch-card.siri .arch-card-title{color:var(--saffron);}
+.arch-card.siri::before{background:var(--saffron);}
+.arch-card.rabindra .arch-card-title{color:var(--lav);}
+.arch-card.rabindra::before{background:var(--lav);}
+.arch-search-row{display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap;}
+.arch-search-input{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 13px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .2s;flex:1;min-width:180px;}
+.arch-search-input:focus{border-color:var(--gold);}
+.arch-search-input::placeholder{color:var(--muted);}
+.arch-filter-select{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:13px;outline:none;cursor:pointer;}
+.arch-filter-select option{background:var(--bg2);}
+.arch-panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.arch-panel-header{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.aph-icon{font-size:19px;}
+.aph-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--cream);flex:1;}
+.aph-count{font-size:11px;color:var(--muted);background:var(--bg3);border:1px solid var(--border);padding:2px 9px;border-radius:12px;}
+.arch-panel-body{padding:18px 22px;}
+.heritage-links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;}
+.hlc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:17px 19px;text-decoration:none;display:block;transition:all .2s;position:relative;overflow:hidden;}
+.hlc:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.3);}
+.hlc::after{content:'↗';position:absolute;top:13px;right:15px;font-size:13px;color:var(--muted);transition:color .2s;}
+.hlc:hover::after{color:var(--gold);}
+.hlc-icon{font-size:20px;margin-bottom:8px;}
+.hlc-title{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold2);margin-bottom:3px;font-weight:300;}
+.hlc-count{font-size:12px;color:var(--saffron);margin-bottom:5px;font-family:'DM Mono',monospace;}
+.hlc-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  header,main,.tabs-bar,.notation-bar{padding-left:20px;padding-right:20px;}
+  .creator-layout,.creator-main,.time-wheel-wrap,.xref-layout{grid-template-columns:1fr;}
+  .swara-grid{grid-template-columns:repeat(6,1fr);}
+  .rr-meta{grid-template-columns:1fr 1fr;}
+  .dual-grid-wrap,.compare-layout{grid-template-columns:1fr;}
+  .compare-middle{display:none;}
+  .swara-mini-grid{grid-template-columns:repeat(7,1fr);}
+}
+@media(max-width:540px){
+  .swara-grid{grid-template-columns:repeat(4,1fr);}
+  .rr-meta{grid-template-columns:1fr;}
+  .rr-cell{border-right:none;border-bottom:1px solid var(--border);}
+  .rc-result-grid{grid-template-columns:1fr;}
+}
+@media print{
+  body{background:#fff!important;color:#000!important;}
+  header,.notation-bar,.tabs-bar,.act-row,.sidebar-card,.rr-ai-btn,.rr-fav-btn,.rr-share-btn,.rr-compare-btn,.const-controls,.drone-bar,.piano-section,.tala-btn-row,.hdr-btn,.genre-bar,.mudra-type-bar,.dance-tabs,.rc-download-bar{display:none!important;}
+  main{padding:0!important;}
+  .pane{display:none!important;}
+  .pane.on{display:block!important;}
+  .raga-result,.rc-result{display:block!important;border:1px solid #ccc!important;}
+  .rr-hero{background:#f5f5f5!important;}
+}
+</style>
 </head>
 <body>
-  <header>
+<div class="deco-clef">𝄞</div>
+<div class="deco-om">ॐ</div>
+<div class="share-toast" id="shareToast">🔗 Link copied!</div>
+
+<header>
+  <div>
+    <div class="logo">Nāda <em>Mudrā</em> <span class="logo-ver">V9</span></div>
+    <div class="logo-sub">Rāga · Tāla · Mudrā · Manas · Virasat</div>
+  </div>
+  <div class="header-right">
+    <select class="lang-select" id="langSelect" onchange="updateLangDisplay()">
+      <optgroup label="🇮🇳 Indian">
+        <option value="roman">Carnatic Roman</option>
+        <option value="hindi">हिंदी</option>
+        <option value="telugu">తెలుగు</option>
+        <option value="tamil">தமிழ்</option>
+        <option value="kannada">ಕನ್ನಡ</option>
+        <option value="malayalam">മലയാളം</option>
+        <option value="bengali">বাংলা</option>
+        <option value="gujarati">ગુજરાતી</option>
+        <option value="punjabi">ਪੰਜਾਬੀ</option>
+        <option value="marathi">मराठी</option>
+        <option value="sanskrit">संस्कृत</option>
+      </optgroup>
+      <optgroup label="🌍 Western">
+        <option value="western">Western</option>
+        <option value="solfege">Solfège</option>
+      </optgroup>
+    </select>
+    <button class="hdr-btn" onclick="toggleTheme()" id="themeBtn">☀ Light</button>
+    <button class="hdr-btn" onclick="window.print()">⎙ Print</button>
+  </div>
+  <div class="genre-bar">
+    <span class="genre-lbl">Genre</span>
+    <button class="gtab on" onclick="setGenreFilter('',this)">All</button>
+    <button class="gtab" onclick="setGenreFilter('Classical',this)">🎼 Classical</button>
+    <button class="gtab" onclick="setGenreFilter('Semi-Classical',this)">🎵 Semi-Classical</button>
+    <button class="gtab" onclick="setGenreFilter('Devotional',this)">🕉 Devotional</button>
+    <button class="gtab" onclick="setGenreFilter('Folk',this)">🌾 Folk</button>
+    <button class="gtab" onclick="setGenreFilter('Light Music',this)">✨ Light</button>
+    <button class="gtab" onclick="setGenreFilter('Filmy',this)">🎬 Filmy</button>
+    <button class="gtab" onclick="setGenreFilter('Fusion',this)">🌐 Fusion</button>
+  </div>
+</header>
+
+<div class="notation-bar">
+  <div class="nb-group">
+    <span class="nb-label">Script</span>
+    <span id="scriptLabel" style="font-size:13px;color:var(--gold2);">Sa Ri Ga Ma Pa Dha Ni</span>
+  </div>
+  <div class="nb-group">
+    <span class="nb-label">Show</span>
+    <button class="ntab on" id="nt-western" onclick="toggleNotation('western',this)">Western</button>
+    <button class="ntab on" id="nt-solfege" onclick="toggleNotation('solfege',this)">Solfège</button>
+  </div>
+  <div class="nb-legend">
+    <div class="nl-item"><div class="nl-bar" style="background:rgba(122,170,138,.8)"></div>Achala</div>
+    <div class="nl-item"><div class="nl-bar" style="background:rgba(91,155,213,.8)"></div>Komal</div>
+    <div class="nl-item"><div class="nl-bar" style="background:rgba(212,116,42,.8)"></div>Tivra</div>
+  </div>
+</div>
+  
+<div class="global-search-wrap">
+  <div class="search-wrap" style="margin-top:12px; margin-bottom:0;">
+    <span class="search-ico">🔍</span>
+    <input
+      class="search-inp"
+      id="globalSiteSearch"
+      placeholder="Search anything in the app..."
+      onkeydown="if(event.key==='Enter') runGlobalSiteSearch()"
+    >
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab on" onclick="setTab('library')">📚 Rāga Library</button>
+  <button class="tab" onclick="setTab('finder')">🔍 Rāga Finder</button>
+  <button class="tab" onclick="setTab('swara')">🎵 Swara Engine</button>
+  <button class="tab" onclick="setTab('mudra')">🤚 Hasta Mudrās</button>
+  <button class="tab" onclick="setTab('kriti')">📖 Kriti Library</button>
+  <button class="tab" onclick="setTab('xref')">🔗 Cross-Reference</button>
+  <button class="tab" onclick="setTab('mind')">🧠 Mind Science</button>
+  <button class="tab t-sage" onclick="setTab('tala')">🥁 Tāla</button>
+  <button class="tab t-sage" onclick="setTab('timewheel')">⏲ Time Wheel</button>
+  <button class="tab t-sage" onclick="setTab('melakarta')">📊 72 Melakarta</button>
+  <button class="tab t-lav" onclick="setTab('thaat')">🎶 10 Thaats</button>
+  <button class="tab t-lav" onclick="setTab('constellation')">✨ Constellation</button>
+  <button class="tab t-lav" onclick="setTab('compare')">⚖ Compare</button>
+  <button class="tab" onclick="setTab('heritage')">🔎 Rāga Search</button>
+  <button class="tab" onclick="setTab('beejakshara')">🔱 Bījāksharas</button>
+  <button class="tab" onclick="setTab('mantra')">🕉 Mantras & Shlokas</button>
+  <button class="tab t-saffron" onclick="setTab('history')">🏛 History</button>
+  <button class="tab t-gold" onclick="setTab('creator')" style="color:var(--gold)">✦ Creator</button>
+</div>
+
+
+<main>
+
+<!-- ══ PANE: RĀGA LIBRARY ══ -->
+<div class="pane on" id="pane-library">
+  <div class="pg-title">Rāga Library</div>
+  <div class="pg-sub">Complete collection — Carnatic, Hindustani, Folk & Fusion</div>
+  <div class="sys-toggle">
+    <button class="sys-btn on" onclick="libSetSystem('all',this)">All Systems</button>
+    <button class="sys-btn" onclick="libSetSystem('carnatic',this)">Carnatic</button>
+    <button class="sys-btn" onclick="libSetSystem('hindustani',this)">Hindustani</button>
+    <button class="sys-btn" onclick="libSetSystem('folk',this)">Folk / Regional</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-ico">🔍</span>
+    <input class="search-inp" id="libSearch" placeholder="Search by name, rasa, time, thaat, melakarta…" oninput="filterLibrary()">
+  </div>
+  <div class="filter-row">
+    <select class="flt-sel" id="libRasaFilter" onchange="filterLibrary()">
+      <option value="">All Rasas</option>
+      <option>Bhakti</option><option>Karuna</option><option>Shringara</option>
+      <option>Veera</option><option>Shanta</option><option>Hasya</option>
+      <option>Raudra</option><option>Adbhuta</option>
+    </select>
+    <select class="flt-sel" id="libTimeFilter" onchange="filterLibrary()">
+      <option value="">All Times</option>
+      <option>Dawn</option><option>Morning</option><option>Afternoon</option>
+      <option>Evening</option><option>Night</option><option>Any Time</option>
+    </select>
+    <span class="results-count" id="libCount"></span>
+  </div>
+  <div class="raga-lib-grid" id="ragaLibGrid"></div>
+</div>
+
+<!-- ══ PANE: RĀGA FINDER ══ -->
+<div class="pane" id="pane-finder">
+  <div class="pg-title">Rāga Finder</div>
+  <div class="pg-sub">Select swaras to identify ragas — or explore by rasa, time & season</div>
+  <div class="drone-bar">
+    <span class="drone-label">Sa Drone</span>
+    <div class="drone-indicator" id="droneIndicator"></div>
+    <button class="drone-btn" id="droneBtn" onclick="toggleDrone()">▶ Start Drone</button>
+    <span style="font-size:12px;color:var(--muted);">Continuous Sa — 261.63 Hz</span>
+  </div>
+  <div class="piano-section">
+    <div class="piano-label">Piano / Keyboard — click keys to play & select</div>
+    <div class="piano-wrap"><div class="piano-svg-container">
+      <svg id="pianoSVG" viewBox="0 0 840 148" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div></div>
+  </div>
+  <div class="creator-layout">
+         <div class="glabel">Select Swaras</div>
+      <div class="swara-grid" id="swaraGrid"></div>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-bar" style="background:rgba(122,170,138,.8)"></div>Achala</div>
+        <div class="leg-item"><div class="leg-bar" style="background:rgba(91,155,213,.8)"></div>Komal</div>
+        <div class="leg-item"><div class="leg-bar" style="background:rgba(212,116,42,.8)"></div>Tivra</div>
+      </div>
+      <div class="scale-cards">
+        <div class="scale-card"><div class="sc-lbl">Arohanam</div><div class="sc-val" id="arohVal">—</div><div class="sc-alt" id="arohAlt"></div></div>
+        <div class="scale-card"><div class="sc-lbl">Avarohanam</div><div class="sc-val" id="avarohVal">—</div><div class="sc-alt" id="avarohAlt"></div></div>
+      </div>
+      <div class="act-row">
+        <button class="btn prime" onclick="identifyRaga()">✦ Identify Rāga</button>
+        <button class="btn play" id="playBtn" onclick="togglePlay()">Play Scale</button>
+        <button class="btn" onclick="clearSwaras()">Clear</button>
+        <button class="btn sage-btn" onclick="randomRaga()">🎲 Random</button>
+      </div>
+      <div class="raga-result" id="ragaResult">
+        <div class="rr-hero">
+          <div class="rr-top">
+            <div><div class="rr-name" id="rrName">—</div><div class="rr-also" id="rrAlso"></div></div>
+            <div class="rasa-badge" id="rrRasaBadge"></div>
+          </div>
+          <div class="conf-row"><span>Confidence</span><div class="conf-bar"><div class="conf-fill" id="confFill" style="width:0%"></div></div><span id="confPct">0%</span></div>
+        </div>
+        <div class="rr-meta">
+          <div class="rr-cell"><div class="rr-cell-lbl">System</div><div class="rr-cell-val" id="rrSystem">—</div></div>
+          <div class="rr-cell"><div class="rr-cell-lbl">Parent</div><div class="rr-cell-val" id="rrMela">—</div></div>
+          <div class="rr-cell"><div class="rr-cell-lbl">Time</div><div class="rr-cell-val" id="rrTime">—</div></div>
+          <div class="rr-cell"><div class="rr-cell-lbl">Season</div><div class="rr-cell-val" id="rrSeason">—</div></div>
+          <div class="rr-cell"><div class="rr-cell-lbl">Rasa</div><div class="rr-cell-val" id="rrMood">—</div></div>
+        </div>
+        <div class="rr-body">
+          <div class="rr-scales">
+            <div class="rr-scale"><div class="rr-scale-lbl">Arohanam</div><div class="rr-scale-val" id="rrAroh">—</div><div class="rr-scale-alt" id="rrArohAlt"></div></div>
+            <div class="rr-scale"><div class="rr-scale-lbl">Avarohanam</div><div class="rr-scale-val" id="rrAvaroh">—</div><div class="rr-scale-alt" id="rrAvarohAlt"></div></div>
+          </div>
+          <div class="gamaka-row"><div class="gamaka-lbl">Gamakas</div><div class="gamaka-pills" id="rrGamakas"></div></div>
+          <div class="rr-action-row">
+            <button class="rr-ai-btn" onclick="loadAIInsight()">✦ Deep Insight</button>
+            <button class="rr-fav-btn" id="favBtn" onclick="toggleFavourite()">♡ Favourite</button>
+            <button class="rr-share-btn" onclick="shareRaga()">⤴ Share</button>
+            <button class="rr-compare-btn" onclick="addToCompare()">⚖ Compare</button>
+          </div>
+          <div class="rr-ai-box" id="aiBox"></div>
+        </div>
+      </div>
+    </div>
     <div>
-      <div class="brand">Nāda <span>Mudrā</span> Beta V12</div>
-      <div class="sub">Beta testing version · enhanced full version in coming months</div>
+      <div class="sidebar-card">
+        <div class="sc-title">Favourites</div>
+        <div class="fav-list" id="favList"><div class="fav-empty">No favourites yet</div></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-title">By Rasa</div>
+        <div class="q-list">
+          <div class="q-item" onclick="filterByRasa('Bhakti')"><span class="q-name">Bhakti</span><span class="q-rasa">Devotion</span></div>
+          <div class="q-item" onclick="filterByRasa('Karuna')"><span class="q-name">Karuna</span><span class="q-rasa">Compassion</span></div>
+          <div class="q-item" onclick="filterByRasa('Shringara')"><span class="q-name">Shringara</span><span class="q-rasa">Love</span></div>
+          <div class="q-item" onclick="filterByRasa('Veera')"><span class="q-name">Veera</span><span class="q-rasa">Heroism</span></div>
+          <div class="q-item" onclick="filterByRasa('Shanta')"><span class="q-name">Shanta</span><span class="q-rasa">Peace</span></div>
+          <div class="q-item" onclick="filterByRasa('Hasya')"><span class="q-name">Hasya</span><span class="q-rasa">Joy</span></div>
+          <div class="q-item" onclick="filterByRasa('Raudra')"><span class="q-name">Raudra</span><span class="q-rasa">Fury</span></div>
+          <div class="q-item" onclick="filterByRasa('Adbhuta')"><span class="q-name">Adbhuta</span><span class="q-rasa">Wonder</span></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-title">Quick Load</div>
+        <div class="q-list" id="quickRagaList"></div>
+      </div>
     </div>
-    <div class="top-actions">
-      <button class="btn" id="manualToggleBtn">Instruction Manual</button>
-      <button class="btn" id="printBtn">Print</button>
-      <button class="btn" id="saveBtn">Save</button>
-      <button class="btn" id="shareBtn">Share</button>
+  </div>
+</div>
+
+<!-- ══ PANE: SWARA ENGINE ══ -->
+<div class="pane" id="pane-swara">
+  <div class="pg-title">Swara Engine</div>
+  <div class="pg-sub">Acoustics, linguistics & shruti positions for all 16 swarasthanas across 12 languages</div>
+  <div class="swara-engine-grid" id="swaraEngineGrid"></div>
+</div>
+
+<!-- ══ PANE: HASTA MUDRĀS ══ -->
+<div class="pane" id="pane-mudra">
+  <div class="pg-title">Hasta Mudrās</div>
+  <div class="pg-sub">Sacred hand gestures — Asamyutha & Samyutha Hastas across all classical dance forms</div>
+  <div class="mudra-type-bar">
+    <button class="mudra-type-btn on" onclick="setMudraType('asamyutha',this)">🤚 Asamyutha (28)</button>
+    <button class="mudra-type-btn" onclick="setMudraType('samyutha',this)">🙌 Samyutha (24)</button>
+    <button class="mudra-type-btn" onclick="setMudraType('therapeutic',this)">💊 Therapeutic</button>
+    <button class="mudra-type-btn" onclick="setMudraType('all',this)">All Mudras</button>
+  </div>
+  <div class="dance-tabs">
+    <button class="dtab on" onclick="filterMudra('all',this)">All Forms</button>
+    <button class="dtab" onclick="filterMudra('bharatanatyam',this)">Bharatanatyam</button>
+    <button class="dtab" onclick="filterMudra('kathak',this)">Kathak</button>
+    <button class="dtab" onclick="filterMudra('odissi',this)">Odissi</button>
+    <button class="dtab" onclick="filterMudra('kuchipudi',this)">Kuchipudi</button>
+    <button class="dtab" onclick="filterMudra('manipuri',this)">Manipuri</button>
+    <button class="dtab" onclick="filterMudra('mohiniyattam',this)">Mohiniyattam</button>
+    <button class="dtab" onclick="filterMudra('therapeutic',this)">Therapeutic</button>
+  </div>
+  <div class="mudra-grid" id="mudraGrid"></div>
+</div>
+
+<!-- ══ PANE: KRITI LIBRARY ══ -->
+<div class="pane" id="pane-kriti">
+  <div class="pg-title">Kriti Library</div>
+  <div class="pg-sub">Sacred compositions — Trinity, Annamacharya, Swati Tirunal & more</div>
+  <div class="kriti-filters">
+    <input class="kriti-search" id="kritiSearch" placeholder="Search compositions…" oninput="filterKriti()" style="width:200px">
+    <select class="flt-kriti-sel" id="kritiRagaFilter" onchange="filterKriti()">
+      <option value="">All Ragas</option>
+    </select>
+    <select class="flt-kriti-sel" id="kritiCompFilter" onchange="filterKriti()">
+      <option value="">All Composers</option>
+    </select>
+    <select class="flt-kriti-sel" id="kritiGenreFilter" onchange="filterKriti()">
+      <option value="">All Genres</option>
+      <option>Classical</option><option>Devotional</option><option>Semi-Classical</option>
+      <option>Folk</option><option>Filmy</option><option>Soft</option>
+    </select>
+    <span class="kriti-count" id="kritiCount"></span>
+  </div>
+  <div class="kriti-grid" id="kritiGrid"></div>
+</div>
+
+<!-- ══ PANE: CROSS-REFERENCE ══ -->
+<div class="pane" id="pane-xref">
+  <div class="pg-title">Cross-Reference</div>
+  <div class="pg-sub">Map swaras → ragas → compositions → mudras</div>
+  <div class="xref-layout">
+    <div><div class="xref-panel"><div class="xref-panel-title">Select Swara</div><div class="xref-swara-pills" id="xrefSwaraPills"></div></div></div>
+    <div class="xref-results-area" id="xrefResults">
+      <div class="xref-result-section"><div class="xref-rs-title">Ragas using this swara</div><div class="xref-empty">← Select a swara to explore connections</div></div>
     </div>
-  </header>
+  </div>
+</div>
 
-  <div class="top-manual card" id="topManual">
-    <div class="section-label">Instruction Manual</div>
-    <div class="manual-box">1. Rāga Finder
-Click swaras and press Identify.
-Result: closest sample raga result.
-Practical use: quick melodic testing.
+<!-- ══ PANE: MIND SCIENCE ══ -->
+<div class="pane" id="pane-mind">
+  <div class="pg-title">Mind Science</div>
+  <div class="pg-sub">Neuroscience of raga — brainwave entrainment, psychoacoustics & nāda cikitsa</div>
+  <div class="ms-grid">
+    <div class="ms-card"><div class="ms-icon">🧠</div><div class="ms-title">Brainwave Entrainment</div><div class="ms-body">Carnatic ragas modulate neural oscillations. <strong>Morning ragas</strong> like Bhairavi activate theta-alpha transitions (4–10 Hz); evening ragas like Kalyani sustain alpha-beta coherence (8–20 Hz).</div></div>
+    <div class="ms-card"><div class="ms-icon">🫀</div><div class="ms-title">Psychoacoustic Response</div><div class="ms-body">The <strong>Gandhar (Ga)</strong> swara's frequency ratios stimulate the limbic system differently. Komal Ga induces parasympathetic activation; Shuddha Ga enhances sympathetic tone.</div></div>
+    <div class="ms-card"><div class="ms-icon">🌊</div><div class="ms-title">Raga & Circadian Rhythm</div><div class="ms-body">Ancient rishi assignment of ragas to prahar times reflects chronobiology. <strong>Brahma Muhurta (3–6am)</strong> ragas use pentatonic structures matching the cortisol awakening response.</div></div>
+    <div class="ms-card"><div class="ms-icon">🔬</div><div class="ms-title">Gamaka & Motor Cortex</div><div class="ms-body">The <strong>meend, kan, and sphurita</strong> gamakas activate mirror neuron networks. Listeners micro-contract laryngeal muscles during gamaka passages.</div></div>
+    <div class="ms-card"><div class="ms-icon">💊</div><div class="ms-title">Nāda Cikitsa</div><div class="ms-body">Clinical studies show Raga Darbari Kanada reduces cortisol by 23% in 20-minute sessions. <strong>Raga Yaman / Kalyani</strong> shows anxiolytic effects in controlled trials.</div></div>
+    <div class="ms-card"><div class="ms-icon">🎯</div><div class="ms-title">22 Shrutis & Microtonality</div><div class="ms-body">The 22-shruti system maps onto <strong>critical bandwidth theory</strong> in psychoacoustics. Intervals under 50 cents trigger basilar membrane dissonance — physics encoded 2,000 years ago.</div></div>
+  </div>
+  <div class="glabel">Raga-Therapy Matrix</div>
+  <div class="ms-card">
+    <table class="ms-table">
+      <thead><tr><th>Raga</th><th>Therapeutic Use</th><th>Time</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td>Bhairavi</td><td>Depression, grief, emotional release</td><td>Morning</td><td>Clinical RCT</td></tr>
+        <tr><td>Darbari Kanada</td><td>Anxiety, cortisol reduction, sleep onset</td><td>Late Night</td><td>Clinical RCT</td></tr>
+        <tr><td>Yaman / Kalyani</td><td>Concentration, creative focus, mild anxiety</td><td>Evening</td><td>Observational</td></tr>
+        <tr><td>Hamsadhwani</td><td>Joy induction, dopamine stimulation</td><td>Any Time</td><td>Neuroimaging</td></tr>
+        <tr><td>Neelambari</td><td>Infant sleep, pain management</td><td>Night</td><td>Traditional + Pilot</td></tr>
+        <tr><td>Todi</td><td>Focus, cognitive enhancement</td><td>Morning</td><td>Observational</td></tr>
+        <tr><td>Mohanam / Bhupali</td><td>Mild euphoria, social bonding</td><td>Afternoon</td><td>Traditional</td></tr>
+        <tr><td>Hindolam / Malkauns</td><td>Deep introspection, grief integration</td><td>Pre-Dawn</td><td>Traditional</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-2. Rāga Creator
-Choose swaras, rasa, genre, and optional name.
-Result: concept raga output.
-Practical use: create your own draft raga.
+<!-- ══ PANE: TĀLA ══ -->
+<div class="pane" id="pane-tala">
+  <div class="pg-title">Tāla & Beat Visualizer</div>
+  <div class="pg-sub">Animated rhythmic cycles — Carnatic Saptha Talas & Hindustani Talas</div>
+  <div class="tala-grid" id="talaGrid"></div>
+</div>
 
-3. 10,000+ Combination Mode
-Choose system and genre, then generate.
-Result: conceptual large-scale raga combination output.
-Practical use: explore many possible raga patterns.
+<!-- ══ PANE: TIME WHEEL ══ -->
+<div class="pane" id="pane-timewheel">
+  <div class="pg-title">Rāga Time Wheel</div>
+  <div class="pg-sub">24-hour prahar clock — click a segment to see its ragas</div>
+  <div class="time-wheel-wrap">
+    <div class="wheel-canvas-wrap"><canvas id="timeWheelCanvas" width="500" height="500"></canvas></div>
+    <div class="wheel-info-panel" id="wheelInfoPanel">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--muted);font-style:italic;">Click a prahar segment to see its ragas</div>
+    </div>
+  </div>
+</div>
 
-4. Mudrās
-Search by mudra name, form, meaning, or beejakshara.
-Result: instant mudra entries.
-Practical use: dance and symbolic lookup.
+<!-- ══ PANE: 72 MELAKARTA ══ -->
+<div class="pane" id="pane-melakarta">
+  <div class="pg-title">72 Melakarta Chart</div>
+  <div class="pg-sub">Complete parent raga system — 12 Chakras of 6 Melakartas each</div>
+  <div class="mela-layout" id="melaLayout"></div>
+</div>
 
-5. Sacred Search
-Choose category and type a word or phrase like Rudram, Namakam, Chamakam, Tat Tvam Asi, Lalita, Hreem.
-Result: instant sacred entries.
-Practical use: compact sacred reference access.
+<!-- ══ PANE: 10 THAATS ══ -->
+<div class="pane" id="pane-thaat">
+  <div class="pg-title">10 Thaats — Hindustani System</div>
+  <div class="pg-sub">Pandit Bhatkhande's classification — the 10 parent scales of North Indian classical music</div>
+  <div class="thaat-grid" id="thaatGrid"></div>
+</div>
 
-6. Metaphors
-Type symbolic words like lotus, light, wave, heart, space.
-Result: instant metaphor entries.
-Practical use: philosophical interpretation support.
+<!-- ══ PANE: CONSTELLATION ══ -->
+<div class="pane" id="pane-constellation">
+  <div class="pg-title">Rāga Constellation</div>
+  <div class="pg-sub">Visual network of raga relationships by rasa affinity & swara proximity</div>
+  <div class="const-controls">
+    <button class="btn prime" onclick="renderConstellation('rasa')">By Rasa</button>
+    <button class="btn" onclick="renderConstellation('mela')">By Parent</button>
+    <button class="btn" onclick="renderConstellation('time')">By Time</button>
+    <button class="btn sage-btn" onclick="renderConstellation('proximity')">By Proximity</button>
+  </div>
+  <div class="constellation-wrap"><canvas id="constellationCanvas"></canvas></div>
+  <div class="info-box" id="constInfoBox">Hover over a node to explore connections. Click to load in Rāga Finder.</div>
+</div>
 
-7. Recording & Sound
-Play tone, record voice, stop, replay, and download.
-Practical use: test sound and preserve voice notes.
+<!-- ══ PANE: COMPARE ══ -->
+<div class="pane" id="pane-compare">
+  <div class="pg-title">Rāga Comparison</div>
+  <div class="pg-sub">Side-by-side analysis — scales, rasa, time, gamakas</div>
+  <div class="compare-layout" id="compareLayout">
+    <div class="compare-panel">
+      <select class="compare-sel" id="compareSelA" onchange="renderCompare()"><option value="">— Select Raga A —</option></select>
+      <div id="compareBodyA"></div>
+    </div>
+    <div class="compare-middle"><div class="compare-vs">vs</div></div>
+    <div class="compare-panel">
+      <select class="compare-sel" id="compareSelB" onchange="renderCompare()"><option value="">— Select Raga B —</option></select>
+      <div id="compareBodyB"></div>
+    </div>
+  </div>
+</div>
+  <!-- ══ PANE: BĪJĀKSHARA & MĀTRIKĀ NYĀSA SEARCH ══ -->
+<div class="pane" id="pane-beejakshara">
+  <div class="pg-title">Bījākshara & Mātrikā Nyāsa Search</div>
+  <div class="pg-sub">Instant search for seed syllables and the 52 Mātrikā Nyāsas by sound, deity, chakra, nyāsa point, scripture, and purpose</div>
 
-8. Print / Save / Share
-Works on current visible screen.
+  <div class="arch-panel">
+    <div class="arch-panel-header">
+      <span class="aph-icon">🔱</span>
+      <span class="aph-title">Search Bījāksharas & Nyāsas</span>
+      <span class="aph-count" id="beejaSearchCount">0 results</span>
+    </div>
 
-9. Beta Note
-This is a beta app. Larger enhanced version will come later.
-Reference sites can be visited for more information.</div>
+    <div class="arch-panel-body">
+      <div class="arch-search-row">
+        <input
+          class="arch-search-input"
+          id="beejaSearchInput"
+          placeholder="Start typing a bījākshara, mātrikā, nyāsa point, deity, chakra, source, or purpose..."
+          oninput="filterBeejaSearch()"
+          autocomplete="off"
+        >
+
+        <select class="arch-filter-select" id="beejaTypeFilter" onchange="filterBeejaSearch()">
+          <option value="">All Types</option>
+          <option value="Beejakshara">Bījākshara</option>
+          <option value="MatrikaNyasa">Mātrikā Nyāsa</option>
+        </select>
+
+        <select class="arch-filter-select" id="beejaDeityFilter" onchange="filterBeejaSearch()">
+          <option value="">All Deities</option>
+          <option value="Shiva">Shiva</option>
+          <option value="Devi">Devi</option>
+          <option value="Lakshmi">Lakshmi</option>
+          <option value="Saraswati">Saraswati</option>
+          <option value="Ganesha">Ganesha</option>
+          <option value="Subrahmanya">Subrahmanya</option>
+          <option value="Vishnu">Vishnu</option>
+        </select>
+
+        <select class="arch-filter-select" id="beejaChakraFilter" onchange="filterBeejaSearch()">
+          <option value="">All Chakras</option>
+          <option value="Muladhara">Muladhara</option>
+          <option value="Svadhishthana">Svadhishthana</option>
+          <option value="Manipura">Manipura</option>
+          <option value="Anahata">Anahata</option>
+          <option value="Vishuddha">Vishuddha</option>
+          <option value="Ajna">Ajna</option>
+          <option value="Sahasrara">Sahasrara</option>
+        </select>
+
+        <select class="arch-filter-select" id="beejaSourceFilter" onchange="filterBeejaSearch()">
+          <option value="">All Sources</option>
+          <option value="Lalitha Sahasranama">Lalitha Sahasranama</option>
+          <option value="Devi Khadgamala">Devi Khadgamala</option>
+          <option value="Rudram Namakam">Rudram Namakam</option>
+          <option value="Rudram Chamakam">Rudram Chamakam</option>
+          <option value="Matrika Nyasa">Mātrikā Nyāsa</option>
+          <option value="Tantra">Tantra</option>
+          <option value="Upasana">Upasana</option>
+        </select>
+
+        <select class="arch-filter-select" id="beejaPurposeFilter" onchange="filterBeejaSearch()">
+          <option value="">All Purposes</option>
+          <option value="Protection">Protection</option>
+          <option value="Purification">Purification</option>
+          <option value="Focus">Focus</option>
+          <option value="Healing">Healing</option>
+          <option value="Energy">Energy</option>
+          <option value="Prosperity">Prosperity</option>
+          <option value="Wisdom">Wisdom</option>
+          <option value="Devotion">Devotion</option>
+        </select>
+      </div>
+
+      <div class="arch-grid" id="beejaSearchGrid"></div>
+    </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="beta">Beta Note</button>
-    <button class="tab" data-tab="finder">Rāga Finder</button>
-    <button class="tab" data-tab="creator">Rāga Creator</button>
-    <button class="tab" data-tab="mudras">Mudrās</button>
-    <button class="tab" data-tab="sacred">Sacred Search</button>
-    <button class="tab" data-tab="metaphors">Metaphors</button>
-    <button class="tab" data-tab="recording">Recording & Sound</button>
+  <!-- ══ RESULT PANEL ══ -->
+  <div class="arch-panel" id="beejaResultPanel" style="margin-top:18px; display:none;">
+    <div class="arch-panel-header">
+      <span class="aph-icon">✨</span>
+      <span class="aph-title" id="brTitle">Selected Entry</span>
+      <span class="aph-count" id="brType">Bījākshara</span>
+    </div>
+
+    <div class="arch-panel-body">
+      <div class="arch-card" style="margin-bottom:14px;">
+        <div class="arch-card-title">Sound / Nyāsa</div>
+        <div class="arch-card-script" id="brText">Text will appear here.</div>
+        <div class="arch-card-meta">
+          <span class="arch-pill ap-type" id="brSource">Source</span>
+          <span class="arch-pill ap-lang" id="brDeity">Deity</span>
+          <span class="arch-pill ap-raga" id="brPurpose">Purpose</span>
+        </div>
+      </div>
+
+      <div class="arch-grid" style="grid-template-columns:1fr; gap:12px;">
+        <div class="arch-card"><div class="arch-card-title">1. Meaning</div><div class="arch-card-meaning" id="brPara1"></div></div>
+        <div class="arch-card"><div class="arch-card-title">2. Scriptural Context</div><div class="arch-card-meaning" id="brPara2"></div></div>
+        <div class="arch-card"><div class="arch-card-title">3. Why It Is Used in Composition</div><div class="arch-card-meaning" id="brPara3"></div></div>
+        <div class="arch-card"><div class="arch-card-title">4. Spiritual Significance</div><div class="arch-card-meaning" id="brPara4"></div></div>
+        <div class="arch-card"><div class="arch-card-title">5. Neurological Significance</div><div class="arch-card-meaning" id="brPara5"></div></div>
+        <div class="arch-card"><div class="arch-card-title">6. Scientific View</div><div class="arch-card-meaning" id="brPara6"></div></div>
+        <div class="arch-card"><div class="arch-card-title">7. Practical Use</div><div class="arch-card-meaning" id="brPara7"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PANE: HISTORY ══ -->
+<div class="pane" id="pane-history">
+  <div class="pg-title">History of Rāga Systems</div>
+  <div class="pg-sub">From Gandharva-Veda to the digital age — a 3,000-year musical journey</div>
+  <div id="historyContent"></div>
+</div>
+<!-- ══ PANE: RAGA SEARCH ══ -->
+<div class="pane" id="pane-heritage">
+  <div class="pg-title">Rāga Search</div>
+  <div class="pg-sub">Search all rāgas by name, rasa, time, system, or parent scale</div>
+
+  <div class="arch-panel">
+    <div class="arch-panel-header">
+      <span class="aph-icon">🔎</span>
+      <span class="aph-title">Search Rāgas</span>
+      <span class="aph-count" id="ragaSearchCount"></span>
+    </div>
+
+    <div class="arch-panel-body">
+      <div class="arch-search-row">
+        <input
+          class="arch-search-input"
+          id="ragaSearchInput"
+          placeholder="Search by rāga name, rasa, time, melakarta, thaat..."
+          oninput="filterRagaSearch()"
+        >
+
+        <select class="arch-filter-select" id="ragaSystemFilter" onchange="filterRagaSearch()">
+          <option value="">All Systems</option>
+          <option value="Carnatic">Carnatic</option>
+          <option value="Hindustani">Hindustani</option>
+          <option value="Folk">Folk / Regional</option>
+          <option value="Fusion">Fusion</option>
+        </select>
+
+        <select class="arch-filter-select" id="ragaRasaFilter" onchange="filterRagaSearch()">
+          <option value="">All Rasas</option>
+          <option value="Bhakti">Bhakti</option>
+          <option value="Karuna">Karuna</option>
+          <option value="Shringara">Shringara</option>
+          <option value="Veera">Veera</option>
+          <option value="Shanta">Shanta</option>
+          <option value="Hasya">Hasya</option>
+          <option value="Raudra">Raudra</option>
+          <option value="Adbhuta">Adbhuta</option>
+        </select>
+
+        <select class="arch-filter-select" id="ragaTimeFilter" onchange="filterRagaSearch()">
+          <option value="">All Times</option>
+          <option value="Dawn">Dawn</option>
+          <option value="Morning">Morning</option>
+          <option value="Afternoon">Afternoon</option>
+          <option value="Evening">Evening</option>
+          <option value="Night">Night</option>
+          <option value="Any Time">Any Time</option>
+        </select>
+      </div>
+
+      <div class="arch-grid" id="ragaSearchGrid"></div>
+    </div>
+  </div>
+</div>
+  <!-- ══ PANE: MANTRA / SHLOKA SEARCH ══ -->
+<div class="pane" id="pane-mantra">
+  <div class="pg-title">Mantra, Shloka & Bījākshara Search</div>
+  <div class="pg-sub">Instant search across shlokas, nāmas, sahasranāmāvali, bījāksharas, Namakam, and Chamakam</div>
+
+  <div class="arch-panel">
+    <div class="arch-panel-header">
+      <span class="aph-icon">🕉</span>
+      <span class="aph-title">Search Sacred Texts</span>
+      <span class="aph-count" id="mantraSearchCount">0 results</span>
+    </div>
+
+    <div class="arch-panel-body">
+      <div class="arch-search-row">
+        <input
+          class="arch-search-input"
+          id="mantraSearchInput"
+          placeholder="Start typing a shloka, nāma, bījākshara, source, or sahasranāmāvali entry..."
+          oninput="filterMantraSearch()"
+          autocomplete="off"
+        >
+
+        <select class="arch-filter-select" id="mantraTypeFilter" onchange="filterMantraSearch()">
+          <option value="">All Types</option>
+          <option value="Shloka">Shloka</option>
+          <option value="Mantra">Mantra</option>
+          <option value="Beejakshara">Bījākshara</option>
+          <option value="Nama">Nāma</option>
+        </select>
+
+        <select class="arch-filter-select" id="mantraSourceFilter" onchange="filterMantraSearch()">
+          <option value="">All Sources</option>
+          <option value="Lalitha Sahasranama">Lalitha Sahasranama</option>
+          <option value="Khadgamala">Devi Khadgamala</option>
+          <option value="Rudram Namakam">Rudram Namakam</option>
+          <option value="Rudram Chamakam">Rudram Chamakam</option>
+        </select>
+
+        <select class="arch-filter-select" id="mantraPurposeFilter" onchange="filterMantraSearch()">
+          <option value="">All Purposes</option>
+          <option value="Devotion">Devotion</option>
+          <option value="Protection">Protection</option>
+          <option value="Purification">Purification</option>
+          <option value="Wisdom">Wisdom</option>
+          <option value="Energy">Energy</option>
+          <option value="Focus">Focus</option>
+          <option value="Healing">Healing</option>
+        </select>
+      </div>
+
+      <div class="arch-grid" id="mantraSearchGrid"></div>
+    </div>
   </div>
 
-  <main>
-    <section class="pane active" id="pane-beta">
-      <div class="title">Beta Note</div>
-      <div class="subtitle">Current beta scope and reference websites</div>
-      <div class="card long">This is a beta app for testing. Enhanced version with fuller features will be coming in a few months.
+  <!-- ══ AUTO-SHOW RESULT PANEL ══ -->
+  <div class="arch-panel" id="mantraResultPanel" style="margin-top:18px; display:none;">
+    <div class="arch-panel-header">
+      <span class="aph-icon">✨</span>
+      <span class="aph-title" id="mrTitle">Selected Text</span>
+      <span class="aph-count" id="mrType">Shloka</span>
+    </div>
 
-For now, users may also visit:
-- www.culturalmusings.com
-- https://karanasrootmap.culturalmusings.com/
-- https://karanassacredsynthesis.culturalmusings.com/
-- https://natyashastra.culturalmusings.com/
-- https://completecelestialsynthesis.culturalmusings.com/
+    <div class="arch-panel-body">
+      <div class="arch-card" style="margin-bottom:14px;">
+        <div class="arch-card-title">Text</div>
+        <div class="arch-card-script" id="mrText">Sacred text will appear here.</div>
+        <div class="arch-card-meta">
+          <span class="arch-pill ap-type" id="mrSource">Source</span>
+          <span class="arch-pill ap-lang" id="mrDeity">Deity</span>
+          <span class="arch-pill ap-raga" id="mrPurpose">Purpose</span>
+        </div>
+      </div>
 
-This beta includes a conceptual 10,000+ raga-creation mode, sample mudrā search, sacred search, metaphor search, recording, sound, and a separate top-right instruction manual.</div>
-    </section>
-
-    <section class="pane" id="pane-finder">
-      <div class="title">Rāga Finder</div>
-      <div class="subtitle">Select swaras and identify a sample raga</div>
-      <div class="grid-2">
-        <div>
-          <div class="card">
-            <div class="section-label">Select Swaras</div>
-            <div class="swara-grid" id="finderSwaraGrid"></div>
-            <div class="action-row" style="margin-top:14px">
-              <button class="btn" id="identifyBtn">Identify</button>
-              <button class="btn" id="clearFinderBtn">Clear</button>
-            </div>
+      <div class="arch-grid" style="grid-template-columns:1fr; gap:12px;">
+        <div class="arch-card"><div class="arch-card-title">1. Meaning</div><div class="arch-card-meaning" id="mrPara1"></div></div>
+        <div class="arch-card"><div class="arch-card-title">2. Scriptural Context</div><div class="arch-card-meaning" id="mrPara2"></div></div>
+        <div class="arch-card"><div class="arch-card-title">3. Why It Is Used in Composition</div><div class="arch-card-meaning" id="mrPara3"></div></div>
+        <div class="arch-card"><div class="arch-card-title">4. Spiritual Significance</div><div class="arch-card-meaning" id="mrPara4"></div></div>
+        <div class="arch-card"><div class="arch-card-title">5. Neurological Significance</div><div class="arch-card-meaning" id="mrPara5"></div></div>
+        <div class="arch-card"><div class="arch-card-title">6. Scientific View</div><div class="arch-card-meaning" id="mrPara6"></div></div>
+        <div class="arch-card"><div class="arch-card-title">7. Practical Use</div><div class="arch-card-meaning" id="mrPara7"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="pg-sub">Instant search across bījāksharas, Mātrikā Nyāsas, sacred sounds, scripture sources, and seed syllables with meaning, compositional use, spiritual significance, neurological significance, scientific view, and practical use</div>
+<!-- ══ PANE: CREATOR ══ -->
+<div class="pane" id="pane-creator">
+  <div class="pg-title">✦ Rāga Creator</div>
+  <div class="pg-sub">Compose novel ragas — AI-assisted naming, rasa mapping, multilingual output & export</div>
+  <div class="rc-section">
+    <div class="rc-section-title">Raga Universe Scale</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.75;">
+      <p style="margin-bottom:7px;"><strong style="color:var(--cream)">No fixed maximum:</strong> in theory, ragas can be created in very large numbers through different swara selections, arohanam/avarohanam patterns, vakra movement, gamakas, and note emphasis.</p>
+      <p style="margin-bottom:7px;"><strong style="color:var(--cream)">Carnatic:</strong> about <strong style="color:var(--gold2)">30,000+</strong> possible ragas are often estimated through Melakarta–Janya combinations.</p>
+      <p style="margin-bottom:7px;"><strong style="color:var(--cream)">Hindustani:</strong> roughly <strong style="color:var(--gold2)">3,000</strong> active and theoretical ragas are commonly cited, depending on classification.</p>
+      <p style="margin-top:9px;color:var(--lav);font-style:italic;">In practice, only a smaller number become established and musically meaningful.</p>
+    </div>
+  </div>
+  <div class="creator-main">
+    <div class="creator-left">
+         <div class="rc-section-title">Raga Universe Scale</div>
+        <div class="rc-section-title">Arohanam (Ascending)</div>
+        <div class="swara-mini-grid" id="arohGrid"></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);"><div style="width:9px;height:9px;border-radius:2px;background:rgba(200,168,75,.6)"></div>Selected</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);"><div style="width:9px;height:9px;border-radius:2px;border-top:2px solid rgba(122,170,138,.7)"></div>Achala</div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);"><div style="width:9px;height:9px;border-radius:2px;border-top:2px solid rgba(91,155,213,.7)"></div>Komal</div>
+        </div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-section-title">Avarohanam (Descending)</div>
+        <div class="swara-mini-grid" id="avarohGrid"></div>
+      </div>
+      <div class="dual-grid-wrap">
+        <div class="rc-section">
+          <div class="rc-section-title">Vādi & Samvādi</div>
+          <div style="margin-bottom:6px;font-size:12px;color:var(--muted);">Vādi (dominant)</div>
+          <div class="vaadi-row" id="vaadiRow"></div>
+          <div style="margin:9px 0 6px;font-size:12px;color:var(--muted);">Samvādi (consonant)</div>
+          <div class="vaadi-row" id="samvaadiRow"></div>
+        </div>
+        <div class="rc-section">
+          <div class="rc-section-title">Gamakas</div>
+          <div class="gamaka-select-grid" id="gamakaSelectGrid"></div>
+        </div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-section-title">Name & Intent</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em;">Raga Name</div>
+            <input class="text-input" id="creatorName" placeholder="Leave blank for suggestion…">
           </div>
-          <div class="card">
-            <div class="section-label">Result</div>
-            <div id="finderResult" class="muted">Select swaras and click Identify.</div>
+          <div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em;">Intended Rasa</div>
+            <select class="form-select" id="creatorRasa">
+              <option value="">— choose —</option>
+              <option>Bhakti (Devotion)</option><option>Karuna (Compassion)</option>
+              <option>Shringara (Love)</option><option>Veera (Heroism)</option>
+              <option>Shanta (Peace)</option><option>Hasya (Joy)</option>
+              <option>Raudra (Fury)</option><option>Adbhuta (Wonder)</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em;">Genre</div>
+            <select class="form-select" id="creatorGenre">
+              <option value="">— choose —</option>
+              <option>Classical</option><option>Semi-Classical</option>
+              <option>Folk</option><option>Devotional</option>
+              <option>Light Music</option><option>Filmy</option><option>Fusion</option>
+            </select>
           </div>
         </div>
-        <div class="card">
-          <div class="section-label">Sample Ragas</div>
-          <div class="side-list" id="sampleRagaList"></div>
+      </div>
+      <div class="act-row">
+        <button class="btn prime" onclick="generateRaga()">✦ Generate Rāga</button>
+        <button class="btn play" id="creatorPlayBtn" onclick="playCreatorRaga()">Play Scale</button>
+        <button class="btn" onclick="clearCreator()">Clear</button>
+        <button class="btn sage-btn" onclick="saveRaga()">💾 Save</button>
+      </div>
+      <div class="rc-result" id="rcResult">
+        <div class="rc-result-name" id="rcName">—</div>
+        <div class="rc-result-status" id="rcStatus"></div>
+        <div class="rc-result-grid">
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Type</div><div class="rc-cell-val" id="rcType">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Rasa</div><div class="rc-cell-val" id="rcRasa">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Genre</div><div class="rc-cell-val" id="rcGenreOut">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Vādi</div><div class="rc-cell-val" id="rcVaadi">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Samvādi</div><div class="rc-cell-val" id="rcSamvaadi">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Gamakas</div><div class="rc-cell-val" id="rcGamakas">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Arohanam</div><div class="rc-cell-val mono" id="rcAroh">—</div></div>
+          <div class="rc-result-cell"><div class="rc-cell-lbl">Avarohanam</div><div class="rc-cell-val mono" id="rcAvaroh">—</div></div>
+        </div>
+        <div class="rc-analysis" id="rcAnalysis"></div>
+        <div class="rc-download-bar">
+          <button class="rc-dl-btn" onclick="exportRagaJSON()">⬇ JSON</button>
+          <button class="rc-dl-btn" onclick="exportRagaText()">⬇ Text</button>
+          <button class="rc-dl-btn" onclick="window.print()">⎙ Print / PDF</button>
         </div>
       </div>
-    </section>
-
-    <section class="pane" id="pane-creator">
-      <div class="title">Rāga Creator</div>
-      <div class="subtitle">Create a concept raga and explore large combination mode</div>
-      <div class="card">
-        <div class="section-label">Manual Creator</div>
-        <div class="search-row">
-          <input id="creatorName" type="text" placeholder="Rāga name (optional)">
-          <select id="creatorRasa"><option>Bhakti</option><option>Karuna</option><option>Shringara</option><option>Shanta</option><option>Veera</option><option>Adbhuta</option></select>
-          <select id="creatorGenre"><option>Classical</option><option>Semi-Classical</option><option>Folk</option><option>Light</option><option>Soft</option><option>Filmy</option></select>
-        </div>
-        <div class="swara-grid" id="creatorSwaraGrid"></div>
-        <div class="action-row" style="margin-top:14px">
-          <button class="btn" id="generateCreatorBtn">Generate</button>
-          <button class="btn" id="clearCreatorBtn">Clear</button>
+    </div>
+    <div class="creator-right">
+      <div class="rc-section">
+        <div class="rc-section-title">Saved Rāgas</div>
+        <div id="savedRagasList"><div style="font-size:13px;color:var(--muted);font-style:italic;">No saved ragas yet</div></div>
+      </div>
+      <div class="rc-section">
+        <div class="rc-section-title">Raga Universe Scale</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.75;">
+          <p style="margin-bottom:7px;"><strong style="color:var(--cream)">72 Melakarta × Janya ≈ 30,000+</strong> possible Carnatic ragas</p>
+          <p style="margin-bottom:7px;"><strong style="color:var(--cream)">10 Thaats × 300 ≈ 3,000</strong> active Hindustani ragas</p>
+          <p><strong style="color:var(--cream)">Raga-Ragini system:</strong> 36–132 traditional</p>
+          <p style="margin-top:9px;color:var(--lav);font-style:italic;">"As many ragas as species of life" — Sangīta-sāra</p>
         </div>
       </div>
-      <div class="card">
-        <div class="section-label">10,000+ Rāga Combination Mode</div>
-        <div class="search-row">
-          <select id="comboSystem"><option value="Carnatic">Carnatic</option><option value="Hindustani">Hindustani</option><option value="Historical">Historical</option></select>
-          <select id="comboGenre"><option value="Classical">Classical</option><option value="Semi-Classical">Semi-Classical</option><option value="Folk">Folk</option><option value="Light">Light</option><option value="Soft">Soft</option><option value="Filmy">Filmy</option></select>
-          <button class="btn" id="generateCombosBtn">Generate Combinations</button>
-        </div>
-        <div id="comboResult" class="muted" style="margin-top:12px">Choose a system and genre, then click Generate Combinations.</div>
-      </div>
-      <div class="card">
-        <div class="section-label">Creator Result</div>
-        <div id="creatorResult" class="muted">Generate a raga to see output.</div>
-      </div>
-    </section>
-
-    <section class="pane" id="pane-mudras">
-      <div class="title">Mudrā Search</div>
-      <div class="subtitle">Instant searchable sample mudrā library</div>
-      <div class="card">
-        <div class="search-row"><input id="mudraSearch" type="text" placeholder="Search mudra, form, meaning, beejakshara..."></div>
-        <div class="grid-auto" id="mudraResults"></div>
-      </div>
-    </section>
-
-    <section class="pane" id="pane-sacred">
-      <div class="title">Sacred Search</div>
-      <div class="subtitle">Instant category-based sacred lookup</div>
-      <div class="card">
-        <div class="search-row">
-          <select id="sacredCategory">
-            <option value="all">All Categories</option>
-            <option value="shlokas">Shlokas</option>
-            <option value="beejaksharas">Beejaksharas</option>
-            <option value="rudram">Rudram</option>
-            <option value="namakam">Namakam</option>
-            <option value="chamakam">Chamakam</option>
-            <option value="lalita">Lalita Sahasranamavali</option>
-            <option value="khadgamala">Devi Khadgamala</option>
-            <option value="other">Other Sacred Shlokas</option>
-          </select>
-          <input id="sacredSearch" type="text" placeholder="Type Rudram, Namakam, Chamakam, Tat Tvam Asi, Hreem...">
-        </div>
-        <div class="chip-row" id="sacredChips" style="margin-bottom:14px"></div>
-        <div class="grid-auto" id="sacredResults"></div>
-      </div>
-    </section>
-
-    <section class="pane" id="pane-metaphors">
-      <div class="title">Metaphor Encyclopedia</div>
-      <div class="subtitle">Instant symbolic and philosophical search</div>
-      <div class="card">
-        <div class="search-row"><input id="metaphorSearch" type="text" placeholder="Search lotus, light, wave, heart, space..."></div>
-        <div class="grid-auto" id="metaphorResults"></div>
-      </div>
-    </section>
-
-    <section class="pane" id="pane-recording">
-      <div class="title">Recording & Sound</div>
-      <div class="subtitle">Tone test and basic browser recording</div>
-      <div class="card">
-        <div class="section-label">Tone Test</div>
-        <div class="action-row">
-          <select id="toneSelect"><option value="261.63">Sa / C</option><option value="293.66">Re / D</option><option value="329.63">Ga / E</option><option value="349.23">Ma / F</option><option value="392.00">Pa / G</option><option value="440.00">Da / A</option><option value="493.88">Ni / B</option></select>
-          <button class="btn" id="playToneBtn">Play Tone</button>
-          <button class="btn" id="stopToneBtn">Stop Tone</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="section-label">Recording</div>
-        <div class="action-row">
-          <button class="btn" id="recordBtn">Start Recording</button>
-          <button class="btn" id="stopRecordBtn">Stop</button>
-          <button class="btn" id="playRecordBtn">Play Latest</button>
-          <button class="btn" id="downloadRecordBtn">Download</button>
-        </div>
-        <div id="recordStatus" class="muted" style="margin-top:10px">Microphone not started.</div>
-        <audio id="recordPlayback" controls></audio>
-      </div>
-    </section>
+    </div>
+  </div>
+</div>
   </main>
+  <div class="pane" id="pane-guide">
+  <div style="text-align:right; margin-bottom:12px; font-size:12px;">
+    <a href="https://www.culturalmusings.com" target="_blank" rel="noopener noreferrer" style="color:var(--gold2); text-decoration:none;">
+      Source: Cultural Musings
+    </a>
+  </div>
+  <div class="pg-title">User Guide</div>
+  <div class="pg-sub">How to use Nāda Mudrā V9 from scratch</div>
 
-  <script>
-    const SWARAS = ['Sa','Re','Ga','Ma','Pa','Da','Ni'];
-    const SAMPLE_RAGAS = { Mohanam:['Sa','Re','Ga','Pa','Da'], Hamsadhwani:['Sa','Re','Ga','Pa','Ni'], Kalyani:['Sa','Re','Ga','Ma','Pa','Da','Ni'], Bhairavi:['Sa','Re','Ga','Ma','Pa','Da','Ni'] };
-    const MUDRAS = [
-      {name:'Pataka',form:'Bharatanatyam',meaning:'Flag / stillness / statement',beejakshara:'Om'},
-      {name:'Anjali',form:'All classical forms',meaning:'Prayer / offering / reverence',beejakshara:'Hreem'},
-      {name:'Hamsasya',form:'Bharatanatyam / Mohiniyattam',meaning:'Delicacy / subtle indication',beejakshara:'Aim'},
-      {name:'Alapadma',form:'Odissi / Bharatanatyam',meaning:'Lotus / blossoming',beejakshara:'Shreem'}
-    ];
-    const SACRED = [
-      {category:'shlokas',title:'Tat Tvam Asi',meaning:'That Thou Art',philosophy:'Identity of self and ultimate reality.'},
-      {category:'rudram',title:'Sri Rudram',meaning:'Vedic hymn to Rudra',philosophy:'Divinity pervades all forms.'},
-      {category:'namakam',title:'Namakam',meaning:'Salutation-rich section of Sri Rudram',philosophy:'Repeated bowing as sacred recognition.'},
-      {category:'chamakam',title:'Chamakam',meaning:'Sacred fullness and completion',philosophy:'Wholeness aligned with sacred order.'},
-      {category:'beejaksharas',title:'Hreem',meaning:'Sacred Devi seed syllable',philosophy:'Condensed sacred force.'},
-      {category:'lalita',title:'Lalita Sahasranamavali',meaning:'Thousand names of the Divine Mother',philosophy:'Many-sided Devi consciousness.'},
-      {category:'khadgamala',title:'Devi Khadgamala',meaning:'Sacred Devi garland text',philosophy:'Layered spiritual progression.'},
-      {category:'other',title:'Gayatri Mantra',meaning:'Prayer for illumination',philosophy:'Knowledge awakened through sacred light.'}
-    ];
-    const METAPHORS = [
-      {title:'Lotus of the Heart',meaning:'Heart as subtle center',philosophy:'Consciousness flowers inwardly.'},
-      {title:'Light of Lights',meaning:'Source of illumination',philosophy:'Ultimate reality as inner light.'},
-      {title:'Ocean and Wave',meaning:'Individual and absolute relation',philosophy:'Difference appears, essence remains one.'},
-      {title:'Space in the Pot',meaning:'Apparent limitation of the infinite',philosophy:'The absolute is never divided.'}
-    ];
-    const SACRED_WORDS = ['tat tvam asi','rudram','namakam','chamakam','lalita','khadgamala','hreem','gayatri'];
+  <div class="ms-card">
+    <div class="ms-body">
+      Nāda Mudrā V9 is a complete interactive platform for exploring <strong>rāgas, swaras, tālas, mudrās, kritis, mantras, bījāksharas, music theory, history, and rāga creation</strong> in one place. The app is designed for learning, searching, comparison, reference, and creative exploration. Users can browse information, search structured content, interact with musical models, and generate new rāga ideas through guided tools.
+        
+  
 
-    let currentVisibleText = 'Nāda Mudrā Beta V12';
-    let finderSet = new Set();
-    let creatorSet = new Set();
-    let mediaRecorder = null, recordedChunks = [], recordedBlob = null, audioCtx = null, toneOsc = null, toneGain = null;
+      The app is organized through a <strong>top tab-based navigation system</strong>. Each tab opens a different section such as Rāga Library, Rāga Finder, Swara Engine, Mudrās, Kriti Library, Cross-Reference, Mind Science, Tāla, Time Wheel, Melakarta, Thaat, Mantra, Bījākshara, History, and Creator. Global controls at the top allow users to change the <strong>language/script display</strong>, switch the <strong>theme</strong>, print the current view, and adjust notation visibility.
+    </div>
+  </div>
 
-    const qs = (s,root=document)=>root.querySelector(s);
-    const qsa = (s,root=document)=>[...root.querySelectorAll(s)];
+  <div class="ms-card">
+    <div class="ms-title">1. General Navigation</div>
+    <div class="ms-body">
+      Begin by clicking any tab in the tab bar to open that section. Only one pane is shown at a time, making it easier to focus on a specific part of the app. The language selector changes the notation or display labels, while the theme button changes the visual appearance. The print button can be used to print or save the current pane as PDF.
+        
+  
 
-    function updateCurrentText(){ const active = qs('.pane.active'); if(active) currentVisibleText = active.innerText.trim(); }
-    function setTab(name){ qsa('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name)); qsa('.pane').forEach(p=>p.classList.toggle('active', p.id===`pane-${name}`)); updateCurrentText(); }
+      Genre filters and notation toggles at the top help refine how information is viewed. These controls apply across relevant sections and allow users to personalize the display according to learning preference.
+    </div>
+  </div>
 
-    function renderSwaraGrid(id,setRef){ qs(id).innerHTML = SWARAS.map(sw=>`<div class="swara ${setRef.has(sw)?'active':''}" data-swara="${sw}"><div class="swara-main">${sw}</div></div>`).join(''); }
-    function renderSampleRagas(){ qs('#sampleRagaList').innerHTML = Object.keys(SAMPLE_RAGAS).map(name=>`<div class="side-item" data-raga="${name}">${name}</div>`).join(''); }
+  <div class="ms-card">
+    <div class="ms-title">2. Rāga Library and Search</div>
+    <div class="ms-body">
+      Use the <strong>Rāga Library</strong> to browse rāgas across Carnatic, Hindustani, Folk, and Fusion categories. Enter text into the search field to find rāgas by name, rasa, time, thaat, melakarta, or keyword. Use filters such as rasa and time to narrow the results.
+        
+  
 
-    function renderMudras(query=''){ const q=query.toLowerCase(); const list=MUDRAS.filter(m=>`${m.name} ${m.form} ${m.meaning} ${m.beejakshara}`.toLowerCase().includes(q)); qs('#mudraResults').innerHTML=list.map(m=>`<div class="entry"><div class="entry-title">${m.name}</div><div class="entry-meta">${m.form}</div><div class="long">Meaning: ${m.meaning}\n\nBeejakshara: ${m.beejakshara}</div></div>`).join('')||'<div class="muted">No results found.</div>'; updateCurrentText(); }
+      Use the separate <strong>Rāga Search</strong> pane for focused lookup. This section allows quick search and filtering by system, rasa, and time. Input in these sections is given through <strong>search boxes, dropdown filters, and clickable result cards</strong>.
+    </div>
+  </div>
 
-    function renderSacred(query=''){ const q=query.toLowerCase(); const category=qs('#sacredCategory').value; let list=SACRED.filter(s=>category==='all'?true:s.category===category); if(q) list=list.filter(s=>`${s.title} ${s.meaning} ${s.philosophy}`.toLowerCase().includes(q)); qs('#sacredResults').innerHTML=list.map(s=>`<div class="entry"><div class="entry-title">${s.title}</div><div class="entry-meta">${s.category}</div><div class="long">Meaning: ${s.meaning}\n\nPhilosophy: ${s.philosophy}</div></div>`).join('')||'<div class="muted">No results found.</div>'; updateCurrentText(); }
-    function renderSacredChips(){ qs('#sacredChips').innerHTML=SACRED_WORDS.map(w=>`<button class="chip" data-word="${w}">${w}</button>`).join(''); }
+  <div class="ms-card">
+    <div class="ms-title">3. Rāga Finder</div>
+    <div class="ms-body">
+      The Rāga Finder helps identify rāgas from selected swaras. Users can click notes in the swara grid or use the piano keyboard to select and hear note positions. The Sa drone can be started for tonal reference. As notes are selected, the arohanam and avarohanam displays update.
+        
+  
 
-    function renderMetaphors(query=''){ const q=query.toLowerCase(); const list=METAPHORS.filter(m=>`${m.title} ${m.meaning} ${m.philosophy}`.toLowerCase().includes(q)); qs('#metaphorResults').innerHTML=list.map(m=>`<div class="entry"><div class="entry-title">${m.title}</div><div class="long">Meaning: ${m.meaning}\n\nPhilosophy: ${m.philosophy}</div></div>`).join('')||'<div class="muted">No results found.</div>'; updateCurrentText(); }
+      After selection, click <strong>Identify Rāga</strong> to see possible matches. Use <strong>Play Scale</strong> to hear the selected note pattern, <strong>Clear</strong> to reset, or <strong>Random</strong> to explore a surprise rāga. Result panels display rāga name, parent scale, rasa, season, time, gamakas, and confidence. Input here is done through <strong>clickable note grids, keyboard interaction, and action buttons</strong>.
+    </div>
+  </div>
 
-    function identifyRaga(){ const picked=[...finderSet]; let best=null,bestScore=0; for(const [name,notes] of Object.entries(SAMPLE_RAGAS)){ const score=notes.filter(n=>picked.includes(n)).length/Math.max(notes.length,picked.length||1); if(score>bestScore){bestScore=score; best={name,notes};}} qs('#finderResult').innerHTML=best?`<div class="entry-title">${best.name}</div><div class="long">Notes: ${best.notes.join(' - ')}\n\nConfidence: ${Math.round(bestScore*100)}%</div>`:'No match found.'; updateCurrentText(); }
-    function generateCreator(){ const name=qs('#creatorName').value.trim()||'Nava Raga'; const rasa=qs('#creatorRasa').value; const genre=qs('#creatorGenre').value; qs('#creatorResult').innerHTML=`<div class="entry-title">${name}</div><div class="long">Rasa: ${rasa}\nGenre: ${genre}\n\nSelected Notes: ${[...creatorSet].join(' - ')||'None'}\n\nThis is a created concept raga in beta mode.</div>`; updateCurrentText(); }
-    function generateCombos(){ const system=qs('#comboSystem').value; const genre=qs('#comboGenre').value; const count=system==='Carnatic'?30000:system==='Hindustani'?12000:16000; qs('#comboResult').innerHTML=`<div class="long">System: ${system}\nGenre: ${genre}\n\nConceptual large-scale generation enabled.\nPossible combinations: ${count.toLocaleString()}+\n\nSample output modes:\n- Pentatonic combinations\n- Hexatonic combinations\n- Heptatonic combinations\n- Directional scale variants\n- Genre-sensitive exploratory structures</div>`; updateCurrentText(); }
+  <div class="ms-card">
+    <div class="ms-title">4. Swara Engine, Tāla, and Theory</div>
+    <div class="ms-body">
+      The <strong>Swara Engine</strong> provides reference information for swaras, shrutis, terminology, and notation across languages. The <strong>Tāla</strong> pane visualizes beat cycles and rhythmic patterns. The <strong>Mind Science</strong> pane explains theoretical, therapeutic, and scientific ideas connected to rāga and sound.
+        
+  
 
-    function saveCurrent(){ const blob=new Blob([currentVisibleText],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nada-mudra-beta-output.txt'; a.click(); }
-    async function shareCurrent(){ if(navigator.share){ try{ await navigator.share({title:'Nāda Mudrā Beta',text:currentVisibleText}); }catch(e){} } else { try{ await navigator.clipboard.writeText(currentVisibleText); alert('Copied to clipboard.'); }catch(e){} } }
+      These sections are mainly reference-driven. Users interact through reading, clicking visual elements, and observing structured panels, tables, or rhythmic displays.
+    </div>
+  </div>
 
-    function getAudio(){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
-    function playTone(){ stopTone(); const ctx=getAudio(); const freq=parseFloat(qs('#toneSelect').value); toneOsc=ctx.createOscillator(); toneGain=ctx.createGain(); toneOsc.type='sine'; toneOsc.frequency.value=freq; toneOsc.connect(toneGain); toneGain.connect(ctx.destination); toneGain.gain.setValueAtTime(0.0001,ctx.currentTime); toneGain.gain.exponentialRampToValueAtTime(0.08,ctx.currentTime+0.2); toneOsc.start(); }
-    function stopTone(){ if(toneOsc){ try{ toneOsc.stop(); }catch(e){} toneOsc.disconnect(); toneOsc=null; } if(toneGain){ toneGain.disconnect(); toneGain=null; } }
+  <div class="ms-card">
+    <div class="ms-title">5. Mudrās, Kritis, Mantras, and Bījāksharas</div>
+    <div class="ms-body">
+      The app also includes cultural and spiritual knowledge sections. <strong>Hasta Mudrās</strong> can be explored by type and dance form. The <strong>Kriti Library</strong> allows searching compositions by name, rāga, composer, or genre. The <strong>Mantra</strong> and <strong>Bījākshara</strong> sections support search across sacred sounds, scriptural sources, deity associations, purposes, meanings, and related explanations.
+        
+  
 
-    async function startRecording(){ try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); recordedChunks=[]; mediaRecorder=new MediaRecorder(stream); mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recordedChunks.push(e.data); }; mediaRecorder.onstop=()=>{ recordedBlob=new Blob(recordedChunks,{type:'audio/webm'}); qs('#recordPlayback').src=URL.createObjectURL(recordedBlob); qs('#recordStatus').textContent='Recording completed.'; }; mediaRecorder.start(); qs('#recordStatus').textContent='Recording...'; }catch(err){ qs('#recordStatus').textContent='Microphone access failed or not supported.'; } }
-    function stopRecording(){ if(mediaRecorder&&mediaRecorder.state!=='inactive') mediaRecorder.stop(); }
-    function playLatestRecord(){ const a=qs('#recordPlayback'); if(a.src) a.play(); }
-    function downloadLatestRecord(){ if(!recordedBlob) return; const a=document.createElement('a'); a.href=URL.createObjectURL(recordedBlob); a.download='nada-mudra-recording.webm'; a.click(); }
+      These sections accept input through <strong>search boxes, dropdown filters, category buttons, and clickable cards</strong>. Users can search, filter, and open entries to read detailed interpretive and reference material.
+    </div>
+  </div>
 
-    function bind(){
-      qsa('.tab').forEach(tab=>tab.addEventListener('click',()=>setTab(tab.dataset.tab)));
-      qs('#manualToggleBtn').addEventListener('click',()=>qs('#topManual').classList.toggle('open'));
-      qs('#finderSwaraGrid').addEventListener('click',e=>{ const box=e.target.closest('.swara'); if(!box) return; const sw=box.dataset.swara; finderSet.has(sw)?finderSet.delete(sw):finderSet.add(sw); renderSwaraGrid('#finderSwaraGrid', finderSet); });
-      qs('#creatorSwaraGrid').addEventListener('click',e=>{ const box=e.target.closest('.swara'); if(!box) return; const sw=box.dataset.swara; creatorSet.has(sw)?creatorSet.delete(sw):creatorSet.add(sw); renderSwaraGrid('#creatorSwaraGrid', creatorSet); });
-      qs('#sampleRagaList').addEventListener('click',e=>{ const item=e.target.closest('.side-item'); if(!item) return; finderSet=new Set(SAMPLE_RAGAS[item.dataset.raga]); renderSwaraGrid('#finderSwaraGrid', finderSet); identifyRaga(); });
-      qs('#identifyBtn').addEventListener('click',identifyRaga);
-      qs('#clearFinderBtn').addEventListener('click',()=>{ finderSet.clear(); renderSwaraGrid('#finderSwaraGrid', finderSet); qs('#finderResult').textContent='Select swaras and click Identify.'; updateCurrentText(); });
-      qs('#generateCreatorBtn').addEventListener('click',generateCreator);
-      qs('#clearCreatorBtn').addEventListener('click',()=>{ creatorSet.clear(); qs('#creatorName').value=''; renderSwaraGrid('#creatorSwaraGrid', creatorSet); qs('#creatorResult').textContent='Generate a raga to see output.'; updateCurrentText(); });
-      qs('#generateCombosBtn').addEventListener('click',generateCombos);
-      qs('#mudraSearch').addEventListener('input',e=>renderMudras(e.target.value));
-      qs('#sacredCategory').addEventListener('change',()=>renderSacred(qs('#sacredSearch').value));
-      qs('#sacredSearch').addEventListener('input',e=>renderSacred(e.target.value));
-      qs('#sacredChips').addEventListener('click',e=>{ const chip=e.target.closest('.chip'); if(!chip) return; qs('#sacredSearch').value=chip.dataset.word; renderSacred(chip.dataset.word); });
-      qs('#metaphorSearch').addEventListener('input',e=>renderMetaphors(e.target.value));
-      qs('#playToneBtn').addEventListener('click',playTone);
-      qs('#stopToneBtn').addEventListener('click',stopTone);
-      qs('#recordBtn').addEventListener('click',startRecording);
-      qs('#stopRecordBtn').addEventListener('click',stopRecording);
-      qs('#playRecordBtn').addEventListener('click',playLatestRecord);
-      qs('#downloadRecordBtn').addEventListener('click',downloadLatestRecord);
-      qs('#printBtn').addEventListener('click',()=>window.print());
-      qs('#saveBtn').addEventListener('click',saveCurrent);
-      qs('#shareBtn').addEventListener('click',shareCurrent);
-    }
+  <div class="ms-card">
+    <div class="ms-title">6. Compare, Time Wheel, and Constellation</div>
+    <div class="ms-body">
+      The <strong>Compare</strong> pane lets users select two rāgas side by side using dropdown menus. The <strong>Time Wheel</strong> allows users to click time segments to see associated rāgas. The <strong>Constellation</strong> pane visually maps rāga relationships by rasa, time, parent system, or proximity.
+        
+  
 
-    renderSwaraGrid('#finderSwaraGrid', finderSet);
-    renderSwaraGrid('#creatorSwaraGrid', creatorSet);
-    renderSampleRagas();
-    renderMudras();
-    renderSacred();
-    renderSacredChips();
-    renderMetaphors();
-    bind();
-  </script>
+      These sections are meant for analysis and visual understanding. Input is provided through <strong>dropdowns, clicks, and hover interaction</strong>.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">7. Rāga Creator</div>
+    <div class="ms-body">
+      The Rāga Creator is one of the app’s most advanced features. It allows users to create new rāga concepts by selecting <strong>arohanam and avarohanam swaras</strong>, choosing <strong>vādi and samvādi</strong>, applying <strong>gamakas</strong>, and setting the intended <strong>rasa</strong> and <strong>genre</strong>. Users may enter their own rāga name or leave the name field blank for an automatically suggested one.
+        
+  
+
+      After entering the data, click <strong>Generate Rāga</strong> to produce a result. The output includes rāga type, rasa, genre, dominant notes, gamakas, ascending and descending structures, and interpretive analysis. Users can then play the scale, save the rāga, export it as JSON or text, or print it as PDF. This section demonstrates how rāgas can be created through note selection, movement structure, expressive identity, and musical intention.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">8. How Data Is Entered in the App</div>
+    <div class="ms-body">
+      Across the app, user input is given in several ways: <strong>text fields</strong> for search and naming, <strong>dropdown menus</strong> for filters and options, <strong>clickable swara grids</strong> for musical selection, <strong>buttons</strong> for actions such as identify, play, compare, save, and generate, and <strong>interactive cards or charts</strong> for deeper exploration.
+        
+  
+
+      This means the app does not rely on long manual typing. Most of the interaction happens through structured visual controls, making the experience easier for both learners and advanced users.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">9. End-to-End Use</div>
+    <div class="ms-body">
+      A typical user journey may begin in the Rāga Library, continue into Rāga Finder for note-based exploration, move into Swara Engine or Mind Science for theory, then connect to Kritis, Mudrās, or Mantras for broader context. Advanced users can compare rāgas, study time associations, inspect parent systems, and finally create new rāga ideas in the Creator pane.
+        
+  
+
+      In this way, Nāda Mudrā V9 functions as an <strong>end-to-end learning, exploration, reference, and creative platform</strong> that connects music, knowledge, structure, sound, and spiritual-cultural context in one integrated system.
+    </div>
+  </div>
+</div>
+i asked for detailed from scratch
+Understood — here is a more complete from-scratch version for the pane.
+<div class="pane" id="pane-guide">
+  <div style="text-align:right; margin-bottom:12px; font-size:12px;">
+    <a href="https://www.culturalmusings.com" target="_blank" rel="noopener noreferrer" style="color:var(--gold2); text-decoration:none;">
+      Source: Cultural Musings
+    </a>
+  </div>
+
+  <div class="pg-title">User Guide</div>
+  <div class="pg-sub">Complete step-by-step instructions for using Nāda Mudrā V9 from scratch</div>
+
+  <div class="ms-card">
+    <div class="ms-title">Introduction</div>
+    <div class="ms-body">
+      Nāda Mudrā V9 is a complete interactive platform designed to help users explore, study, compare, and create knowledge related to <strong>rāgas, swaras, tālas, mudrās, kritis, mantras, bījāksharas, music theory, and history</strong>. The app is built as a unified knowledge and discovery system where musical structure, cultural context, spiritual content, and creative tools are all brought together in one interface.
+        
+  
+
+      This application is useful for students, learners, musicians, dancers, teachers, researchers, devotional users, and anyone interested in Indian music and sound traditions. Some sections are designed mainly for reading and reference, while others are interactive and allow users to enter data, search, filter, compare, listen, or generate new outputs.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 1: Opening the App and Understanding the Layout</div>
+    <div class="ms-body">
+      When the app opens, the top area contains the global controls. These remain important throughout the experience because they affect how the app is viewed and used. The first control is the <strong>language and script selector</strong>, which changes how musical terms or note names may be displayed. This allows users to view content in different Indian scripts or in Western notation.
+        
+  
+
+      Next to it is the <strong>theme button</strong>, which changes the appearance of the app between visual modes such as dark and light display. The <strong>print button</strong> allows the currently open section to be printed or saved as a PDF. Beneath these controls are the <strong>genre filters</strong> and notation display toggles, which help users adjust which kind of content they want to focus on and how notation is shown.
+        
+  
+
+      Below the top controls is the main <strong>tab bar</strong>. This is the primary way to move through the software. Each tab opens one section or pane of the app. Only one pane is shown at a time, so users can focus clearly on one topic without visual clutter.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 2: Navigating Through the Main Sections</div>
+    <div class="ms-body">
+      The app is divided into multiple functional sections. These include Rāga Library, Rāga Finder, Swara Engine, Hasta Mudrās, Kriti Library, Cross-Reference, Mind Science, Tāla, Time Wheel, Melakarta, Thaat, Constellation, Compare, Rāga Search, Bījākshara Search, Mantra Search, History, and Rāga Creator.
+        
+  
+
+      Each of these sections is designed for a different type of use. Some are for searching and filtering. Some are for reading and understanding theory. Others are for visual exploration, comparison, or interactive note selection. The Creator section goes even further by allowing users to construct new rāga ideas from scratch.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 3: Using the Rāga Library</div>
+    <div class="ms-body">
+      The Rāga Library is the broad browsing area of the app. It helps users explore available rāgas across systems such as Carnatic, Hindustani, Folk, and related categories. At the top of the section, users can switch between system groupings such as All Systems, Carnatic, Hindustani, and Folk / Regional.
+        
+  
+
+      Users can type into the <strong>search bar</strong> to look for a rāga by name, rasa, time, melakarta, thaat, or keyword. Additional filters such as rasa and time can be selected from dropdown menus. The results appear as cards, which visually summarize the rāga and its classification. This section is ideal for beginning exploration because it gives an overview of the content available in the app.
+        
+  
+
+      <strong>Input methods used here:</strong> text search, dropdown filters, category buttons, and clickable result cards.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 4: Using the Rāga Finder</div>
+    <div class="ms-body">
+      The Rāga Finder allows users to identify rāgas using swara selection. This section is interactive and useful for learners who want to understand how note combinations relate to rāga identity. To begin, the user clicks swaras in the visible swara grid. There is also a piano keyboard interface that can be used to hear note positions and support note selection.
+        
+  
+
+      The user may also start the <strong>Sa drone</strong> to maintain a tonal reference while selecting or listening. As swaras are selected, the ascending and descending note displays begin to reflect the active selection. Once ready, the user clicks <strong>Identify Rāga</strong> to generate likely matches.
+        
+  
+
+      The result area shows rāga name, alternate name, system, parent classification, time, season, rasa, gamakas, and confidence score. The user may then choose to play the scale, clear the selection, choose a random rāga, mark the result as a favourite, share it, or add it for comparison.
+        
+  
+
+      <strong>Input methods used here:</strong> clickable swara grid, keyboard clicks, drone control, action buttons, and quick filters.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 5: Using the Swara Engine</div>
+    <div class="ms-body">
+      The Swara Engine is a structured reference module for understanding note systems. It explains swaras across multiple languages and notation systems, helping the user understand note identity, relationship, terminology, and shruti placement.
+        
+  
+
+      This section is not mainly for heavy input. Instead, it is designed for careful reading and browsing. Users can review swara cards to understand Carnatic naming, Western note equivalence, Solfège parallels, language forms, and pitch relationships. This is especially helpful when using the Finder or Creator sections because it builds note literacy.
+        
+  
+
+      <strong>Input methods used here:</strong> primarily browsing, reading, and card inspection.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 6: Using the Hasta Mudrā Section</div>
+    <div class="ms-body">
+      The Hasta Mudrā section focuses on classical hand gestures. Users can browse by major mudrā type such as Asamyutha, Samyutha, Therapeutic, or All Mudras. There are also dance-form tabs that let the user view mudrās within traditions such as Bharatanatyam, Kathak, Odissi, Kuchipudi, Manipuri, and Mohiniyattam.
+        
+  
+
+      Mudrā cards present names, categories, descriptions, uses, and related interpretive meaning. This section is helpful for users interested in dance vocabulary, expressive symbolism, and embodied cultural meaning.
+        
+  
+
+      <strong>Input methods used here:</strong> filter buttons, dance-form tabs, and clickable browsing.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 7: Using the Kriti Library</div>
+    <div class="ms-body">
+      The Kriti Library helps users search and study compositions. Users can type composition names or keywords into the search field and narrow results using filters such as rāga, composer, and genre.
+        
+  
+
+      Each composition card may include title, rāga, tāla, language, opening text, translation, composer, and descriptive notes. This section connects theoretical rāga study with actual compositional practice.
+        
+  
+
+      <strong>Input methods used here:</strong> search field, dropdown filters, and clickable cards or action buttons.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 8: Using Cross-Reference</div>
+    <div class="ms-body">
+      The Cross-Reference section is designed to show relationships between different entities in the app. A user begins by selecting a swara. Once selected, the app displays related rāgas, compositions, or associated concepts connected to that note.
+        
+  
+
+      This section helps users move beyond isolated facts and understand musical relationships. It is especially useful for seeing how one element participates in a larger system.
+        
+  
+
+      <strong>Input methods used here:</strong> clickable swara pills and interactive result selections.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 9: Using Mind Science</div>
+    <div class="ms-body">
+      The Mind Science section provides interpretive and theoretical content about the effects of sound, rāga, psychoacoustics, neural response, rhythm, and therapeutic use. This pane contains concept cards and structured tables intended for reading and reflection.
+        
+  
+
+      Users can study how rāgas are linked to emotional states, circadian patterns, neurological interpretation, and therapeutic associations. This section expands the app from musical classification into broader scientific and experiential understanding.
+        
+  
+
+      <strong>Input methods used here:</strong> mainly reading, scrolling, and content review.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 10: Using Tāla, Time Wheel, Melakarta, and Thaat</div>
+    <div class="ms-body">
+      These sections help users understand structural frameworks. In the <strong>Tāla</strong> pane, users explore rhythmic cycles and beat visualization. In the <strong>Time Wheel</strong>, users click time segments to see rāgas associated with different times of day. In the <strong>Melakarta</strong> pane, users explore the 72 parent rāga system of Carnatic music. In the <strong>Thaat</strong> pane, users study the parent scale system used in Hindustani music.
+        
+  
+
+      Together, these sections build structural understanding. They explain how rāgas can be classified by note set, family, rhythm, or time tradition.
+        
+  
+
+      <strong>Input methods used here:</strong> clicks on charts, grids, time segments, and visual controls.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 11: Using Constellation and Compare</div>
+    <div class="ms-body">
+      The Constellation section visually maps relationships among rāgas. Users can choose whether to view those relationships by rasa, parent system, time, or proximity. Nodes can be hovered over or clicked to inspect related content.
+        
+  
+
+      In the Compare section, users select two rāgas from dropdown menus and study them side by side. This is useful for understanding differences in scale, mood, time, or musical identity.
+        
+  
+
+      <strong>Input methods used here:</strong> dropdown menus, view-selection buttons, node hover, and click interaction.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 12: Using Bījākshara and Mantra Search</div>
+    <div class="ms-body">
+      The app also includes sections for sacred sound and textual reference. In the Bījākshara and Mātrikā Nyāsa section, users can search by syllable, deity, chakra, source, or purpose. In the Mantra and Shloka section, users can search sacred texts, nāmas, seed syllables, and related references.
+        
+  
+
+      Detailed result panels display meaning, scriptural context, compositional relevance, spiritual significance, neurological interpretation, scientific view, and practical use. These sections expand the app beyond pure music classification into sacred sound knowledge and applied reference.
+        
+  
+</div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 13: Using the History Section</div>
+    <div class="ms-body">
+      The History pane provides cultural and historical background for rāga systems. Users can read how ideas evolved from older traditions into later theoretical and practical forms. This section gives chronological depth to the app.
+        
+  
+
+      It is primarily intended for reading and reference rather than active input.
+        
+  
+
+      <strong>Input methods used here:</strong> reading and scrolling.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 14: Using the Rāga Creator from Scratch</div>
+    <div class="ms-body">
+      The Rāga Creator allows users to build a new rāga concept step by step. First, the user selects notes for the <strong>arohanam</strong> or ascending movement. Next, the user selects notes for the <strong>avarohanam</strong> or descending movement. Then the user chooses the <strong>vādi</strong> and <strong>samvādi</strong> notes to define tonal emphasis.
+        
+  
+
+      After that, the user may select one or more <strong>gamakas</strong> to shape musical movement and style. The user can then enter a rāga name or leave the field blank so the app can suggest one. Additional fields allow the user to define the intended <strong>rasa</strong> and <strong>genre</strong>.
+        
+  
+
+      Once these inputs are ready, the user clicks <strong>Generate Rāga</strong>. The output shows the generated rāga’s type, rasa, genre, note structure, dominant notes, gamakas, and analytical description. The user can then play the scale, save the rāga, export it as JSON or text, or print it as a PDF.
+        
+  
+
+      This section is important because it shows how rāgas can be created through the combination of note selection, ascending and descending structure, note emphasis, movement style, and intended emotional or aesthetic identity. It teaches that rāga creation is not only about scale choice, but also about musical personality and expressive logic.
+        
+  
+
+      <strong>Input methods used here:</strong> swara selection grids, button toggles, name input field, dropdown menus, and generate/save/export controls.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 15: Understanding All Input Methods in the App</div>
+    <div class="ms-body">
+      The app accepts user input in several structured ways. <strong>Text fields</strong> are used for searching and naming. <strong>Dropdown menus</strong> are used for filtering and selecting categories such as rasa, time, system, purpose, deity, source, or genre. <strong>Buttons</strong> are used for actions like identify, play, clear, randomize, compare, save, share, print, and generate.
+        
+  
+
+      <strong>Clickable grids</strong> are used for swara selection and note construction. <strong>Cards and list items</strong> can be clicked to open deeper information. <strong>Visual interactive elements</strong> such as charts, wheels, and network maps allow users to explore relationships in a more intuitive way.
+        
+  
+
+      This design ensures that the user does not need to manually type everything. Much of the experience is guided through structured interactive controls.
+    </div>
+  </div>
+
+  <div class="ms-card">
+    <div class="ms-title">Step 16: Recommended End-to-End Way to Use the App</div>
+    <div class="ms-body">
+      A beginner may start with the Rāga Library to become familiar with available material. From there, the user may move to the Rāga Finder to understand how note combinations identify rāgas. The Swara Engine and Mind Science sections can then be used to deepen theoretical understanding.
+        
+  
+
+      After that, the user can connect musical knowledge with compositions in the Kriti Library, symbolic expression in Mudrās, and sacred sound reference in the Mantra and Bījākshara sections. Advanced users can compare rāgas, study time associations, review parent systems, and finally use the Rāga Creator to generate new concepts.
+      In this way, the application supports a full journey from <strong>basic lookup</strong> to <strong>deep study</strong>, <strong>cross-reference</strong>, <strong>visual understanding</strong>, and <strong>creative experimentation</strong>.
+    </div>
+  </div> 
+  
+  <div class="ms-card">
+    <div class="ms-title">Conclusion</div>
+    <div class="ms-body">
+      Nāda Mudrā V9 is more than a reference library. It is a complete end-to-end exploration environment that brings together music, knowledge, cultural meaning, sound systems, rhythm, creativity, and sacred textual reference. Whether the user wants to search, learn, analyze, compare, or create, the app provides structured tools and guided interfaces to support the full experience from scratch.
+    </div>
+  </div>
+</div>
+<script>
+function setTab(tabName){
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(pane => pane.classList.remove('on'));
+
+  const activePane = document.getElementById('pane-' + tabName);
+  if (activePane) activePane.classList.add('on');
+
+  const activeTab = document.querySelector(`.tab[onclick="setTab('${tabName}')"]`);
+  if (activeTab) activeTab.classList.add('on');
+}
+
+function runGlobalSiteSearch(){
+  const q = document.getElementById('globalSiteSearch').value.trim();
+  if(!q) return;
+  const url = 'https://www.google.com/search?q=site:culturalmusings.com+' + encodeURIComponent(q);
+  window.open(url, '_blank');
+}
+</script>
 </body>
 </html>
