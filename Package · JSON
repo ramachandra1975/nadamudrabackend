@@ -1,5 +1,5 @@
 {
-  "name": "madamudra-backend",
+  "name": "nadamudra-backend",
   "version": "4.1.0",
   "description": "nadaMudra Sacred Knowledge Platform - Backend Server",
   "main": "server.js",
