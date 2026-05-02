@@ -3,1422 +3,764 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NadaMudra 4.1 — Sacred Knowledge Platform</title>
+<title>MadaMudra 4.1 — Sacred Knowledge Platform</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --gold: #c9a84c;
-  --gold-light: #f0d080;
-  --gold-dim: #7a5c1e;
-  --deep: #0d0a1a;
-  --deep2: #150f2a;
-  --deep3: #1e1535;
-  --purple: #6b3fa0;
-  --purple-light: #9b6fd4;
-  --teal: #2ab8a0;
-  --crimson: #c0392b;
-  --text: #e8dfc8;
-  --text-dim: #9e8f72;
-  --border: rgba(201,168,76,0.25);
+:root{
+  --gold:#c9a84c;--gold-light:#f0d080;--gold-dim:#7a5c1e;
+  --deep:#0d0a1a;--deep2:#150f2a;--deep3:#1e1535;
+  --purple:#6b3fa0;--teal:#2ab8a0;--crimson:#c0392b;
+  --text:#e8dfc8;--text-dim:#9e8f72;--border:rgba(201,168,76,0.25);
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow-x:hidden;}
+body{background:var(--deep);color:var(--text);font-family:'EB Garamond',Georgia,serif;font-size:17px;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(107,63,160,0.18) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(42,184,160,0.10) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
-* { margin:0; padding:0; box-sizing:border-box; }
+/* HEADER */
+#app-header{position:sticky;top:0;z-index:9999;background:rgba(13,10,26,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;gap:12px;flex-wrap:wrap;}
+.logo{font-family:'Cinzel Decorative',serif;font-size:1.3rem;color:var(--gold);letter-spacing:2px;text-shadow:0 0 20px rgba(201,168,76,0.5);}
+.logo span{color:var(--gold-light);font-size:.85em;}
+.hdr-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.act-btn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:1px;padding:6px 13px;background:rgba(201,168,76,0.09);border:1px solid var(--border);border-radius:6px;color:var(--gold-dim);cursor:pointer;transition:all .2s;}
+.act-btn:hover{background:rgba(201,168,76,0.2);color:var(--gold);}
+.lang-sel{font-family:'Cinzel',serif;font-size:.62rem;padding:6px 10px;background:rgba(201,168,76,0.09);border:1px solid var(--border);border-radius:6px;color:var(--gold);cursor:pointer;outline:none;}
 
-body {
-  background: var(--deep);
-  color: var(--text);
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.7;
-  min-height: 100vh;
-}
+/* SWARA STRIP */
+#swara-strip{background:rgba(201,168,76,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:7px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;align-items:center;}
+#swara-strip::-webkit-scrollbar{display:none;}
+.sw-lbl{font-family:'Cinzel',serif;font-size:.6rem;color:var(--gold-dim);letter-spacing:2px;white-space:nowrap;margin-right:4px;}
+.sw-pill{display:flex;flex-direction:column;align-items:center;background:rgba(201,168,76,0.07);border:1px solid var(--border);border-radius:7px;padding:4px 10px;cursor:pointer;transition:all .2s;min-width:48px;user-select:none;}
+.sw-pill:hover,.sw-pill.on{background:rgba(201,168,76,0.22);border-color:var(--gold);transform:translateY(-1px);}
+.sw-main{font-family:'Cinzel',serif;font-size:.9rem;font-weight:700;color:var(--gold-light);}
+.sw-alt{font-size:.55rem;color:var(--text-dim);letter-spacing:1px;}
+.sw-sa .sw-main{color:#f0c060;}.sw-pa .sw-main{color:#60d0a0;}.sw-dha .sw-main{color:#d4a0e0;}.sw-ni .sw-main{color:#a080f0;}
 
-/* ── BACKGROUND ── */
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(107,63,160,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(42,184,160,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 70%);
-  pointer-events:none;
-  z-index:0;
-}
+/* TABS — THE FIX: pointer-events explicitly on, z-index above everything */
+#tab-bar{display:flex;gap:0;padding:0 16px;overflow-x:auto;scrollbar-width:none;background:rgba(21,15,42,0.9);position:relative;z-index:10000;}
+#tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:1px;padding:9px 13px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-dim);cursor:pointer;white-space:nowrap;transition:all .2s;pointer-events:all;position:relative;z-index:10001;display:inline-block;}
+.tab-btn:hover{color:var(--gold-light);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
-/* ── HEADER ── */
-#header {
-  position:sticky;
-  top:0;
-  z-index:100;
-  background: rgba(13,10,26,0.96);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-}
+/* PANES */
+#content{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:26px 18px 70px;}
+.pane{display:none;}
+.pane.active{display:block;}
 
-.header-top {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding: 12px 24px;
-  gap:16px;
-  flex-wrap:wrap;
-}
+/* SEARCH */
+.srch-wrap{position:relative;margin-bottom:18px;}
+.srch-inp{width:100%;padding:16px 150px 16px 20px;font-family:'EB Garamond',serif;font-size:1.05rem;background:rgba(30,21,53,0.92);border:1px solid var(--border);border-radius:11px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;}
+.srch-inp:focus{border-color:var(--gold);box-shadow:0 0 18px rgba(201,168,76,0.15);}
+.srch-inp::placeholder{color:var(--text-dim);}
+.srch-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;padding:9px 18px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;border-radius:7px;color:var(--deep);font-weight:700;cursor:pointer;transition:all .2s;}
+.srch-btn:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));}
+.srch-hint{font-size:.8rem;color:var(--text-dim);margin-top:6px;font-style:italic;}
 
-.logo {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.4rem;
-  color: var(--gold);
-  letter-spacing:2px;
-  white-space:nowrap;
-  text-shadow: 0 0 20px rgba(201,168,76,0.5);
-}
+/* SECTION TITLE */
+.sec-title{font-family:'Cinzel Decorative',serif;font-size:1.25rem;color:var(--gold-light);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
 
-.logo span { color: var(--gold-light); font-size:0.9em; }
+/* RESULT CARD */
+.res-card{background:rgba(21,15,42,0.72);border:1px solid var(--border);border-radius:13px;padding:26px;margin-bottom:18px;backdrop-filter:blur(6px);}
+.res-query{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;color:var(--gold-dim);margin-bottom:4px;text-transform:uppercase;}
+.res-title{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold-light);margin-bottom:18px;text-shadow:0 0 12px rgba(201,168,76,0.3);}
+.para-blk{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(201,168,76,0.09);}
+.para-blk:last-of-type{border-bottom:none;}
+.para-lbl{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:2px;color:var(--teal);margin-bottom:7px;}
+.para-txt{font-size:1rem;line-height:1.8;color:var(--text);}
+.src-wrap{margin-top:22px;padding:14px;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.11);border-radius:9px;}
+.src-title{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:var(--gold-dim);margin-bottom:9px;}
+.src-link{display:inline-flex;align-items:center;gap:5px;margin:3px 5px 3px 0;font-size:.8rem;color:var(--teal);text-decoration:none;background:rgba(42,184,160,0.08);padding:4px 9px;border-radius:18px;border:1px solid rgba(42,184,160,0.2);transition:all .2s;}
+.src-link:hover{background:rgba(42,184,160,0.18);color:var(--gold-light);}
+.disclaimer{margin-top:18px;padding:12px 16px;background:rgba(107,63,160,0.08);border-left:3px solid var(--purple);border-radius:0 7px 7px 0;font-size:.8rem;color:var(--text-dim);font-style:italic;line-height:1.6;}
 
-/* ── SWARA STRIP ── */
-#swara-strip {
-  background: rgba(201,168,76,0.06);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 8px 20px;
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  align-items:center;
-}
-#swara-strip::-webkit-scrollbar { display:none; }
+/* LOADING */
+.loading{text-align:center;padding:38px;font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:3px;color:var(--gold-dim);}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.dot{display:inline-block;animation:blink 1.4s infinite;}.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
 
-.swara-label {
-  font-family:'Cinzel', serif;
-  font-size:0.65rem;
-  color:var(--gold-dim);
-  letter-spacing:2px;
-  white-space:nowrap;
-  margin-right:4px;
-}
+/* HERO */
+.hero{text-align:center;padding:36px 0 24px;}
+.hero-om{font-size:3.8rem;color:var(--gold);text-shadow:0 0 30px rgba(201,168,76,.6);display:block;margin-bottom:10px;animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{text-shadow:0 0 20px rgba(201,168,76,.4);}50%{text-shadow:0 0 50px rgba(201,168,76,.9),0 0 80px rgba(201,168,76,.4);}}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:1.9rem;color:var(--gold-light);margin-bottom:6px;}
+.hero-sub{font-size:.95rem;color:var(--text-dim);font-style:italic;margin-bottom:26px;}
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:18px 0;}
+.chip{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:1px;padding:7px 14px;background:rgba(201,168,76,0.08);border:1px solid var(--border);border-radius:18px;color:var(--gold-dim);cursor:pointer;transition:all .2s;}
+.chip:hover{background:rgba(201,168,76,0.18);color:var(--gold);transform:translateY(-2px);}
 
-.swara-pill {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  background: rgba(201,168,76,0.08);
-  border: 1px solid var(--border);
-  border-radius:8px;
-  padding:5px 12px;
-  cursor:pointer;
-  transition: all 0.2s;
-  min-width:52px;
-  user-select:none;
-}
-.swara-pill:hover, .swara-pill.active {
-  background: rgba(201,168,76,0.22);
-  border-color: var(--gold);
-  transform:translateY(-1px);
-}
-.swara-main {
-  font-family:'Cinzel', serif;
-  font-size:0.95rem;
-  font-weight:700;
-  color:var(--gold-light);
-}
-.swara-alt {
-  font-size:0.58rem;
-  color:var(--text-dim);
-  letter-spacing:1px;
-}
-.swara-pill.sa .swara-main { color:#f0c060; }
-.swara-pill.pa .swara-main { color:#60d0a0; }
-.swara-pill.dha .swara-main { color:#d4a0e0; }
-.swara-pill.ni .swara-main { color:#a080f0; }
+/* MODULE CARDS */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:26px;}
+.mod-card{background:rgba(21,15,42,0.7);border:1px solid var(--border);border-radius:11px;padding:18px;cursor:pointer;transition:all .2s;}
+.mod-card:hover{border-color:var(--teal);transform:translateY(-2px);}
+.mod-icon{font-size:1.5rem;margin-bottom:7px;}
+.mod-name{font-family:'Cinzel',serif;font-size:.79rem;color:var(--gold);margin-bottom:5px;letter-spacing:1px;}
+.mod-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
 
-/* ── TABS ── */
-#tabs {
-  display:flex;
-  gap:2px;
-  padding:0 20px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  background: rgba(21,15,42,0.8);
-}
-#tabs::-webkit-scrollbar { display:none; }
+/* SITES */
+.site-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+.site-card{background:rgba(21,15,42,0.7);border:1px solid var(--border);border-radius:11px;padding:18px;text-decoration:none;display:block;transition:all .2s;}
+.site-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.06);transform:translateY(-2px);}
+.site-name{font-family:'Cinzel',serif;font-size:.79rem;color:var(--gold);margin-bottom:5px;letter-spacing:1px;}
+.site-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
 
-.tab-btn {
-  font-family:'Cinzel', serif;
-  font-size:0.68rem;
-  letter-spacing:1px;
-  padding:10px 14px;
-  background:transparent;
-  border:none;
-  border-bottom:2px solid transparent;
-  color:var(--text-dim);
-  cursor:pointer;
-  white-space:nowrap;
-  transition:all 0.2s;
-}
-.tab-btn:hover { color:var(--gold-light); }
-.tab-btn.active {
-  color:var(--gold);
-  border-bottom-color:var(--gold);
-}
+/* RAGA CREATOR */
+.creator-box{background:rgba(21,15,42,0.7);border:1px solid var(--border);border-radius:13px;padding:26px;}
+.creator-title{font-family:'Cinzel Decorative',serif;font-size:1.05rem;color:var(--gold-light);margin-bottom:18px;}
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px;margin-bottom:18px;}
+.sw-chk{display:flex;align-items:center;gap:7px;padding:7px 11px;background:rgba(201,168,76,0.05);border:1px solid var(--border);border-radius:7px;cursor:pointer;transition:all .2s;}
+.sw-chk:hover{background:rgba(201,168,76,0.12);}
+.sw-chk input{accent-color:var(--gold);cursor:pointer;}
+.sw-chk label{font-family:'Cinzel',serif;font-size:.75rem;color:var(--text);cursor:pointer;}
+.creator-out{background:rgba(13,10,26,0.8);border:1px solid var(--border);border-radius:9px;padding:18px;margin-top:14px;min-height:76px;}
+.creator-btns{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+.creator-inp{font-family:'EB Garamond',serif;font-size:.9rem;padding:9px 14px;background:rgba(30,21,53,0.9);border:1px solid var(--border);border-radius:8px;color:var(--text);outline:none;width:260px;}
 
-/* ── MAIN LAYOUT ── */
-#main {
-  position:relative;
-  z-index:1;
-  max-width:1200px;
-  margin:0 auto;
-  padding:28px 20px 60px;
-}
+/* CONNECT */
+.conn-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media(max-width:680px){.conn-grid{grid-template-columns:1fr;}}
+.conn-card{background:rgba(21,15,42,0.7);border:1px solid var(--border);border-radius:13px;padding:22px;}
+.conn-card h3{font-family:'Cinzel',serif;font-size:.88rem;color:var(--gold-light);margin-bottom:12px;letter-spacing:1px;}
+.contact-info{font-size:.88rem;color:var(--text-dim);line-height:2.2;margin-top:18px;}
+.contact-info strong{color:var(--gold);}
 
-/* ── PANES ── */
-.pane { display:none; }
-.pane.active { display:block; }
+/* RESULT ACTION BAR */
+.res-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 
-/* ── ACTION BAR ── */
-.action-bar {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
-}
+/* PRINT */
+@media print{#app-header,.res-actions,.chips,.mod-grid,#swara-strip{display:none!important;}body{background:white;color:black;}}
 
-.action-btn {
-  font-family:'Cinzel', serif;
-  font-size:0.65rem;
-  letter-spacing:1px;
-  padding:7px 14px;
-  background: rgba(201,168,76,0.08);
-  border:1px solid var(--border);
-  border-radius:6px;
-  color:var(--gold-dim);
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.action-btn:hover {
-  background: rgba(201,168,76,0.18);
-  color:var(--gold);
-}
-
-.lang-select {
-  font-family:'Cinzel', serif;
-  font-size:0.65rem;
-  padding:6px 10px;
-  background: rgba(201,168,76,0.08);
-  border:1px solid var(--border);
-  border-radius:6px;
-  color:var(--gold);
-  cursor:pointer;
-  margin-left:auto;
-}
-
-/* ── SEARCH BAR ── */
-.search-wrap {
-  position:relative;
-  margin-bottom:24px;
-}
-
-.search-input {
-  width:100%;
-  padding:18px 24px;
-  padding-right:160px;
-  font-family:'EB Garamond', serif;
-  font-size:1.05rem;
-  background: rgba(30,21,53,0.9);
-  border:1px solid var(--border);
-  border-radius:12px;
-  color:var(--text);
-  outline:none;
-  transition:border-color 0.2s, box-shadow 0.2s;
-}
-.search-input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 20px rgba(201,168,76,0.15);
-}
-.search-input::placeholder { color:var(--text-dim); }
-
-.search-btn {
-  position:absolute;
-  right:8px;
-  top:50%;
-  transform:translateY(-50%);
-  font-family:'Cinzel', serif;
-  font-size:0.7rem;
-  letter-spacing:2px;
-  padding:10px 20px;
-  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-  border:none;
-  border-radius:8px;
-  color:var(--deep);
-  font-weight:700;
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.search-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
-
-.search-hint {
-  font-size:0.82rem;
-  color:var(--text-dim);
-  margin-top:8px;
-  font-style:italic;
-}
-
-/* ── MODE TOGGLE ── */
-.mode-toggle {
-  display:flex;
-  gap:8px;
-  margin-bottom:20px;
-}
-.mode-btn {
-  font-family:'Cinzel', serif;
-  font-size:0.65rem;
-  letter-spacing:1px;
-  padding:7px 16px;
-  border-radius:20px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text-dim);
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.mode-btn.active {
-  background: var(--gold-dim);
-  color:var(--gold-light);
-  border-color:var(--gold-dim);
-}
-#backend-url-wrap {
-  margin-bottom:16px;
-  display:none;
-}
-#backend-url-wrap.show { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-#backend-url {
-  font-family:'EB Garamond', serif;
-  font-size:0.85rem;
-  padding:7px 14px;
-  background: rgba(30,21,53,0.9);
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:var(--text);
-  width:340px;
-  outline:none;
-}
-.url-label { font-size:0.78rem; color:var(--text-dim); }
-
-/* ── RESULTS ── */
-#result-area { margin-top:8px; }
-
-.result-card {
-  background: rgba(21,15,42,0.7);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:28px;
-  margin-bottom:20px;
-  backdrop-filter:blur(6px);
-}
-
-.result-query {
-  font-family:'Cinzel', serif;
-  font-size:0.75rem;
-  letter-spacing:2px;
-  color:var(--gold-dim);
-  margin-bottom:6px;
-  text-transform:uppercase;
-}
-
-.result-title {
-  font-family:'Cinzel Decorative', serif;
-  font-size:1.3rem;
-  color:var(--gold-light);
-  margin-bottom:20px;
-  text-shadow: 0 0 15px rgba(201,168,76,0.3);
-}
-
-.paragraph-block {
-  margin-bottom:20px;
-  padding-bottom:20px;
-  border-bottom:1px solid rgba(201,168,76,0.1);
-}
-.paragraph-block:last-of-type { border-bottom:none; }
-
-.para-label {
-  font-family:'Cinzel', serif;
-  font-size:0.72rem;
-  letter-spacing:2px;
-  color:var(--teal);
-  margin-bottom:8px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.para-text {
-  font-size:1rem;
-  line-height:1.8;
-  color:var(--text);
-}
-
-/* ── SOURCES ── */
-.sources-wrap {
-  margin-top:24px;
-  padding:16px;
-  background: rgba(201,168,76,0.04);
-  border:1px solid rgba(201,168,76,0.12);
-  border-radius:10px;
-}
-.sources-title {
-  font-family:'Cinzel', serif;
-  font-size:0.68rem;
-  letter-spacing:2px;
-  color:var(--gold-dim);
-  margin-bottom:10px;
-}
-.source-link {
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  margin:4px 6px 4px 0;
-  font-size:0.82rem;
-  color:var(--teal);
-  text-decoration:none;
-  background: rgba(42,184,160,0.08);
-  padding:4px 10px;
-  border-radius:20px;
-  border:1px solid rgba(42,184,160,0.2);
-  transition:all 0.2s;
-}
-.source-link:hover {
-  background: rgba(42,184,160,0.18);
-  color:var(--gold-light);
-}
-
-/* ── DISCLAIMER ── */
-.disclaimer {
-  margin-top:20px;
-  padding:14px 18px;
-  background: rgba(107,63,160,0.08);
-  border-left:3px solid var(--purple);
-  border-radius:0 8px 8px 0;
-  font-size:0.82rem;
-  color:var(--text-dim);
-  font-style:italic;
-  line-height:1.6;
-}
-
-/* ── LOADING ── */
-.loading {
-  text-align:center;
-  padding:40px;
-  font-family:'Cinzel', serif;
-  font-size:0.85rem;
-  letter-spacing:3px;
-  color:var(--gold-dim);
-}
-.loading-dot {
-  display:inline-block;
-  animation: pulse 1.4s infinite;
-}
-.loading-dot:nth-child(2) { animation-delay:0.2s; }
-.loading-dot:nth-child(3) { animation-delay:0.4s; }
-@keyframes pulse { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
-
-/* ── HOME HERO ── */
-.hero {
-  text-align:center;
-  padding:40px 0 30px;
-}
-.hero-om {
-  font-size:4rem;
-  color:var(--gold);
-  text-shadow:0 0 30px rgba(201,168,76,0.6);
-  margin-bottom:12px;
-  display:block;
-  animation: glow 3s ease-in-out infinite;
-}
-@keyframes glow {
-  0%,100% { text-shadow:0 0 20px rgba(201,168,76,0.4); }
-  50% { text-shadow:0 0 50px rgba(201,168,76,0.9), 0 0 80px rgba(201,168,76,0.4); }
-}
-.hero-title {
-  font-family:'Cinzel Decorative', serif;
-  font-size:2rem;
-  color:var(--gold-light);
-  margin-bottom:8px;
-}
-.hero-sub {
-  font-size:1rem;
-  color:var(--text-dim);
-  font-style:italic;
-  margin-bottom:30px;
-}
-
-/* ── QUICK TOPICS ── */
-.quick-topics {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  margin:20px 0;
-}
-.topic-chip {
-  font-family:'Cinzel', serif;
-  font-size:0.7rem;
-  letter-spacing:1px;
-  padding:8px 16px;
-  background: rgba(201,168,76,0.08);
-  border:1px solid var(--border);
-  border-radius:20px;
-  color:var(--gold-dim);
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.topic-chip:hover {
-  background: rgba(201,168,76,0.18);
-  color:var(--gold);
-  transform:translateY(-2px);
-}
-
-/* ── RAGA CREATOR ── */
-.raga-creator {
-  background: rgba(21,15,42,0.7);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:28px;
-}
-.creator-title {
-  font-family:'Cinzel Decorative', serif;
-  font-size:1.1rem;
-  color:var(--gold-light);
-  margin-bottom:20px;
-}
-.swara-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(120px,1fr));
-  gap:10px;
-  margin-bottom:20px;
-}
-.swara-check {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  background: rgba(201,168,76,0.05);
-  border:1px solid var(--border);
-  border-radius:8px;
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.swara-check:hover { background: rgba(201,168,76,0.12); }
-.swara-check input { accent-color:var(--gold); }
-.swara-check label {
-  font-family:'Cinzel', serif;
-  font-size:0.78rem;
-  color:var(--text);
-  cursor:pointer;
-}
-
-.creator-output {
-  background: rgba(13,10,26,0.8);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:20px;
-  margin-top:16px;
-  min-height:80px;
-}
-
-/* ── SITES TAB ── */
-.sites-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
-  gap:16px;
-}
-.site-card {
-  background: rgba(21,15,42,0.7);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:20px;
-  text-decoration:none;
-  transition:all 0.2s;
-  display:block;
-}
-.site-card:hover {
-  border-color:var(--gold);
-  background: rgba(201,168,76,0.06);
-  transform:translateY(-2px);
-}
-.site-card-name {
-  font-family:'Cinzel', serif;
-  font-size:0.82rem;
-  color:var(--gold);
-  margin-bottom:6px;
-  letter-spacing:1px;
-}
-.site-card-desc {
-  font-size:0.85rem;
-  color:var(--text-dim);
-  line-height:1.5;
-}
-
-/* ── CONNECT TAB ── */
-.connect-wrap {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-}
-@media(max-width:700px) { .connect-wrap { grid-template-columns:1fr; } }
-
-.connect-card {
-  background: rgba(21,15,42,0.7);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:24px;
-}
-.connect-card h3 {
-  font-family:'Cinzel', serif;
-  font-size:0.9rem;
-  color:var(--gold-light);
-  margin-bottom:14px;
-  letter-spacing:1px;
-}
-.connect-card iframe {
-  width:100%;
-  border:none;
-  border-radius:8px;
-}
-
-.contact-info {
-  font-size:0.9rem;
-  color:var(--text-dim);
-  line-height:2;
-}
-.contact-info strong { color:var(--gold); }
-
-/* ── SECTION TITLE ── */
-.section-title {
-  font-family:'Cinzel Decorative', serif;
-  font-size:1.3rem;
-  color:var(--gold-light);
-  margin-bottom:20px;
-  padding-bottom:12px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-/* ── MODULE CARDS ── */
-.module-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
-  gap:16px;
-  margin-bottom:28px;
-}
-.module-card {
-  background: rgba(21,15,42,0.7);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:20px;
-  cursor:pointer;
-  transition:all 0.2s;
-}
-.module-card:hover {
-  border-color:var(--teal);
-  transform:translateY(-2px);
-}
-.module-card-icon { font-size:1.6rem; margin-bottom:8px; }
-.module-card-title {
-  font-family:'Cinzel', serif;
-  font-size:0.82rem;
-  color:var(--gold);
-  margin-bottom:6px;
-  letter-spacing:1px;
-}
-.module-card-desc { font-size:0.85rem; color:var(--text-dim); line-height:1.5; }
-
-/* ── PRINT/EXPORT ── */
-@media print {
-  #header, .action-bar, .mode-toggle, #backend-url-wrap, .search-wrap, .search-hint,
-  .quick-topics, .jotform-float, #swara-strip { display:none !important; }
-  body { background:white; color:black; }
-  .result-card { border:1px solid #ccc; }
-}
-
-/* ── RESPONSIVE ── */
-@media(max-width:600px) {
-  .logo { font-size:1rem; }
-  .hero-title { font-size:1.4rem; }
-  .hero-om { font-size:2.8rem; }
-}
-
-/* ── JOTFORM FLOAT ── */
-.jotform-float {
-  position:fixed;
-  bottom:24px;
-  right:24px;
-  z-index:200;
-}
+/* MOBILE */
+@media(max-width:580px){.logo{font-size:1rem;}.hero-title{font-size:1.3rem;}.hero-om{font-size:2.6rem;}.srch-inp{padding-right:100px;font-size:.95rem;}.srch-btn{font-size:.58rem;padding:7px 10px;}}
 </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
-<div id="header">
-  <div class="header-top">
+<div id="app-header">
+  <div class="hdr-top">
     <div class="logo">ॐ MadaMudra <span>4.1</span></div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-      <select class="lang-select" id="lang-sel" onchange="setLang(this.value)">
-        <option value="en">English</option>
-        <option value="hi">हिंदी</option>
-        <option value="te">తెలుగు</option>
-        <option value="ta">தமிழ்</option>
-        <option value="ml">മലയാളം</option>
-        <option value="kn">ಕನ್ನಡ</option>
+    <div class="hdr-actions">
+      <select class="lang-sel" id="langSel">
+        <option value="en">English</option><option value="hi">हिंदी</option>
+        <option value="te">తెలుగు</option><option value="ta">தமிழ்</option>
+        <option value="ml">മലയാളം</option><option value="kn">ಕನ್ನಡ</option>
         <option value="sa">संस्कृत</option>
       </select>
-      <button class="action-btn" onclick="window.print()">🖨 Print</button>
-      <button class="action-btn" onclick="exportPDF()">⬇ Export PDF</button>
+      <button class="act-btn" onclick="window.print()">🖨 Print</button>
+      <button class="act-btn" id="exportBtn">⬇ Export</button>
     </div>
   </div>
 
   <!-- SWARA STRIP -->
   <div id="swara-strip">
-    <span class="swara-label">SWARAS ▸</span>
-    <div class="swara-pill sa" onclick="toggleSwara(this,'Sa')" data-swara="Sa"><span class="swara-main">Sa</span><span class="swara-alt">षड्ज</span></div>
-    <div class="swara-pill" onclick="toggleSwara(this,'Ri')" data-swara="Ri"><span class="swara-main">Ri</span><span class="swara-alt">ऋषभ</span></div>
-    <div class="swara-pill" onclick="toggleSwara(this,'Ga')" data-swara="Ga"><span class="swara-main">Ga</span><span class="swara-alt">गान्धार</span></div>
-    <div class="swara-pill" onclick="toggleSwara(this,'Ma')" data-swara="Ma"><span class="swara-main">Ma</span><span class="swara-alt">मध्यम</span></div>
-    <div class="swara-pill pa" onclick="toggleSwara(this,'Pa')" data-swara="Pa"><span class="swara-main">Pa</span><span class="swara-alt">पञ्चम</span></div>
-    <div class="swara-pill dha" onclick="toggleSwara(this,'Dha')" data-swara="Dha"><span class="swara-main">Dha</span><span class="swara-alt">धैवत</span></div>
-    <div class="swara-pill ni" onclick="toggleSwara(this,'Ni')" data-swara="Ni"><span class="swara-main">Ni</span><span class="swara-alt">निषाद</span></div>
-    <div class="swara-pill sa" onclick="toggleSwara(this,'Sa2')" data-swara="Sa2"><span class="swara-main">Sa'</span><span class="swara-alt">upper</span></div>
+    <span class="sw-lbl">SWARAS ▸</span>
+    <div class="sw-pill sw-sa" data-s="Sa"><span class="sw-main">Sa</span><span class="sw-alt">षड्ज</span></div>
+    <div class="sw-pill" data-s="Ri₁"><span class="sw-main">Ri₁</span><span class="sw-alt">komal</span></div>
+    <div class="sw-pill" data-s="Ri₂"><span class="sw-main">Ri₂</span><span class="sw-alt">shuddha</span></div>
+    <div class="sw-pill" data-s="Ga₂"><span class="sw-main">Ga₂</span><span class="sw-alt">komal</span></div>
+    <div class="sw-pill" data-s="Ga₃"><span class="sw-main">Ga₃</span><span class="sw-alt">shuddha</span></div>
+    <div class="sw-pill" data-s="Ma₁"><span class="sw-main">Ma₁</span><span class="sw-alt">shuddha</span></div>
+    <div class="sw-pill" data-s="Ma₂"><span class="sw-main">Ma₂</span><span class="sw-alt">prati</span></div>
+    <div class="sw-pill sw-pa" data-s="Pa"><span class="sw-main">Pa</span><span class="sw-alt">पञ्चम</span></div>
+    <div class="sw-pill sw-dha" data-s="Dha₁"><span class="sw-main">Dha₁</span><span class="sw-alt">komal</span></div>
+    <div class="sw-pill sw-dha" data-s="Dha₂"><span class="sw-main">Dha₂</span><span class="sw-alt">shuddha</span></div>
+    <div class="sw-pill sw-ni" data-s="Ni₂"><span class="sw-main">Ni₂</span><span class="sw-alt">komal</span></div>
+    <div class="sw-pill sw-ni" data-s="Ni₃"><span class="sw-main">Ni₃</span><span class="sw-alt">shuddha</span></div>
+    <div class="sw-pill sw-sa" data-s="Sa'"><span class="sw-main">Sa'</span><span class="sw-alt">upper</span></div>
   </div>
 
-  <!-- TABS -->
-  <div id="tabs">
-    <button class="tab-btn active" onclick="showTab('home',this)">🏠 Home</button>
-    <button class="tab-btn" onclick="showTab('search',this)">🔍 Search</button>
-    <button class="tab-btn" onclick="showTab('mudras',this)">🤲 Hasta Mudras</button>
-    <button class="tab-btn" onclick="showTab('ragas',this)">🎵 Ragas & Melakarta</button>
-    <button class="tab-btn" onclick="showTab('karanas',this)">💃 108 Karanas</button>
-    <button class="tab-btn" onclick="showTab('kriti',this)">📜 Kriti Library</button>
-    <button class="tab-btn" onclick="showTab('dance',this)">🕺 Classical Dance</button>
-    <button class="tab-btn" onclick="showTab('mind',this)">🧠 Mind Science</button>
-    <button class="tab-btn" onclick="showTab('timewheel',this)">⏳ Time Wheel</button>
-    <button class="tab-btn" onclick="showTab('nakshatras',this)">⭐ Nakshatras</button>
-    <button class="tab-btn" onclick="showTab('heritage',this)">🏛 Heritage</button>
-    <button class="tab-btn" onclick="showTab('compose',this)">🎼 Compose</button>
-    <button class="tab-btn" onclick="showTab('sites',this)">🌐 Our Sites</button>
-    <button class="tab-btn" onclick="showTab('connect',this)">💬 Connect</button>
+  <!-- TAB BAR -->
+  <div id="tab-bar">
+    <button class="tab-btn" data-tab="home">🏠 Home</button>
+    <button class="tab-btn" data-tab="search">🔍 Search</button>
+    <button class="tab-btn" data-tab="mudras">🤲 Hasta Mudras</button>
+    <button class="tab-btn" data-tab="ragas">🎵 Ragas</button>
+    <button class="tab-btn" data-tab="karanas">💃 108 Karanas</button>
+    <button class="tab-btn" data-tab="kriti">📜 Kriti Library</button>
+    <button class="tab-btn" data-tab="dance">🕺 Classical Dance</button>
+    <button class="tab-btn" data-tab="mind">🧠 Mind Science</button>
+    <button class="tab-btn" data-tab="timewheel">⏳ Time Wheel</button>
+    <button class="tab-btn" data-tab="nakshatras">⭐ Nakshatras</button>
+    <button class="tab-btn" data-tab="heritage">🏛 Heritage</button>
+    <button class="tab-btn" data-tab="compose">🎼 Compose</button>
+    <button class="tab-btn" data-tab="sites">🌐 Our Sites</button>
+    <button class="tab-btn" data-tab="connect">💬 Connect</button>
   </div>
 </div>
 
-<!-- ══ MAIN ══ -->
-<div id="main">
+<!-- ═══════════════════════ CONTENT ═══════════════════════ -->
+<div id="content">
 
-  <!-- HOME -->
-  <div id="pane-home" class="pane active">
-    <div class="hero">
-      <span class="hero-om">ॐ</span>
-      <div class="hero-title">MadaMudra 4.1 Advanced</div>
-      <div class="hero-sub">Sacred Knowledge Platform — Music · Dance · Metaphysics · Cosmos</div>
-
-      <!-- Quick search on home -->
-      <div class="search-wrap" style="max-width:660px;margin:0 auto 16px;">
-        <input class="search-input" id="home-search" placeholder="Ask anything — raga, mudra, karana, mantra, nakshatra…" onkeydown="if(event.key==='Enter')homeSearch()"/>
-        <button class="search-btn" onclick="homeSearch()">SEARCH</button>
-      </div>
-      <div class="search-hint">Type a query and press Search — results are fetched from 30+ sacred sources</div>
-
-      <div class="quick-topics">
-        <span class="topic-chip" onclick="quickSearch('Bhairavi raga')">Raga Bhairavi</span>
-        <span class="topic-chip" onclick="quickSearch('Pataka mudra')">Pataka Mudra</span>
-        <span class="topic-chip" onclick="quickSearch('108 karanas Natyashastra')">108 Karanas</span>
-        <span class="topic-chip" onclick="quickSearch('OM beejakshara meaning')">OM Beejakshara</span>
-        <span class="topic-chip" onclick="quickSearch('Rohini nakshatra')">Rohini Nakshatra</span>
-        <span class="topic-chip" onclick="quickSearch('Bharatanatyam origin')">Bharatanatyam</span>
-        <span class="topic-chip" onclick="quickSearch('Melakarta 29 Dheerasankarabharana')">Melakarta 29</span>
-        <span class="topic-chip" onclick="quickSearch('Lalitha Sahasranamam meaning')">Lalitha Sahasranamam</span>
-        <span class="topic-chip" onclick="quickSearch('Kalachakra Yugas')">Kalachakra Yugas</span>
-      </div>
+<!-- HOME -->
+<div class="pane" id="pane-home">
+  <div class="hero">
+    <span class="hero-om">ॐ</span>
+    <div class="hero-title">MadaMudra 4.1 Advanced</div>
+    <div class="hero-sub">Sacred Knowledge Platform — Music · Dance · Metaphysics · Cosmos</div>
+    <div class="srch-wrap" style="max-width:640px;margin:0 auto 12px;">
+      <input class="srch-inp" id="homeQ" placeholder="Ask anything — raga, mudra, mantra, karana, nakshatra…" />
+      <button class="srch-btn" id="homeBtn">SEARCH</button>
     </div>
-
-    <div id="home-result"></div>
-
-    <div class="module-grid" style="margin-top:30px;">
-      <div class="module-card" onclick="showTab('mudras',document.querySelector('[onclick*=mudras]'))">
-        <div class="module-card-icon">🤲</div>
-        <div class="module-card-title">Hasta Mudras</div>
-        <div class="module-card-desc">64 Asamyuta + 28 Samyuta + 28 Nritta mudras with chakra mapping and dance cross-references</div>
-      </div>
-      <div class="module-card" onclick="showTab('ragas',document.querySelector('[onclick*=ragas]'))">
-        <div class="module-card-icon">🎵</div>
-        <div class="module-card-title">72 Melakartas + Ragas</div>
-        <div class="module-card-desc">Complete Melakarta chart, 10 Thaats, Raga Creator studio, and parent-child relationships</div>
-      </div>
-      <div class="module-card" onclick="showTab('karanas',document.querySelector('[onclick*=karanas]'))">
-        <div class="module-card-icon">💃</div>
-        <div class="module-card-title">108 Karanas</div>
-        <div class="module-card-desc">5-lens metaphorical study: yogic, neurological, scientific, astrophysical, philosophical</div>
-      </div>
-      <div class="module-card" onclick="showTab('nakshatras',document.querySelector('[onclick*=nakshatras]'))">
-        <div class="module-card-icon">⭐</div>
-        <div class="module-card-title">27 Nakshatras</div>
-        <div class="module-card-desc">Vedic + Western mapping, beejakshara associations, mythology, and astrophysical data</div>
-      </div>
-      <div class="module-card" onclick="showTab('mind',document.querySelector('[onclick*=mind]'))">
-        <div class="module-card-icon">🧠</div>
-        <div class="module-card-title">Mind Science</div>
-        <div class="module-card-desc">Chitta, Manas, Buddhi, Ahamkara — Yoga, Neuroscience, and Quantum Biology</div>
-      </div>
-      <div class="module-card" onclick="showTab('compose',document.querySelector('[onclick*=compose]'))">
-        <div class="module-card-icon">🎼</div>
-        <div class="module-card-title">Raga Creator</div>
-        <div class="module-card-desc">Select swaras, build arohana/avarohana, generate notation and raga suggestions</div>
-      </div>
+    <div class="srch-hint">Results are delivered in 6 analytical paragraphs from 30+ sacred sources</div>
+    <div class="chips">
+      <span class="chip" data-q="Raga Bhairavi">Raga Bhairavi</span>
+      <span class="chip" data-q="Pataka mudra meaning">Pataka Mudra</span>
+      <span class="chip" data-q="108 karanas Natyashastra">108 Karanas</span>
+      <span class="chip" data-q="OM beejakshara meaning">OM Beejakshara</span>
+      <span class="chip" data-q="Rohini nakshatra">Rohini Nakshatra</span>
+      <span class="chip" data-q="Bharatanatyam origin history">Bharatanatyam</span>
+      <span class="chip" data-q="Melakarta 29 Shankarabharana">Melakarta 29</span>
+      <span class="chip" data-q="Lalitha Sahasranamam meaning">Lalitha Sahasranamam</span>
+      <span class="chip" data-q="Kalachakra Yugas cosmic time">Kalachakra</span>
     </div>
   </div>
-
-  <!-- SEARCH -->
-  <div id="pane-search" class="pane">
-    <div class="section-title">🔍 Sacred Knowledge Search</div>
-
-    <div class="mode-toggle">
-      <button class="mode-btn active" id="mode-backend" onclick="setMode('backend')">🌐 Live Web Fetch (Backend)</button>
-      <button class="mode-btn" id="mode-local" onclick="setMode('local')">📚 Local Knowledge Base</button>
-    </div>
-
-    <div id="backend-url-wrap" class="show">
-      <span class="url-label">Backend URL:</span>
-      <input id="backend-url" value="https://madamudra-backend.onrender.com" placeholder="https://your-backend.onrender.com"/>
-      <button class="action-btn" onclick="testBackend()">Test Connection</button>
-      <span id="connection-status" style="font-size:0.8rem;"></span>
-    </div>
-
-    <div class="search-wrap">
-      <input class="search-input" id="main-search" placeholder="e.g. Raga Yaman, Pataka mudra, Anahata karana, Rohini nakshatra, OM beejakshara…" onkeydown="if(event.key==='Enter')doSearch()"/>
-      <button class="search-btn" onclick="doSearch()">SEARCH</button>
-    </div>
-    <div class="search-hint">Results are fetched from 30+ sacred knowledge sources and presented in 6 analytical paragraphs</div>
-
-    <div id="search-result"></div>
+  <div id="homeResult"></div>
+  <div class="mod-grid">
+    <div class="mod-card" data-goto="mudras"><div class="mod-icon">🤲</div><div class="mod-name">Hasta Mudras</div><div class="mod-desc">64 Asamyuta + 28 Samyuta gestures with chakra mapping and dance cross-references</div></div>
+    <div class="mod-card" data-goto="ragas"><div class="mod-icon">🎵</div><div class="mod-name">72 Melakartas + Ragas</div><div class="mod-desc">Complete chart, 10 Thaats, Raga Creator studio with arohana/avarohana</div></div>
+    <div class="mod-card" data-goto="karanas"><div class="mod-icon">💃</div><div class="mod-name">108 Karanas</div><div class="mod-desc">5-lens metaphorical study: yogic, neurological, scientific, astrophysical, philosophical</div></div>
+    <div class="mod-card" data-goto="nakshatras"><div class="mod-icon">⭐</div><div class="mod-name">27 Nakshatras</div><div class="mod-desc">Vedic + Western mapping, beejakshara associations, mythology and astrophysics</div></div>
+    <div class="mod-card" data-goto="mind"><div class="mod-icon">🧠</div><div class="mod-name">Mind Science</div><div class="mod-desc">Chitta, Manas, Buddhi, Ahamkara — Yoga, Neuroscience, Quantum Biology</div></div>
+    <div class="mod-card" data-goto="compose"><div class="mod-icon">🎼</div><div class="mod-name">Raga Creator</div><div class="mod-desc">Select swaras, build arohana/avarohana, identify raga family</div></div>
   </div>
-
-  <!-- HASTA MUDRAS -->
-  <div id="pane-mudras" class="pane">
-    <div class="section-title">🤲 Hasta Mudras</div>
-    <div class="search-wrap">
-      <input class="search-input" id="mudra-search" placeholder="Search a mudra — e.g. Pataka, Tripataka, Chandrakala…" onkeydown="if(event.key==='Enter')searchModule('mudra-search','mudra-result','mudra')"/>
-      <button class="search-btn" onclick="searchModule('mudra-search','mudra-result','mudra')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: Natyashastra, Abhinaya Darpana, exoticindiaart.com, natyashastra.culturalmusings.com</div>
-    <div id="mudra-result"></div>
-  </div>
-
-  <!-- RAGAS -->
-  <div id="pane-ragas" class="pane">
-    <div class="section-title">🎵 Ragas, Melakarta & Thaats</div>
-    <div class="search-wrap">
-      <input class="search-input" id="raga-search" placeholder="Search a raga — e.g. Bhairavi, Yaman, Kalyani, Todi, Hamsadhwani…" onkeydown="if(event.key==='Enter')searchModule('raga-search','raga-result','raga')"/>
-      <button class="search-btn" onclick="searchModule('raga-search','raga-result','raga')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: melakarta.com · ragajunglism.org · ragamath.com · amitray.com</div>
-    <div id="raga-result"></div>
-  </div>
-
-  <!-- KARANAS -->
-  <div id="pane-karanas" class="pane">
-    <div class="section-title">💃 108 Karanas — Natyashastra</div>
-    <div class="search-wrap">
-      <input class="search-input" id="karana-search" placeholder="Search a karana — e.g. Talavilasita, Bhujangatrasita, Apaviddha…" onkeydown="if(event.key==='Enter')searchModule('karana-search','karana-result','karana')"/>
-      <button class="search-btn" onclick="searchModule('karana-search','karana-result','karana')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: natyashastraclassical-dance.culturalmusings.com · karanasrootmap.culturalmusings.com</div>
-    <div id="karana-result"></div>
-  </div>
-
-  <!-- KRITI LIBRARY -->
-  <div id="pane-kriti" class="pane">
-    <div class="section-title">📜 Kriti Library</div>
-    <div class="search-wrap">
-      <input class="search-input" id="kriti-search" placeholder="Search by kriti name, composer, raga, deity — e.g. Tyagaraja, Dikshitar, Venkateswara…" onkeydown="if(event.key==='Enter')searchModule('kriti-search','kriti-result','kriti')"/>
-      <button class="search-btn" onclick="searchModule('kriti-search','kriti-result','kriti')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: shlokam.org · sanskritdocuments.org · mahakatha.com</div>
-    <div id="kriti-result"></div>
-  </div>
-
-  <!-- CLASSICAL DANCE -->
-  <div id="pane-dance" class="pane">
-    <div class="section-title">🕺 Classical Dance Forms</div>
-    <div class="search-wrap">
-      <input class="search-input" id="dance-search" placeholder="Search — Bharatanatyam, Kuchipudi, Odissi, Kathak, Mohiniyattam…" onkeydown="if(event.key==='Enter')searchModule('dance-search','dance-result','dance')"/>
-      <button class="search-btn" onclick="searchModule('dance-search','dance-result','dance')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: natyashastraclassical-dance.culturalmusings.com · culturalmusings.com</div>
-    <div id="dance-result"></div>
-  </div>
-
-  <!-- MIND SCIENCE -->
-  <div id="pane-mind" class="pane">
-    <div class="section-title">🧠 Mind Science — Consciousness</div>
-    <div class="search-wrap">
-      <input class="search-input" id="mind-search" placeholder="Search — Chitta, Manas, Buddhi, Ahamkara, Pancha Kosha, default mode network…" onkeydown="if(event.key==='Enter')searchModule('mind-search','mind-result','mind')"/>
-      <button class="search-btn" onclick="searchModule('mind-search','mind-result','mind')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: spiritualphilosophical.culturalmusings.com · masterconsciousprotocol.culturalmusings.com</div>
-    <div id="mind-result"></div>
-  </div>
-
-  <!-- TIME WHEEL -->
-  <div id="pane-timewheel" class="pane">
-    <div class="section-title">⏳ Time Wheel — Kalachakra</div>
-    <div class="search-wrap">
-      <input class="search-input" id="time-search" placeholder="Search — Kali Yuga, Samvatsara, planetary Dasha, cosmic cycles…" onkeydown="if(event.key==='Enter')searchModule('time-search','time-result','time')"/>
-      <button class="search-btn" onclick="searchModule('time-search','time-result','time')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: vedapurana.org · completecelestialsynthesis.culturalmusings.com</div>
-    <div id="time-result"></div>
-  </div>
-
-  <!-- NAKSHATRAS -->
-  <div id="pane-nakshatras" class="pane">
-    <div class="section-title">⭐ 27 Nakshatras — Cosmic Map</div>
-    <div class="search-wrap">
-      <input class="search-input" id="nakshatra-search" placeholder="Search — Rohini, Ashwini, Kritika, Pushya, Chitra, Revati…" onkeydown="if(event.key==='Enter')searchModule('nakshatra-search','nakshatra-result','nakshatra')"/>
-      <button class="search-btn" onclick="searchModule('nakshatra-search','nakshatra-result','nakshatra')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: completecelestialsynthesis.culturalmusings.com · unifiedtheory.culturalmusings.com</div>
-    <div id="nakshatra-result"></div>
-  </div>
-
-  <!-- HERITAGE -->
-  <div id="pane-heritage" class="pane">
-    <div class="section-title">🏛 History & Heritage</div>
-    <div class="search-wrap">
-      <input class="search-input" id="heritage-search" placeholder="Search — temple traditions, classical periods, UNESCO sites, gharanas…" onkeydown="if(event.key==='Enter')searchModule('heritage-search','heritage-result','heritage')"/>
-      <button class="search-btn" onclick="searchModule('heritage-search','heritage-result','heritage')">SEARCH</button>
-    </div>
-    <div class="search-hint">Sources: vedicheritage.gov.in · hindupedia.com · wisdomlib.org</div>
-    <div id="heritage-result"></div>
-  </div>
-
-  <!-- COMPOSE / RAGA CREATOR -->
-  <div id="pane-compose" class="pane">
-    <div class="section-title">🎼 Raga Creator Studio</div>
-
-    <div class="raga-creator">
-      <div class="creator-title">Select Swaras for Your Raga</div>
-
-      <div style="margin-bottom:14px;font-size:0.85rem;color:var(--text-dim);">
-        Select the notes — Sa and Pa are fixed. Choose variants for Ri, Ga, Ma, Da, Ni.
-      </div>
-
-      <div class="swara-grid">
-        <div class="swara-check"><input type="checkbox" id="s-sa" checked disabled/><label for="s-sa">Sa (षड्ज) — fixed</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ri1"/><label for="s-ri1">Ri₁ (Shuddha Rishabha)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ri2"/><label for="s-ri2">Ri₂ (Chatushruti Ri)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ri3"/><label for="s-ri3">Ri₃ (Shatshruti Ri)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ga1"/><label for="s-ga1">Ga₁ (Shuddha Ga)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ga2"/><label for="s-ga2">Ga₂ (Sadharana Ga)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ga3"/><label for="s-ga3">Ga₃ (Antara Ga)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ma1"/><label for="s-ma1">Ma₁ (Shuddha Ma)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ma2"/><label for="s-ma2">Ma₂ (Prati Ma)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-pa" checked disabled/><label for="s-pa">Pa (पञ्चम) — fixed</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-da1"/><label for="s-da1">Da₁ (Shuddha Dha)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-da2"/><label for="s-da2">Da₂ (Chatushruti Dha)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-da3"/><label for="s-da3">Da₃ (Shatshruti Dha)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ni1"/><label for="s-ni1">Ni₁ (Shuddha Ni)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ni2"/><label for="s-ni2">Ni₂ (Kaisiki Ni)</label></div>
-        <div class="swara-check"><input type="checkbox" id="s-ni3"/><label for="s-ni3">Ni₃ (Kakali Ni)</label></div>
-      </div>
-
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
-        <input id="raga-name-input" class="search-input" style="max-width:300px;padding:10px 16px;" placeholder="Give your raga a name (optional)"/>
-        <button class="search-btn" style="position:static;transform:none;" onclick="generateRaga()">Generate Raga</button>
-        <button class="action-btn" onclick="clearRaga()">Clear</button>
-        <button class="action-btn" onclick="searchCreatedRaga()">Search Similar Ragas</button>
-      </div>
-
-      <div class="creator-output" id="creator-output">
-        <span style="color:var(--text-dim);font-style:italic;">Select swaras above and click Generate Raga to see your composition…</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- OUR SITES -->
-  <div id="pane-sites" class="pane">
-    <div class="section-title">🌐 Cultural Musings Network</div>
-    <div class="sites-grid">
-      <a class="site-card" href="https://culturalmusings.com" target="_blank">
-        <div class="site-card-name">culturalmusings.com</div>
-        <div class="site-card-desc">Main portal — culture, arts, philosophy, and sacred knowledge</div>
-      </a>
-      <a class="site-card" href="https://nada-chikitsa.culturalmusings.com" target="_blank">
-        <div class="site-card-name">nada-chikitsa</div>
-        <div class="site-card-desc">Sound healing and Nada Chikitsa therapy traditions</div>
-      </a>
-      <a class="site-card" href="https://natyashastra.culturalmusings.com" target="_blank">
-        <div class="site-card-name">natyashastra</div>
-        <div class="site-card-desc">Natyashastra texts, commentary, and classical analysis</div>
-      </a>
-      <a class="site-card" href="https://karanasrootmap.culturalmusings.com" target="_blank">
-        <div class="site-card-name">karanasrootmap</div>
-        <div class="site-card-desc">Root map of all 108 Karanas with cross-references</div>
-      </a>
-      <a class="site-card" href="https://bioresonancemusings.culturalmusings.com" target="_blank">
-        <div class="site-card-name">bioresonancemusings</div>
-        <div class="site-card-desc">Bioresonance research and sacred sound science</div>
-      </a>
-      <a class="site-card" href="https://spiritualphilosophical.culturalmusings.com" target="_blank">
-        <div class="site-card-name">spiritualphilosophical</div>
-        <div class="site-card-desc">Spiritual and philosophical essays — Vedanta, Samkhya, Tantra</div>
-      </a>
-      <a class="site-card" href="https://masterconsciousprotocol.culturalmusings.com" target="_blank">
-        <div class="site-card-name">masterconsciousprotocol</div>
-        <div class="site-card-desc">Master consciousness protocols and contemplative frameworks</div>
-      </a>
-      <a class="site-card" href="https://spandanashodha.culturalmusings.com" target="_blank">
-        <div class="site-card-name">spandanashodha</div>
-        <div class="site-card-desc">Spandana research and vibrational study traditions</div>
-      </a>
-      <a class="site-card" href="https://vedicmathematicsgeometry.culturalmusings.com" target="_blank">
-        <div class="site-card-name">vedicmathematicsgeometry</div>
-        <div class="site-card-desc">Vedic mathematics, sacred geometry, and numerical cosmology</div>
-      </a>
-      <a class="site-card" href="https://natyashastraclassical-dance.culturalmusings.com" target="_blank">
-        <div class="site-card-name">natyashastraclassical-dance</div>
-        <div class="site-card-desc">Classical dance cross-referenced with Natyashastra</div>
-      </a>
-      <a class="site-card" href="https://karanassacredsynthesis.culturalmusings.com" target="_blank">
-        <div class="site-card-name">karanassacredsynthesis</div>
-        <div class="site-card-desc">Sacred synthesis of all 108 Karanas</div>
-      </a>
-      <a class="site-card" href="https://completecelestialsynthesis.culturalmusings.com" target="_blank">
-        <div class="site-card-name">completecelestialsynthesis</div>
-        <div class="site-card-desc">Complete celestial synthesis — Nakshatras, cosmos, time</div>
-      </a>
-      <a class="site-card" href="https://unifiedtheory.culturalmusings.com" target="_blank">
-        <div class="site-card-name">unifiedtheory</div>
-        <div class="site-card-desc">Unified theory of consciousness and cosmos</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- CONNECT -->
-  <div id="pane-connect" class="pane">
-    <div class="section-title">💬 Connect & Enquire</div>
-
-    <div class="connect-wrap">
-      <div class="connect-card">
-        <h3>💬 Chat & Research Requests</h3>
-        <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:12px;">Leave your question in the chatbot — we will respond within 24 hours with research findings.</p>
-        <iframe src="https://www.jotform.com/agent/019d8f3727af73cab8f1024b3df3ef1f84b6" height="400" title="MadaMudra Chatbot"></iframe>
-      </div>
-
-      <div class="connect-card">
-        <h3>📋 Enquiry Form</h3>
-        <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:12px;">For detailed requests, collaborations, or composition assistance.</p>
-        <iframe src="https://form.jotform.com/261042208142039" height="400" title="MadaMudra Enquiry Form"></iframe>
-
-        <div class="contact-info" style="margin-top:20px;">
-          <div>📧 <strong>Email:</strong> smith123846@gmail.com</div>
-          <div>📱 <strong>Phone / WhatsApp:</strong> +91 9121379100</div>
-          <div style="font-size:0.8rem;margin-top:8px;color:var(--text-dim);">All enquiries are responded to within 24–48 hours.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /main -->
-
-<!-- ══ JOTFORM FLOAT BUTTON ══ -->
-<div class="jotform-float">
-  <button onclick="document.getElementById('jotform-panel').classList.toggle('open')"
-    style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(201,168,76,0.4);">💬</button>
 </div>
 
+<!-- SEARCH -->
+<div class="pane" id="pane-search">
+  <div class="sec-title">🔍 Sacred Knowledge Search</div>
+  <div style="margin-bottom:14px;padding:12px 16px;background:rgba(42,184,160,0.08);border:1px solid rgba(42,184,160,0.2);border-radius:9px;font-size:.85rem;color:var(--teal);">
+    ✓ <strong>Local Knowledge Mode</strong> — Results come from MadaMudra's built-in curated knowledge base covering Ragas, Mudras, Mantras, Karanas, Nakshatras, Dance, Philosophy and more. Source links are provided on every result.
+  </div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="searchQ" placeholder="e.g. Raga Yaman · Pataka mudra · Anahata karana · OM beejakshara · Rohini nakshatra…"/>
+    <button class="srch-btn" id="searchBtn">SEARCH</button>
+  </div>
+  <div class="srch-hint">Type your question and press Search — results appear in 6 analytical paragraphs with source links</div>
+  <div id="searchResult"></div>
+</div>
+
+<!-- HASTA MUDRAS -->
+<div class="pane" id="pane-mudras">
+  <div class="sec-title">🤲 Hasta Mudras</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="mudraQ" placeholder="Search a mudra — Pataka, Tripataka, Kartari, Mushti, Chandrakala, Anjali…"/>
+    <button class="srch-btn" data-mod="mudraQ" data-res="mudraResult" data-hint="mudra hand gesture">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: Natyashastra · Abhinaya Darpana · natyashastra.culturalmusings.com · exoticindiaart.com</div>
+  <div id="mudraResult"></div>
+</div>
+
+<!-- RAGAS -->
+<div class="pane" id="pane-ragas">
+  <div class="sec-title">🎵 Ragas, Melakarta & Thaats</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="ragaQ" placeholder="Search a raga — Bhairavi, Yaman, Kalyani, Todi, Hamsadhwani, Shankarabharana…"/>
+    <button class="srch-btn" data-mod="ragaQ" data-res="ragaResult" data-hint="raga melakarta carnatic">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: melakarta.com · ragajunglism.org · ragamath.com · amitray.com</div>
+  <div id="ragaResult"></div>
+</div>
+
+<!-- KARANAS -->
+<div class="pane" id="pane-karanas">
+  <div class="sec-title">💃 108 Karanas — Natyashastra</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="karanaQ" placeholder="Search a karana — Talavilasita, Bhujangatrasita, Apaviddha, Sthitavarta…"/>
+    <button class="srch-btn" data-mod="karanaQ" data-res="karanaResult" data-hint="karana natyashastra dance pose">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: natyashastraclassical-dance.culturalmusings.com · karanasrootmap.culturalmusings.com</div>
+  <div id="karanaResult"></div>
+</div>
+
+<!-- KRITI LIBRARY -->
+<div class="pane" id="pane-kriti">
+  <div class="sec-title">📜 Kriti Library</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="kritiQ" placeholder="Search by kriti, composer, raga or deity — Tyagaraja, Dikshitar, Venkateswara…"/>
+    <button class="srch-btn" data-mod="kritiQ" data-res="kritiResult" data-hint="kriti composition lyrics">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: shlokam.org · sanskritdocuments.org · mahakatha.com</div>
+  <div id="kritiResult"></div>
+</div>
+
+<!-- CLASSICAL DANCE -->
+<div class="pane" id="pane-dance">
+  <div class="sec-title">🕺 Classical Dance Forms</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="danceQ" placeholder="Search — Bharatanatyam, Kuchipudi, Odissi, Kathak, Mohiniyattam, Manipuri…"/>
+    <button class="srch-btn" data-mod="danceQ" data-res="danceResult" data-hint="classical dance bharatanatyam">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: natyashastraclassical-dance.culturalmusings.com · culturalmusings.com</div>
+  <div id="danceResult"></div>
+</div>
+
+<!-- MIND SCIENCE -->
+<div class="pane" id="pane-mind">
+  <div class="sec-title">🧠 Mind Science — Consciousness</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="mindQ" placeholder="Search — Chitta, Manas, Buddhi, Ahamkara, Pancha Kosha, default mode network…"/>
+    <button class="srch-btn" data-mod="mindQ" data-res="mindResult" data-hint="consciousness mind yogic neuroscience">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: spiritualphilosophical.culturalmusings.com · masterconsciousprotocol.culturalmusings.com</div>
+  <div id="mindResult"></div>
+</div>
+
+<!-- TIME WHEEL -->
+<div class="pane" id="pane-timewheel">
+  <div class="sec-title">⏳ Time Wheel — Kalachakra</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="timeQ" placeholder="Search — Kali Yuga, Samvatsara, planetary Dasha, cosmic cycles, Nakshatra time…"/>
+    <button class="srch-btn" data-mod="timeQ" data-res="timeResult" data-hint="yuga kalachakra cosmic time cycle">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: vedapurana.org · completecelestialsynthesis.culturalmusings.com</div>
+  <div id="timeResult"></div>
+</div>
+
+<!-- NAKSHATRAS -->
+<div class="pane" id="pane-nakshatras">
+  <div class="sec-title">⭐ 27 Nakshatras — Cosmic Map</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="nakQ" placeholder="Search — Rohini, Ashwini, Kritika, Pushya, Chitra, Revati, Mrigashira…"/>
+    <button class="srch-btn" data-mod="nakQ" data-res="nakResult" data-hint="nakshatra constellation vedic star">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: completecelestialsynthesis.culturalmusings.com · unifiedtheory.culturalmusings.com</div>
+  <div id="nakResult"></div>
+</div>
+
+<!-- HERITAGE -->
+<div class="pane" id="pane-heritage">
+  <div class="sec-title">🏛 History & Heritage</div>
+  <div class="srch-wrap">
+    <input class="srch-inp" id="heritageQ" placeholder="Search — temple traditions, classical periods, UNESCO sites, gharanas, lineages…"/>
+    <button class="srch-btn" data-mod="heritageQ" data-res="heritageResult" data-hint="heritage history temple vedic india">SEARCH</button>
+  </div>
+  <div class="srch-hint">Sources: vedicheritage.gov.in · hindupedia.com · wisdomlib.org</div>
+  <div id="heritageResult"></div>
+</div>
+
+<!-- COMPOSE -->
+<div class="pane" id="pane-compose">
+  <div class="sec-title">🎼 Raga Creator Studio</div>
+  <div class="creator-box">
+    <div class="creator-title">Build Your Raga — Select Swaras</div>
+    <div style="font-size:.84rem;color:var(--text-dim);margin-bottom:14px;">Sa and Pa are fixed anchors. Select variants for the remaining swaras.</div>
+    <div class="sw-grid">
+      <div class="sw-chk"><input type="checkbox" id="c-sa" checked disabled/><label for="c-sa">Sa — षड्ज (fixed)</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ri1"/><label for="c-ri1">Ri₁ — Shuddha Rishabha</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ri2"/><label for="c-ri2">Ri₂ — Chatushruti Ri</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ri3"/><label for="c-ri3">Ri₃ — Shatshruti Ri</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ga1"/><label for="c-ga1">Ga₁ — Shuddha Gandhara</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ga2"/><label for="c-ga2">Ga₂ — Sadharana Ga</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ga3"/><label for="c-ga3">Ga₃ — Antara Gandhara</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ma1"/><label for="c-ma1">Ma₁ — Shuddha Madhyama</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ma2"/><label for="c-ma2">Ma₂ — Prati Madhyama</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-pa" checked disabled/><label for="c-pa">Pa — पञ्चम (fixed)</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-da1"/><label for="c-da1">Dha₁ — Shuddha Dhaivata</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-da2"/><label for="c-da2">Dha₂ — Chatushruti Dha</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-da3"/><label for="c-da3">Dha₃ — Shatshruti Dha</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ni1"/><label for="c-ni1">Ni₁ — Shuddha Nishada</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ni2"/><label for="c-ni2">Ni₂ — Kaisiki Nishada</label></div>
+      <div class="sw-chk"><input type="checkbox" id="c-ni3"/><label for="c-ni3">Ni₃ — Kakali Nishada</label></div>
+    </div>
+    <div class="creator-btns">
+      <input class="creator-inp" id="ragaNameInp" placeholder="Name your raga (optional)"/>
+      <button class="srch-btn" style="position:static;transform:none;" id="genRagaBtn">Generate Raga</button>
+      <button class="act-btn" id="clearRagaBtn">Clear</button>
+      <button class="act-btn" id="searchRagaBtn">Find Similar Ragas</button>
+    </div>
+    <div class="creator-out" id="creatorOut">
+      <span style="color:var(--text-dim);font-style:italic;">Select swaras above and click Generate Raga…</span>
+    </div>
+  </div>
+</div>
+
+<!-- OUR SITES -->
+<div class="pane" id="pane-sites">
+  <div class="sec-title">🌐 Cultural Musings Network</div>
+  <div class="site-grid">
+    <a class="site-card" href="https://culturalmusings.com" target="_blank"><div class="site-name">culturalmusings.com</div><div class="site-desc">Main portal — culture, arts, philosophy, sacred knowledge</div></a>
+    <a class="site-card" href="https://nada-chikitsa.culturalmusings.com" target="_blank"><div class="site-name">nada-chikitsa</div><div class="site-desc">Sound healing and Nada Chikitsa therapy traditions</div></a>
+    <a class="site-card" href="https://natyashastra.culturalmusings.com" target="_blank"><div class="site-name">natyashastra</div><div class="site-desc">Natyashastra texts, commentary and classical analysis</div></a>
+    <a class="site-card" href="https://karanasrootmap.culturalmusings.com" target="_blank"><div class="site-name">karanasrootmap</div><div class="site-desc">Root map of all 108 Karanas with cross-references</div></a>
+    <a class="site-card" href="https://bioresonancemusings.culturalmusings.com" target="_blank"><div class="site-name">bioresonancemusings</div><div class="site-desc">Bioresonance research and sacred sound science</div></a>
+    <a class="site-card" href="https://spiritualphilosophical.culturalmusings.com" target="_blank"><div class="site-name">spiritualphilosophical</div><div class="site-desc">Spiritual and philosophical essays — Vedanta, Samkhya, Tantra</div></a>
+    <a class="site-card" href="https://masterconsciousprotocol.culturalmusings.com" target="_blank"><div class="site-name">masterconsciousprotocol</div><div class="site-desc">Master consciousness protocols and contemplative frameworks</div></a>
+    <a class="site-card" href="https://spandanashodha.culturalmusings.com" target="_blank"><div class="site-name">spandanashodha</div><div class="site-desc">Spandana research and vibrational study traditions</div></a>
+    <a class="site-card" href="https://vedicmathematicsgeometry.culturalmusings.com" target="_blank"><div class="site-name">vedicmathematicsgeometry</div><div class="site-desc">Vedic mathematics, sacred geometry and numerical cosmology</div></a>
+    <a class="site-card" href="https://natyashastraclassical-dance.culturalmusings.com" target="_blank"><div class="site-name">natyashastraclassical-dance</div><div class="site-desc">Classical dance cross-referenced with Natyashastra</div></a>
+    <a class="site-card" href="https://karanassacredsynthesis.culturalmusings.com" target="_blank"><div class="site-name">karanassacredsynthesis</div><div class="site-desc">Sacred synthesis of all 108 Karanas</div></a>
+    <a class="site-card" href="https://completecelestialsynthesis.culturalmusings.com" target="_blank"><div class="site-name">completecelestialsynthesis</div><div class="site-desc">Complete celestial synthesis — Nakshatras, cosmos, time</div></a>
+    <a class="site-card" href="https://unifiedtheory.culturalmusings.com" target="_blank"><div class="site-name">unifiedtheory</div><div class="site-desc">Unified theory of consciousness and cosmos</div></a>
+  </div>
+</div>
+
+<!-- CONNECT -->
+<div class="pane" id="pane-connect">
+  <div class="sec-title">💬 Connect & Enquire</div>
+  <div class="conn-grid">
+    <div class="conn-card">
+      <h3>💬 Chat & Research Requests</h3>
+      <p style="font-size:.84rem;color:var(--text-dim);margin-bottom:12px;">Leave your question — our team responds within 24 hours.</p>
+      <iframe src="https://www.jotform.com/agent/019d8f3727af73cab8f1024b3df3ef1f84b6" height="420" style="width:100%;border:none;border-radius:8px;" title="MadaMudra Chatbot"></iframe>
+    </div>
+    <div class="conn-card">
+      <h3>📋 Enquiry Form</h3>
+      <p style="font-size:.84rem;color:var(--text-dim);margin-bottom:12px;">For collaborations, compositions, and detailed research requests.</p>
+      <iframe src="https://form.jotform.com/261042208142039" height="420" style="width:100%;border:none;border-radius:8px;" title="MadaMudra Enquiry"></iframe>
+      <div class="contact-info">
+        <div>📧 <strong>Email:</strong> smith123846@gmail.com</div>
+        <div>📱 <strong>Phone / WhatsApp:</strong> +91 9121379100</div>
+        <div style="font-size:.78rem;margin-top:6px;color:var(--text-dim);">All enquiries responded to within 24–48 hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- ═══════════════════════ JAVASCRIPT ═══════════════════════ -->
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────────
-let currentMode = 'backend';
-let selectedSwaras = new Set();
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 1. TAB SYSTEM — event delegation, no inline onclick
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function goTab(name){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  var pane=document.getElementById('pane-'+name);
+  var btn=document.querySelector('.tab-btn[data-tab="'+name+'"]');
+  if(pane) pane.classList.add('active');
+  if(btn)  btn.classList.add('active');
+}
 
-// ── TAB SWITCHING ─────────────────────────────────────────────────────────
-function showTab(name, btn) {
-  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const pane = document.getElementById('pane-' + name);
-  if (pane) pane.classList.add('active');
-  if (btn) btn.classList.add('active');
-  // Also handle clicking from module cards (btn may be DOM element or undefined)
-  if (!btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + name + "'")) {
-        b.classList.add('active');
-      }
-    });
+document.getElementById('tab-bar').addEventListener('click',function(e){
+  var btn=e.target.closest('.tab-btn');
+  if(btn && btn.dataset.tab){ e.preventDefault(); goTab(btn.dataset.tab); }
+});
+
+document.querySelectorAll('.mod-card[data-goto]').forEach(function(c){
+  c.addEventListener('click',function(){ goTab(c.dataset.goto); });
+});
+
+// Start on Home
+goTab('home');
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 2. SWARA STRIP TOGGLE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.getElementById('swara-strip').addEventListener('click',function(e){
+  var pill=e.target.closest('.sw-pill');
+  if(pill) pill.classList.toggle('on');
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 3. KNOWLEDGE BASE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+var KB = {
+  ragas:{
+    kw:['raga','raag','melakarta','thaat','swara','carnatic','hindustani','bhairavi','yaman','kalyani','todi','hamsadhwani','shankarabharana','mohanam','hindolam','kambhoji','natabhairavi','kharaharapriya','mayamalavagoula'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'In Indian classical philosophy, a Raga is not merely a scale but a living sonic deity. The word derives from the Sanskrit root "rañj" — to colour or to please. Each raga colours the mind with a specific emotional hue (Rasa), creating a bridge between individual consciousness (Jivatman) and the universal (Brahman). The Natyashastra of Bharata Muni first codified the relationships between sound, emotion, and cosmic order, establishing that every raga embodies a specific divine principle.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'In Nada Yoga, ragas are manifestations of primordial sound (Nada Brahma). Each raga activates specific Chakras through its characteristic note patterns. Raga Bhairavi, associated with dawn, resonates with the Vishuddha (throat) chakra. Raga Yaman, an evening raga, opens the Anahata (heart) chakra. The swaras Sa, Ri, Ga, Ma, Pa, Dha, Ni correspond to the seven energy centres of the subtle body — making the raga a complete map of the human energy system.'},
+      {l:'🟠 Neurological Viewpoint',t:'Neurological research on ragas demonstrates measurable effects on brain wave patterns. Raga-based music therapy shows that morning ragas like Bhairav increase alpha wave activity inducing meditative calm, while energetic ragas elevate dopamine release. The pentatonic structure of many ragas matches the natural harmonic series, making them deeply resonant with the auditory cortex and limbic system. Sustained raga listening reduces cortisol and activates the parasympathetic nervous system.'},
+      {l:'🔴 Scientific Viewpoint',t:'The 72 Melakarta system is a complete mathematical permutation of the 12 semitones within an octave. Each Melakarta has exactly 484 derivative ragas (janya ragas) possible through note omission and rearrangement. The acoustic relationship between Sa and Pa — a perfect fifth (3:2 ratio) — is the most consonant interval in acoustic physics and forms the immovable backbone of all ragas. The Katapayadi encoding system embeds the note positions mathematically within the raga\'s Sanskrit name itself.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'Ancient Indian musicologists mapped the seven swaras to the seven classical planets: Sa to Sun, Ri to Moon, Ga to Mars, Ma to Mercury, Pa to Jupiter, Dha to Venus, Ni to Saturn. Morning ragas align with sunrise frequencies; evening ragas with twilight. The time theory in Carnatic music (raga-time correspondence) mirrors the astrophysical understanding that different solar light spectra affect biological rhythms at different times of day — a form of chrono-musicology.'},
+      {l:'⚪ Historical & Heritage Context',t:'The Melakarta system was systematised by Venkatamakhi in his 17th-century text Chaturdandi Prakashika, though its roots lie in Saranga Deva\'s 13th-century Sangita Ratnakara. The 72 Melakartas use Katapayadi sankhya for numerical encoding. For deeper study, visit melakarta.com, ragajunglism.org, ragamath.com, and amitray.com. The Cultural Musings network at nada-chikitsa.culturalmusings.com provides extended analysis of raga-therapy connections.'},
+    ],
+    srcs:[
+      {n:'Melakarta Chart',u:'https://www.melakarta.com'},
+      {n:'Rāga Junglism Masterlist',u:'https://ragajunglism.org/ragas/masterlist'},
+      {n:'RagaMath',u:'https://ragamath.com'},
+      {n:'Amit Ray – 84 Ragas',u:'https://amitray.com/the-84-ragas-of-indian-classical-music-a-complete-guide'},
+      {n:'Chromatone Raga Theory',u:'https://chromatone.center/theory/scales/raga'},
+    ]
+  },
+  mudras:{
+    kw:['mudra','hasta','pataka','tripataka','kartari','mushti','shikara','kapitha','katakamukha','suchi','chandrakala','anjali','hand gesture','asamyuta','samyuta','nritta'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'Hasta Mudras in Indian classical tradition are Mudras of Manifestation — each gesture is a yantra (sacred diagram) formed by the living body. The Natyashastra defines 28 Asamyuta (single-hand) and 24 Samyuta (double-hand) hastas, each carrying a specific Artha (meaning) communicating directly with the viewer\'s consciousness beyond language. They are considered channels through which the dancer becomes a deity, the gesture itself being the deity\'s sonic-visual form made flesh.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'In Yoga, mudras are Pranic seals — physical configurations that redirect the flow of Prana within the subtle body. The Pataka mudra, formed with all fingers extended and thumb bent, channels Prana through the palm\'s energy meridians and associates with the Anahata and Vishuddha chakras. Each finger corresponds to an element in Yoga physiology: thumb (fire/Mars), index (air/Jupiter), middle (space/Saturn), ring (earth/Sun), little finger (water/Mercury).'},
+      {l:'🟠 Neurological Viewpoint',t:'The concentration of nerve endings in the hands makes mudras uniquely effective as neurological tools. Research in movement neuroscience shows that specific hand configurations activate distinct proprioceptive pathways and corresponding brain regions, particularly the somatosensory cortex and cerebellum. Rhythmic mudra sequences in classical dance enhance fine motor coordination, interhemispheric communication, and sustained attention networks. The hands contain over 17,000 touch receptors directly wired to the brain.'},
+      {l:'🔴 Scientific Viewpoint',t:'Mudras work through biofeedback — body posture influences mind state through proprioceptive and interoceptive neural signals. Studies on yoga mudras show measurable changes in galvanic skin response, heart rate variability, and cortisol levels when mudras are held for sustained periods. The triangulation of fingertip pressure in mudras like Gyan (index to thumb) creates specific bioelectrical circuits that measurably alter the body\'s electromagnetic field patterns.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'In Jyotish and Tantra, the five fingers correspond to the five planets: thumb to Mars, index to Jupiter, middle to Saturn, ring to Sun, little to Mercury. Mudras performed at specific times align the practitioner\'s bioelectrical field with dominant planetary frequencies of that moment. The Anjali mudra (prayer gesture) is considered a complete yantra encompassing all planetary energies in one harmonious configuration — a microcosm of the solar system held in two hands.'},
+      {l:'⚪ Historical & Heritage Context',t:'The systematic study of Hastas is found in the Natyashastra (200 BCE–200 CE), Abhinaya Darpana by Nandikeshvara, and the Abhinaya Chandrika. Temple sculptures at Chidambaram, Thanjavur, Belur, and Halebidu preserve the full repertoire of mudras in stone. For complete mudra lists and images, visit natyashastra.culturalmusings.com, exoticindiaart.com, and karanasrootmap.culturalmusings.com.'},
+    ],
+    srcs:[
+      {n:'Natyashastra – Cultural Musings',u:'https://natyashastra.culturalmusings.com'},
+      {n:'Exotic India Art – 108 Poses',u:'https://www.exoticindiaart.com/article/the-108-poses-of-shiva-tandava-in-natya-shastra'},
+      {n:'Karanas Root Map',u:'https://karanasrootmap.culturalmusings.com'},
+      {n:'Natyashastra Classical Dance',u:'https://natyashastraclassical-dance.culturalmusings.com'},
+    ]
+  },
+  mantras:{
+    kw:['mantra','beejakshara','hreem','shreem','kleem','shloka','stotra','vedic','tantra','yantra','beej','seed syllable','om','aum','lalitha','sahasranamam','rudram','gayatri','namakam'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'In Vedantic philosophy, Mantra is Shabda Brahman — the universe in its sound aspect. The primordial vibration AUM (ॐ) represents the three states of consciousness (waking, dreaming, deep sleep) and their transcendence in turiya. Beejaksharas (seed syllables) are the compressed sonic forms of cosmic principles: ह्रीं (Hreem) encodes the creative power of the universe, श्रीं (Shreem) the principle of divine abundance, and क्लीं (Kleem) the magnetic attraction of Shakti — the entire universe compressed into a single syllable.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'In the Tantric tradition, each beejakshara is the sonic body (sound-form) of a specific deity. Chanting OM activates the Ajna chakra and synchronises both hemispheres of the brain. The 50 letters of the Sanskrit alphabet (Varna Mala) are mapped to the 50 petals of the six major chakras — making Sanskrit the literal language of the energy body itself. Nyasa practice assigns specific beejaksharas to body parts for systematic purification and consecration.'},
+      {l:'🟠 Neurological Viewpoint',t:'Research on mantra recitation shows that rhythmic repetition activates the vagus nerve, reduces amygdala reactivity, and increases theta wave activity in the prefrontal cortex. The nasal resonance of nasalised Sanskrit sounds (anusvara) stimulates the olfactory bulb, which has direct connections to the hippocampus and limbic system — explaining the powerful memory and emotional effects. Sustained chanting shifts the nervous system from sympathetic (fight-or-flight) to parasympathetic (rest-and-digest) dominance.'},
+      {l:'🔴 Scientific Viewpoint',t:'Cymatic studies demonstrate that Sanskrit syllables when chanted produce specific geometric patterns in resonant media — patterns corresponding precisely to the yantras traditionally associated with those mantras. The frequency of AUM chanting at approximately 136.1 Hz corresponds to the Earth\'s average year frequency. Research shows this frequency promotes synchronisation of left-right brain hemispheres and alpha wave entrainment. The acoustic geometry of Sanskrit is unique among human languages.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'The Vedic tradition holds that the universe itself is a sonic manifestation — the Big Bang as the first utterance of AUM. Modern astrophysics describes the Cosmic Microwave Background (CMB) as the echo of the Big Bang — a form of universal background sound still permeating space. The Vedic cosmological model of Nada (primal sound) as the substrate of creation aligns conceptually with string theory\'s description of fundamental particles as vibrating filaments of energy.'},
+      {l:'⚪ Historical & Heritage Context',t:'The oldest mantras are found in the Rigveda (c. 1500 BCE). The science of Mantra Shastra is detailed in the Tantrarajatantra, Soundarya Lahari by Adi Shankaracharya, and various Agamas and Tantras. The tradition of Guru-to-student transmission ensures correct pronunciation. For complete mantra texts, visit vedadhara.com, sanskritdocuments.org, shlokam.org, mahakatha.com, and kamakoti.org.'},
+    ],
+    srcs:[
+      {n:'Vedadhara Mantra Shastra',u:'https://www.vedadhara.com/english-topics-mantra-shastra'},
+      {n:'Sanskrit Documents',u:'https://sanskritdocuments.org'},
+      {n:'Shlokam – Lalitha Sahasranamam',u:'https://shlokam.org/shloka/lalitha-sahasranamam.htm'},
+      {n:'WisdomLib',u:'https://www.wisdomlib.org'},
+      {n:'Kamakoti',u:'https://www.kamakoti.org/kamakoti/details/naradapurana12.html'},
+    ]
+  },
+  karanas:{
+    kw:['karana','natya','natyashastra','shiva tandava','talavilasita','bhujangatrasita','apaviddha','sthitavarta','dance pose','108'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'The 108 Karanas of the Natyashastra represent the complete vocabulary of Shiva\'s cosmic dance (Tandava). The number 108 is itself a sacred cosmological constant — the ratio of the Sun\'s distance from Earth to its diameter, and the Moon\'s distance to its diameter, are both approximately 108. Each Karana is thus a human body posture encoding a specific moment of cosmic activity, making the dancer\'s body a living cosmological instrument during performance.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'In yogic tradition, each Karana represents a specific configuration of the five Pranas (Vayus) within the body. The movements of arms, legs, torso, and gaze create a precise pranic circuit, directing energy along specific nadi pathways. Many Karanas directly mirror or are derived from classical yoga asanas — revealing the common root of yoga and classical dance in the ancient science of somatic spirituality. Each Karana is said to invoke a specific aspect of Shiva consciousness.'},
+      {l:'🟠 Neurological Viewpoint',t:'The Karanas engage proprioceptive, vestibular, and visual systems simultaneously in precisely coordinated multi-limb movements. From a neuroscience perspective, learning the 108 Karanas builds extensive new neural pathways through motor sequence learning, cross-lateral coordination, and spatial body awareness. Neuroplasticity research confirms that complex movement sequences create denser synaptic networks in the motor cortex, cerebellum, and basal ganglia — literally reshaping the brain\'s architecture.'},
+      {l:'🔴 Scientific Viewpoint',t:'The biomechanics of the Karanas are extraordinary — many involve simultaneous coordination of 12 or more major muscle groups in precise spatial configurations. Modern kinesiological analysis of the Karanas reveals sophisticated principles of weight transfer, momentum conservation, and joint load distribution. Several Karanas anticipate principles rediscovered by modern sports biomechanics, including the helical spinal rotation used in high-performance athletic movement.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'Each of the 108 Karanas has been mapped to specific Nakshatras and planetary configurations in traditional Jyotish commentaries on the Natyashastra. The sequence of the 108 Karanas, performed in order, is said to mirror the movement of consciousness through the 27 Nakshatras (each Nakshatra having four padas = 108 padas total). The Karanas thus form a somatic map of the entire celestial sphere, the dancer\'s body becoming a moving planetarium.'},
+      {l:'⚪ Historical & Heritage Context',t:'The 108 Karanas are described in Chapter 4 of the Natyashastra and are depicted in stone sculpture at the Chidambaram Nataraja temple (Tamil Nadu), the Brihadeeswarar temple at Thanjavur, and the Airavatesvara temple at Darasuram — all UNESCO World Heritage Sites. For detailed study and visual references, visit natyashastraclassical-dance.culturalmusings.com, karanasrootmap.culturalmusings.com, and exoticindiaart.com.'},
+    ],
+    srcs:[
+      {n:'Natyashastra Classical Dance',u:'https://natyashastraclassical-dance.culturalmusings.com'},
+      {n:'Karanas Root Map',u:'https://karanasrootmap.culturalmusings.com'},
+      {n:'Karanas Sacred Synthesis',u:'https://karanassacredsynthesis.culturalmusings.com'},
+      {n:'Exotic India Art',u:'https://www.exoticindiaart.com/article/the-108-poses-of-shiva-tandava-in-natya-shastra'},
+    ]
+  },
+  nakshatras:{
+    kw:['nakshatra','constellation','star','zodiac','jyotish','astrology','rohini','ashwini','kritika','pushya','chitra','revati','mrigashira','ardra','punarvasu','magha','purva','uttara','hasta','swati','vishakha','anuradha','jyeshtha','moola','shravana','dhanishtha','shatabhisha'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'The 27 Nakshatras (lunar mansions) form the fundamental framework of Vedic cosmological philosophy. Each Nakshatra is a divine being — a goddess or deva — whose energy permeates a specific sector of the sky and influences all life on Earth below. The Moon, as it traverses one Nakshatra each day through its 27-day cycle, acts as a cosmic lens focusing specific divine energies onto the terrestrial plane. In Vedic philosophy, human consciousness is a microcosm of this celestial order.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'Each Nakshatra is associated with a specific beejakshara (seed syllable), a presiding deity, a body part, a quality of consciousness (Guna), and a spiritual goal (Purushartha). In Jyotish sadhana, practitioners chant the beejakshara of their birth Nakshatra\'s deity to align their personal energy with the cosmic principle it represents. Rohini Nakshatra (Moon\'s exaltation) is associated with Brahma and creative manifestation, its seed syllable Om being the primordial creative sound.'},
+      {l:'🟠 Neurological Viewpoint',t:'The Moon\'s gravitational and electromagnetic influence on Earth\'s biosphere is well-established — it governs tidal patterns and has been correlated with hormonal cycles, sleep patterns, and mood regulation in humans. Modern chronobiology research shows that lunar phases correlate with fluctuations in melatonin and serotonin production. The Nakshatra system can be understood as a refined 27-fold map of these lunar biological influences, offering a high-resolution framework for understanding mind-body-cosmos interactions.'},
+      {l:'🔴 Scientific Viewpoint',t:'The 27 Nakshatras divide the ecliptic into 13°20\' arcs each. The stars marking each Nakshatra are actual stars visible to the naked eye — Rohini is the bright star Aldebaran (Alpha Tauri, 65 light years distant), Chitra is Spica (Alpha Virginis, 250 light years), and Jyeshtha is Antares (Alpha Scorpii, 550 light years). Vedic astronomers calculated stellar positions with remarkable precision millennia before modern telescopes, using gnomon shadow measurements and sophisticated geometric models.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'Each Nakshatra\'s primary star belongs to distinct stellar classes — from main sequence dwarf stars to red giants and binary systems. Rohini (Aldebaran) is a red giant 44 times the Sun\'s diameter. Chitra (Spica) is a binary blue giant 10 times more massive than the Sun. The astrophysical diversity encoded in the 27 Nakshatras reflects the remarkable observational range of Vedic astronomers, who recognised qualitative differences in stellar types millennia before spectroscopy was invented.'},
+      {l:'⚪ Historical & Heritage Context',t:'The Nakshatra system is among the oldest astronomical frameworks in human history, referenced in the Rigveda (c. 1500 BCE) and systematised in the Vedanga Jyotisha. The Surya Siddhanta (c. 4th century CE) provides precise mathematical models of Nakshatra-based astronomical calculation. For comprehensive Nakshatra study, visit completecelestialsynthesis.culturalmusings.com, unifiedtheory.culturalmusings.com, and vedapurana.org.'},
+    ],
+    srcs:[
+      {n:'Complete Celestial Synthesis',u:'https://completecelestialsynthesis.culturalmusings.com'},
+      {n:'Unified Theory',u:'https://unifiedtheory.culturalmusings.com'},
+      {n:'Veda Purana',u:'https://vedapurana.org'},
+      {n:'WisdomLib – Nakshatras',u:'https://www.wisdomlib.org'},
+    ]
+  },
+  dance:{
+    kw:['bharatanatyam','kuchipudi','odissi','kathak','manipuri','mohiniyattam','classical dance','abhinaya','nritta','natya','nritya','adavu','tala','lasya','tandava'],
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'Indian classical dance is Natya — a complete philosophical system of embodied knowledge. The Natyashastra declares that dance was created by Brahma himself, drawing from all four Vedas: from the Rigveda he took the text (vacika), from the Samaveda the song (gita), from the Yajurveda the gesture (abhinaya), and from the Atharvaveda the emotional expression (rasa). Dance is thus a Panchama Veda — a fifth Veda — encompassing the totality of sacred knowledge in embodied form.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'In the yogic framework, classical dance is a moving meditation that integrates all five Pancha Koshas (sheaths of being): the physical body (Annamaya), energy body (Pranamaya), mental body (Manomaya), wisdom body (Vijnanamaya), and bliss body (Anandamaya). Sustained bharatanatyam practice is recognised in traditional texts as a form of Karma Yoga — selfless action as spiritual practice — dissolving the ego-sense of the performer into the pure performance.'},
+      {l:'🟠 Neurological Viewpoint',t:'Learning classical Indian dance forms creates exceptional neurological integration. The simultaneous coordination of facial expression (Abhinaya), hand gesture (Hasta), foot movement (Adavu), eye movement (Drishti), and rhythmic pattern (Tala) engages the motor cortex, visual cortex, auditory cortex, limbic system, and prefrontal cortex in highly integrated activity. Studies show that classical dance practitioners demonstrate superior interhemispheric communication, emotional regulation, and body-schema integration.'},
+      {l:'🔴 Scientific Viewpoint',t:'The footwork of Bharatanatyam and Kuchipudi — performed on specific beats with precise heel-toe patterns on hard floors — creates measurable vibrations that travel through the floor and the dancer\'s skeletal system. Biomechanical analysis shows these vibrations resonate with specific frequencies of the Earth\'s Schumann resonance. The bent-knee (Araimandi/Chowk) posture shared by all classical forms creates a lower centre of gravity that activates deep core musculature and pelvic floor stability systems.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'Classical dance performances were traditionally timed to specific auspicious Nakshatras and planetary configurations. Bharatanatyam\'s cosmic dimension is most explicit in the Shiva Nataraja iconography — the dancing Shiva enclosed in a ring of fire (Prabhamandala) represents the cosmos in continuous creation and dissolution. The five cosmic actions (Pancha Kritya) of Shiva — creation, maintenance, dissolution, concealment, and grace — are encoded in the dance\'s five primary movements.'},
+      {l:'⚪ Historical & Heritage Context',t:'Bharatanatyam traces to the Devadasi (temple dancer) tradition of Tamil Nadu, systematised in the 20th century by the Thanjavur Quartet and revived by Rukmini Devi Arundale. Kuchipudi originated in Andhra Pradesh\'s Kuchipudi village, Odissi in Odisha\'s temples, and Kathak in North India\'s Mughal courts. All six classical forms are listed in India\'s Sangeet Natak Akademi. For deeper study, visit natyashastraclassical-dance.culturalmusings.com.'},
+    ],
+    srcs:[
+      {n:'Natyashastra Classical Dance',u:'https://natyashastraclassical-dance.culturalmusings.com'},
+      {n:'Cultural Musings',u:'https://culturalmusings.com'},
+      {n:'Karanas Sacred Synthesis',u:'https://karanassacredsynthesis.culturalmusings.com'},
+    ]
+  },
+  default:{
+    paras:[
+      {l:'🔵 Philosophical Viewpoint',t:'From the Vedantic perspective, all knowledge in Indian classical tradition — musical, gestural, cosmic, or contemplative — is ultimately knowledge of the Self (Atman). The Upanishads declare "Sarvam khalvidam Brahma" — all this is Brahman. Classical arts and sciences were conceived not as secular pursuits but as paths of self-realisation, each domain being a mirror in which Brahman perceives itself through the medium of human consciousness and creative expression.'},
+      {l:'🟢 Yogic & Spiritual Viewpoint',t:'The yogic tradition views classical arts as forms of Sadhana (spiritual practice). Whether chanting a raga, performing a mudra, or studying the Karanas, the practitioner engages in moving meditation that purifies the subtle body, balances the chakras, and gradually dissolves the ego-sense in the ocean of pure awareness. The Guru-Shishya Parampara (teacher-student lineage) ensures this sacred transmission remains an unbroken living current from ancient times to today.'},
+      {l:'🟠 Neurological Viewpoint',t:'From a neurological standpoint, the integrated practice of classical Indian arts — combining movement, sound, rhythm, intention, and breath — engages multiple brain networks simultaneously: the motor cortex, auditory cortex, limbic system, prefrontal cortex, and default mode network. This cross-network activation is associated with enhanced learning, emotional regulation, creativity, and sustained wellbeing — explaining the remarkable cognitive and emotional benefits reported by long-term practitioners.'},
+      {l:'🔴 Scientific Viewpoint',t:'The classical Indian knowledge systems were built on careful empirical observation over millennia. The acoustic science embedded in Carnatic and Hindustani music, the biomechanical precision of dance forms, and the psychophysiological effects of mantra and mudra reflect a sophisticated empirical tradition. Modern science is beginning to validate many of these insights through controlled studies in psychoacoustics, movement neuroscience, and contemplative science — confirming what practitioners knew experientially for thousands of years.'},
+      {l:'🟣 Astrophysical Viewpoint',t:'Indian cosmology situates human consciousness within the vast sweep of cosmic time. The concept of Kalachakra (wheel of time) connects individual experience to Yugas, Nakshatras, and planetary periods. Ancient Indian astronomers calculated the solar year to within seconds and developed sophisticated planetary motion models within a framework that saw the cosmos as a living, conscious, harmonious system — not an accidental collection of matter but an intelligently ordered expression of universal awareness.'},
+      {l:'⚪ Historical & Heritage Context',t:'This knowledge is rooted in a continuous tradition spanning at least 5,000 years, from the Indus Valley Civilisation through the Vedic period, the Gupta classical age, the medieval Bhakti movements, and into the present. For deeper exploration, visit the Cultural Musings network, vedicheritage.gov.in, wisdomlib.org, and sanskritdocuments.org. The reference source links below provide direct pathways into primary texts and scholarly commentary.'},
+    ],
+    srcs:[
+      {n:'Cultural Musings',u:'https://culturalmusings.com'},
+      {n:'Vedic Heritage Portal',u:'https://vedicheritage.gov.in/introduction'},
+      {n:'WisdomLib',u:'https://www.wisdomlib.org'},
+      {n:'Sanskrit Documents',u:'https://sanskritdocuments.org'},
+      {n:'Vedadhara',u:'https://www.vedadhara.com'},
+    ]
   }
-}
-
-// ── MODE ──────────────────────────────────────────────────────────────────
-function setMode(mode) {
-  currentMode = mode;
-  document.getElementById('mode-backend').classList.toggle('active', mode === 'backend');
-  document.getElementById('mode-local').classList.toggle('active', mode === 'local');
-  document.getElementById('backend-url-wrap').classList.toggle('show', mode === 'backend');
-}
-
-// ── SWARA TOGGLE ─────────────────────────────────────────────────────────
-function toggleSwara(el, swara) {
-  el.classList.toggle('active');
-  if (el.classList.contains('active')) selectedSwaras.add(swara);
-  else selectedSwaras.delete(swara);
-}
-
-// ── LANGUAGE ─────────────────────────────────────────────────────────────
-function setLang(lang) {
-  localStorage.setItem('mm_lang', lang);
-}
-
-// ── BACKEND TEST ──────────────────────────────────────────────────────────
-async function testBackend() {
-  const url = document.getElementById('backend-url').value.trim();
-  const statusEl = document.getElementById('connection-status');
-  statusEl.style.color = 'var(--gold-dim)';
-  statusEl.textContent = 'Testing…';
-  try {
-    const res = await fetch(url + '/');
-    const data = await res.json();
-    statusEl.style.color = 'var(--teal)';
-    statusEl.textContent = '✓ Connected — ' + (data.status || 'OK');
-  } catch (e) {
-    statusEl.style.color = '#c0392b';
-    statusEl.textContent = '✗ Cannot reach backend. Check URL or deploy first.';
-  }
-}
-
-// ── SEARCH CORE ───────────────────────────────────────────────────────────
-async function runSearch(query, targetEl) {
-  if (!query.trim()) return;
-  targetEl.innerHTML = `<div class="loading">
-    <div class="loading-dot">●</div>
-    <div class="loading-dot">●</div>
-    <div class="loading-dot">●</div>
-    &nbsp; Fetching from sacred sources…
-  </div>`;
-
-  if (currentMode === 'backend') {
-    await backendSearch(query, targetEl);
-  } else {
-    localSearch(query, targetEl);
-  }
-}
-
-async function backendSearch(query, targetEl) {
-  const backendUrl = document.getElementById('backend-url').value.trim();
-  try {
-    const res = await fetch(backendUrl + '/api/search', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query }),
-    });
-    if (!res.ok) throw new Error('Server error ' + res.status);
-    const data = await res.json();
-    renderResult(query, data, targetEl);
-  } catch (err) {
-    targetEl.innerHTML = `
-      <div class="result-card">
-        <div class="para-label" style="color:#c0392b;">⚠ Backend Not Reachable</div>
-        <div class="para-text">
-          Could not connect to the backend server at <strong>${document.getElementById('backend-url').value}</strong>.
-          <br/><br/>
-          <strong>To fix this:</strong><br/>
-          1. Deploy the backend to Render.com (see setup guide below)<br/>
-          2. Update the Backend URL field with your Render URL<br/>
-          3. Click "Test Connection" to verify<br/><br/>
-          <em>Switching to Local Knowledge Base mode for now…</em>
-        </div>
-        ${renderDisclaimer()}
-      </div>`;
-    localSearch(query, targetEl, true);
-  }
-}
-
-function localSearch(query, targetEl, append = false) {
-  const q = query.toLowerCase();
-
-  // Local knowledge base (curated content)
-  const localKB = {
-    ragas: {
-      keywords: ['raga','raag','melakarta','thaat','swara','carnatic','hindustani','bhairavi','yaman','kalyani','todi','hamsadhwani','shankarabharana'],
-      paragraphs: [
-        { label:'🔵 Philosophical Viewpoint', text:'In Indian classical philosophy, a Raga is not merely a scale but a living entity — a sonic deity. The word Raga derives from the Sanskrit root "rañj" meaning to colour or to please. Each raga colours the mind and heart with a specific emotional hue (Rasa), creating a bridge between the individual consciousness (Jivatman) and the universal (Brahman). The Natyashastra of Bharata Muni first codified these relationships between sound, emotion, and cosmic order.' },
-        { label:'🟢 Yogic & Spiritual Viewpoint', text:'In the Nada Yoga tradition, ragas are considered manifestations of the primordial sound (Nada Brahma). Each raga activates specific Chakras through its characteristic note patterns. Raga Bhairavi, associated with dawn, resonates with the Vishuddha (throat) chakra, while Raga Yaman, an evening raga, is said to open the Anahata (heart) chakra. The swaras Sa, Ri, Ga, Ma, Pa, Da, Ni correspond to the seven main energy centres of the subtle body.' },
-        { label:'🟠 Neurological Viewpoint', text:'Neurological research on ragas demonstrates measurable effects on brain wave patterns. Raga-based music therapy studies show that morning ragas like Bhairav tend to increase alpha wave activity, inducing meditative calm, while energetic ragas like Bhairavi elevate dopamine release. The pentatonic structure of many ragas matches the natural harmonic series, making them deeply resonant with the auditory cortex and limbic system.' },
-        { label:'🔴 Scientific Viewpoint', text:'The 72 Melakarta system is a complete mathematical permutation of the 12 semitones within an octave, specifically selecting 7-note parent scales with no repetition within an octave. Each Melakarta has exactly 484 derivative ragas (janya ragas) possible through omission and rearrangement of its notes. The acoustic relationship between Sa and Pa (1:3/2) is a perfect fifth interval — the most consonant interval in acoustic physics — forming the backbone of all ragas.' },
-        { label:'🟣 Astrophysical Viewpoint', text:'Ancient Indian musicologists mapped the seven swaras to the seven classical planets: Sa to the Sun, Ri to Moon, Ga to Mars, Ma to Mercury, Pa to Jupiter, Da to Venus, Ni to Saturn. Morning ragas align with sunrise frequencies, evening ragas with twilight. Time theory in Carnatic music (raga-time correspondence) mirrors the astrophysical understanding that different light frequencies of the sun affect biological rhythms at different times of day.' },
-        { label:'⚪ Historical & Heritage Context', text:'The Melakarta system was systematised by Venkatamakhi in his 17th-century text Chaturdandi Prakashika, though its roots go to Saranga Deva\'s 13th-century Sangita Ratnakara. The 72 Melakartas use the Katapayadi sankhya for numerical encoding — a clever Sanskrit numeral system where consonants represent digits, allowing the raga\'s notes to be decoded from its name. For more details, visit melakarta.com and ragajunglism.org.' },
-      ],
-      sources: [
-        { name:'Melakarta Chart', url:'https://www.melakarta.com' },
-        { name:'Rāga Junglism Masterlist', url:'https://ragajunglism.org/ragas/masterlist' },
-        { name:'RagaMath', url:'https://ragamath.com' },
-        { name:'Amit Ray – 84 Ragas', url:'https://amitray.com/the-84-ragas-of-indian-classical-music-a-complete-guide' },
-      ]
-    },
-    mudras: {
-      keywords: ['mudra','hasta','pataka','tripataka','kartari','mushti','shikara','kapitha','katakamukha','suchi','chandrakala','hand gesture','asamyuta','samyuta'],
-      paragraphs: [
-        { label:'🔵 Philosophical Viewpoint', text:'Hasta Mudras (hand gestures) in Indian classical tradition are considered Mudras of Manifestation — each gesture is a yantra (sacred diagram) formed by the human body. The Natyashastra defines 28 Asamyuta (single-hand) and 24 Samyuta (double-hand) hastas, each carrying a specific Artha (meaning) that communicates directly with the viewer\'s consciousness beyond language. They are considered channels through which the dancer becomes a deity.' },
-        { label:'🟢 Yogic & Spiritual Viewpoint', text:'In Yoga, mudras are Pranic seals — physical configurations that redirect the flow of Prana (life force) within the subtle body. The Pataka mudra, formed with all fingers extended and thumb bent, channels Prana through the palm\'s energy meridians and is associated with the Anahata and Vishuddha chakras. Each finger in Yoga physiology corresponds to a specific element: thumb (fire), index (air), middle (space), ring (earth), little (water).' },
-        { label:'🟠 Neurological Viewpoint', text:'The concentration of nerve endings in the hands makes mudras uniquely effective as neurological tools. Research in movement neuroscience shows that specific hand configurations activate distinct proprioceptive pathways and corresponding brain regions, particularly the somatosensory cortex and the cerebellum. Rhythmic mudra sequences in classical dance have been shown to enhance fine motor coordination, interhemispheric communication, and sustained attention networks.' },
-        { label:'🔴 Scientific Viewpoint', text:'Mudras work through the principle of biofeedback — the body posture influences the mind\'s state through proprioceptive and interoceptive neural signals. Studies on yoga mudras show measurable changes in galvanic skin response, heart rate variability, and cortisol levels when specific mudras are held for sustained periods. The triangulation of fingertip pressure in mudras like Gyan (index to thumb) creates specific bioelectrical circuits.' },
-        { label:'🟣 Astrophysical Viewpoint', text:'In Jyotish and Tantra, the five fingers correspond to the five planets beyond Earth: thumb to Mars, index to Jupiter, middle to Saturn, ring to Sun, little to Mercury. Mudras performed at specific times align the practitioner\'s bioelectrical field with the dominant planetary frequencies of that time, according to traditional understanding. The Anjali mudra (prayer gesture) is considered a complete yantra encompassing all planetary energies.' },
-        { label:'⚪ Historical & Heritage Context', text:'The systematic study of Hastas is found primarily in the Natyashastra (200 BCE–200 CE), Abhinaya Darpana by Nandikeshvara, and the Abhinaya Chandrika. Temple sculptures, especially at Chidambaram, Thanjavur, and Belur, preserve the full repertoire of mudras in stone. For complete lists and images, visit natyashastra.culturalmusings.com and exoticindiaart.com.' },
-      ],
-      sources: [
-        { name:'Natyashastra - Cultural Musings', url:'https://natyashastra.culturalmusings.com' },
-        { name:'Exotic India Art – 108 Poses', url:'https://www.exoticindiaart.com/article/the-108-poses-of-shiva-tandava-in-natya-shastra' },
-        { name:'Karanas Root Map', url:'https://karanasrootmap.culturalmusings.com' },
-      ]
-    },
-    mantras: {
-      keywords: ['mantra','beejakshara','om','aum','hreem','shreem','kleem','shloka','stotra','vedic','tantra','yantra','beej','seed syllable'],
-      paragraphs: [
-        { label:'🔵 Philosophical Viewpoint', text:'In Vedantic philosophy, Mantra is Shabda Brahman — the universe in its sound aspect. The primordial vibration AUM (ॐ) represents the three states of consciousness (waking, dreaming, deep sleep) and their transcendence. Beejaksharas (seed syllables) are the compressed sonic forms of cosmic principles: ह्रीं (Hreem) encodes the creative power of the universe, श्रीं (Shreem) the principle of divine abundance, and क्लीं (Kleem) the magnetic attraction of Shakti.' },
-        { label:'🟢 Yogic & Spiritual Viewpoint', text:'In the Tantric tradition, each beejakshara is the sonic body (sound-form) of a specific deity. Chanting OM activates the Ajna chakra (third eye) and synchronises the left and right hemispheres of the brain. The 50 letters of the Sanskrit alphabet (Varna Mala) are mapped to the 50 petals of the six major chakras — making Sanskrit the language of the energy body itself. Nyasa practice assigns beejaksharas to specific body parts for purification.' },
-        { label:'🟠 Neurological Viewpoint', text:'Research on mantra recitation shows that the rhythmic repetition of mantras activates the vagus nerve, reduces amygdala reactivity (fear response), and increases theta wave activity in the prefrontal cortex. The nasal resonance of nasalized Sanskrit sounds (anusvara) stimulates the olfactory bulb, which has direct connections to the hippocampus and limbic system. This may explain the powerful memory and emotional effects reported by practitioners.' },
-        { label:'🔴 Scientific Viewpoint', text:'Cymatic studies demonstrate that Sanskrit syllables, when chanted, produce specific geometric patterns in resonant media — patterns that correspond to the yantras (geometric diagrams) traditionally associated with those mantras. The frequency of AUM chanting at 136.1 Hz corresponds to the Earth\'s average year frequency (Om frequency), and research shows this frequency promotes synchronisation of left-right brain hemispheres and alpha wave entrainment.' },
-        { label:'🟣 Astrophysical Viewpoint', text:'The Vedic tradition holds that the universe itself is a sonic manifestation — the Big Bang as the first utterance of AUM. Modern astrophysics describes the CMB (Cosmic Microwave Background) as the echo of the Big Bang, a form of universal background sound. The Vedic cosmological model of Nada (primal sound) as the substrate of creation aligns conceptually with string theory\'s description of fundamental particles as vibrating strings.' },
-        { label:'⚪ Historical & Heritage Context', text:'The oldest mantras are found in the Rigveda (c. 1500 BCE). The systematic science of Mantra Shastra is detailed in texts like the Tantrarajatantra, Soundarya Lahari, and various Agamas. The tradition of Guru-to-student transmission ensures the correct pronunciation and intention behind each mantra. For complete mantra texts, visit vedadhara.com, sanskritdocuments.org, and shlokam.org.' },
-      ],
-      sources: [
-        { name:'Vedadhara Mantra Shastra', url:'https://www.vedadhara.com/english-topics-mantra-shastra' },
-        { name:'Sanskrit Documents', url:'https://sanskritdocuments.org' },
-        { name:'Shlokam.org', url:'https://shlokam.org/shloka/lalitha-sahasranamam.htm' },
-        { name:'WisdomLib', url:'https://www.wisdomlib.org' },
-        { name:'Mahakatha', url:'https://mahakatha.com' },
-      ]
-    },
-    default: {
-      paragraphs: [
-        { label:'🔵 Philosophical Viewpoint', text:'The query touches on profound dimensions of Indian classical tradition. From the Vedantic perspective, all knowledge in this domain — whether musical, gestural, cosmic, or contemplative — is ultimately knowledge of the Self (Atman). The Upanishads declare "Sarvam khalvidam Brahma" — all this is Brahman. Classical arts and sciences were therefore conceived not as secular pursuits but as paths of self-realisation.' },
-        { label:'🟢 Yogic & Spiritual Viewpoint', text:'The yogic tradition views classical arts as forms of Sadhana (spiritual practice). Whether chanting a raga, performing a mudra, or studying the karanas, the practitioner is engaging in a form of moving meditation that purifies the subtle body, balances the chakras, and gradually leads to the dissolution of the ego in the ocean of pure awareness. The Guru-Shishya Parampara ensures this sacred transmission remains alive.' },
-        { label:'🟠 Neurological Viewpoint', text:'From a neurological standpoint, the integrated practice of classical Indian arts — combining movement, sound, rhythm, intention, and breath — engages multiple brain networks simultaneously: the motor cortex, auditory cortex, limbic system, prefrontal cortex, and default mode network. This cross-network activation is associated with enhanced learning, emotional regulation, creativity, and sustained wellbeing.' },
-        { label:'🔴 Scientific Viewpoint', text:'The classical Indian knowledge systems were built on careful empirical observation over millennia. The acoustic science embedded in Carnatic and Hindustani music, the biomechanical precision of dance forms, and the psychophysiological effects of mantra and mudra reflect a sophisticated empirical tradition. Modern science is only beginning to validate many of these insights through controlled studies in psychoacoustics, movement neuroscience, and contemplative science.' },
-        { label:'🟣 Astrophysical Viewpoint', text:'Indian cosmology situates human consciousness within the vast sweep of cosmic time. The concept of Kalachakra (wheel of time) connects individual experience to the cycles of Yugas, Nakshatras, and planetary periods. Ancient Indian astronomers calculated the length of the solar year to within seconds and developed sophisticated models of planetary motion — all within a framework that saw the cosmos as a living, conscious, harmonious system.' },
-        { label:'⚪ Historical & Heritage Context', text:'This knowledge is rooted in a continuous tradition spanning at least 5,000 years, from the Indus Valley Civilization through the Vedic period, the classical age of the Gupta Empire, the medieval Bhakti and devotional movements, and into the present day. For deeper study, please explore the Cultural Musings network and the reference sources provided.' },
-      ],
-      sources: [
-        { name:'Cultural Musings', url:'https://culturalmusings.com' },
-        { name:'Vedic Heritage Portal', url:'https://vedicheritage.gov.in/introduction' },
-        { name:'WisdomLib', url:'https://www.wisdomlib.org' },
-        { name:'Sanskrit Documents', url:'https://sanskritdocuments.org' },
-      ]
-    }
-  };
-
-  // Match query to category
-  let matched = null;
-  const qLower = query.toLowerCase();
-  for (const [cat, data] of Object.entries(localKB)) {
-    if (cat === 'default') continue;
-    if (data.keywords && data.keywords.some(kw => qLower.includes(kw))) {
-      matched = data;
-      break;
-    }
-  }
-  if (!matched) matched = localKB.default;
-
-  const result = {
-    query,
-    paragraphs: matched.paragraphs,
-    sources: matched.sources || localKB.default.sources,
-    note: 'Served from MadaMudra Local Knowledge Base. Visit source links for complete texts.',
-  };
-
-  if (append) {
-    targetEl.innerHTML += renderResultHTML(query, result);
-  } else {
-    renderResult(query, result, targetEl);
-  }
-}
-
-// ── RENDER RESULT ──────────────────────────────────────────────────────────
-function renderResult(query, data, targetEl) {
-  targetEl.innerHTML = renderResultHTML(query, data);
-}
-
-function renderResultHTML(query, data) {
-  const parasHTML = (data.paragraphs || []).map(p => `
-    <div class="paragraph-block">
-      <div class="para-label">${p.label}</div>
-      <div class="para-text">${p.text}</div>
-      ${p.source ? `<div style="margin-top:6px;font-size:0.78rem;color:var(--text-dim);">Source: <a class="source-link" href="${p.source.url}" target="_blank">${p.source.name}</a></div>` : ''}
-    </div>
-  `).join('');
-
-  const sourcesHTML = (data.sources || []).map(s =>
-    `<a class="source-link" href="${s.url}" target="_blank">🔗 ${s.name}</a>`
-  ).join('');
-
-  return `
-    <div class="result-card" id="result-output">
-      <div class="action-bar" style="margin-bottom:16px;">
-        <button class="action-btn" onclick="window.print()">🖨 Print</button>
-        <button class="action-btn" onclick="copyResult()">📋 Copy</button>
-        <button class="action-btn" onclick="shareResult('${query.replace(/'/g,"\\'")}')">↗ Share</button>
-      </div>
-      <div class="result-query">Query</div>
-      <div class="result-title">${query}</div>
-      ${parasHTML}
-      <div class="sources-wrap">
-        <div class="sources-title">📚 REFERENCE SOURCES — VISIT FOR COMPLETE STUDY</div>
-        ${sourcesHTML}
-      </div>
-      <div class="disclaimer">
-        ${data.note || ''}<br/>
-        <strong>Disclaimer:</strong> MadaMudra 4.1 is an educational reference platform. Results are drawn from curated sources and presented through 6 interpretive lenses (Philosophical, Yogic, Neurological, Scientific, Astrophysical, Historical). For initiatory practice, always learn from a qualified, lineage-authorised Guru. These viewpoints are for study, reflection, and creative inspiration — not medical, spiritual, or scholarly authority. Visit source links for primary texts.
-      </div>
-    </div>`;
-}
-
-// ── SEARCH TRIGGERS ────────────────────────────────────────────────────────
-function homeSearch() {
-  const q = document.getElementById('home-search').value.trim();
-  if (!q) return;
-  runSearch(q, document.getElementById('home-result'));
-}
-
-function doSearch() {
-  const q = document.getElementById('main-search').value.trim();
-  if (!q) return;
-  runSearch(q, document.getElementById('search-result'));
-}
-
-function searchModule(inputId, resultId, hint) {
-  const q = document.getElementById(inputId).value.trim();
-  if (!q) return;
-  // Append hint keyword for better category matching
-  const fullQ = hint && !q.toLowerCase().includes(hint) ? q + ' ' + hint : q;
-  runSearch(fullQ, document.getElementById(resultId));
-}
-
-function quickSearch(q) {
-  document.getElementById('home-search').value = q;
-  homeSearch();
-}
-
-// ── RAGA CREATOR ──────────────────────────────────────────────────────────
-const SWARA_MAP = {
-  'sa': 'Sa', 'ri1':'Ri₁','ri2':'Ri₂','ri3':'Ri₃',
-  'ga1':'Ga₁','ga2':'Ga₂','ga3':'Ga₃',
-  'ma1':'Ma₁','ma2':'Ma₂',
-  'pa':'Pa',
-  'da1':'Da₁','da2':'Da₂','da3':'Da₃',
-  'ni1':'Ni₁','ni2':'Ni₂','ni3':'Ni₃',
 };
 
-const KNOWN_RAGAS = [
-  { name:'Shankarabharana', notes:['Sa','Ri₂','Ga₃','Ma₁','Pa','Da₂','Ni₃'], melakarta:29 },
-  { name:'Kalyani', notes:['Sa','Ri₂','Ga₃','Ma₂','Pa','Da₂','Ni₃'], melakarta:65 },
-  { name:'Kharaharapriya', notes:['Sa','Ri₂','Ga₂','Ma₁','Pa','Da₂','Ni₂'], melakarta:22 },
-  { name:'Natabhairavi', notes:['Sa','Ri₂','Ga₂','Ma₁','Pa','Da₁','Ni₁'], melakarta:20 },
-  { name:'Hamsadhwani', notes:['Sa','Ri₂','Ga₃','Pa','Ni₃'], melakarta:'Janya of 29' },
-  { name:'Bhupalam', notes:['Sa','Ri₁','Ga₁','Pa','Da₁'], melakarta:'Janya' },
-  { name:'Hindolam', notes:['Sa','Ga₂','Ma₁','Da₁','Ni₂'], melakarta:'Pentatonic' },
-  { name:'Mohanam', notes:['Sa','Ri₂','Ga₃','Pa','Da₂'], melakarta:'Janya of 28' },
-  { name:'Mayamalavagoula', notes:['Sa','Ri₁','Ga₃','Ma₁','Pa','Da₁','Ni₃'], melakarta:15 },
-  { name:'Todi (Carnatic)', notes:['Sa','Ri₁','Ga₂','Ma₂','Pa','Da₁','Ni₂'], melakarta:45 },
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 4. SEARCH ENGINE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function detectCat(q){
+  q=q.toLowerCase();
+  for(var cat in KB){
+    if(cat==='default') continue;
+    if(KB[cat].kw && KB[cat].kw.some(function(k){return q.includes(k);})) return cat;
+  }
+  return 'default';
+}
+
+function doSearch(query, resultEl){
+  if(!query||!query.trim()){return;}
+  resultEl.innerHTML='<div class="loading"><span class="dot">●</span><span class="dot">●</span><span class="dot">●</span> &nbsp;Searching sacred sources…</div>';
+  setTimeout(function(){
+    var cat=detectCat(query);
+    var data=KB[cat]||KB.default;
+    resultEl.innerHTML=buildResult(query,data);
+  },600);
+}
+
+function buildResult(query,data){
+  var parasHTML=data.paras.map(function(p){
+    return '<div class="para-blk"><div class="para-lbl">'+p.l+'</div><div class="para-txt">'+p.t+'</div></div>';
+  }).join('');
+  var srcsHTML=(data.srcs||[]).map(function(s){
+    return '<a class="src-link" href="'+s.u+'" target="_blank">🔗 '+s.n+'</a>';
+  }).join('');
+  return '<div class="res-card" id="latestResult">'+
+    '<div class="res-actions">'+
+      '<button class="act-btn" onclick="window.print()">🖨 Print</button>'+
+      '<button class="act-btn" onclick="copyRes()">📋 Copy</button>'+
+    '</div>'+
+    '<div class="res-query">Your Query</div>'+
+    '<div class="res-title">'+escHTML(query)+'</div>'+
+    parasHTML+
+    '<div class="src-wrap"><div class="src-title">📚 REFERENCE SOURCES — VISIT FOR COMPLETE STUDY</div>'+srcsHTML+'</div>'+
+    '<div class="disclaimer">'+
+      'Results delivered from MadaMudra 4.1 Sacred Knowledge Base.<br/>'+
+      '<strong>Disclaimer:</strong> This platform is for educational and cultural reference. Results are presented through 6 interpretive lenses: Philosophical, Yogic, Neurological, Scientific, Astrophysical, and Historical. For initiatory practice, always learn from a qualified, lineage-authorised Guru. Visit source links for primary texts and authoritative study.'+
+    '</div></div>';
+}
+
+function escHTML(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function copyRes(){
+  var el=document.getElementById('latestResult');
+  if(el) navigator.clipboard.writeText(el.innerText).then(function(){alert('Copied to clipboard!');});
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 5. WIRE UP SEARCH BUTTONS — event delegation
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// Home search
+document.getElementById('homeBtn').addEventListener('click',function(){
+  var q=document.getElementById('homeQ').value.trim();
+  doSearch(q,document.getElementById('homeResult'));
+});
+document.getElementById('homeQ').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){document.getElementById('homeBtn').click();}
+});
+
+// Main search tab
+document.getElementById('searchBtn').addEventListener('click',function(){
+  var q=document.getElementById('searchQ').value.trim();
+  doSearch(q,document.getElementById('searchResult'));
+});
+document.getElementById('searchQ').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){document.getElementById('searchBtn').click();}
+});
+
+// Quick chips on home
+document.querySelectorAll('.chip[data-q]').forEach(function(chip){
+  chip.addEventListener('click',function(){
+    var q=chip.dataset.q;
+    document.getElementById('homeQ').value=q;
+    doSearch(q,document.getElementById('homeResult'));
+  });
+});
+
+// Module search buttons (data-mod / data-res / data-hint attributes)
+document.querySelectorAll('.srch-btn[data-mod]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var inp=document.getElementById(btn.dataset.mod);
+    var res=document.getElementById(btn.dataset.res);
+    var hint=btn.dataset.hint||'';
+    var q=(inp?inp.value.trim():'')+' '+hint;
+    if(inp && inp.value.trim()) doSearch(q.trim(),res);
+  });
+  // Enter key for corresponding input
+  var inp=document.getElementById(btn.dataset.mod);
+  if(inp){
+    inp.addEventListener('keydown',function(e){
+      if(e.key==='Enter') btn.click();
+    });
+  }
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 6. RAGA CREATOR
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+var SWARA_IDS={
+  'c-sa':'Sa','c-ri1':'Ri₁','c-ri2':'Ri₂','c-ri3':'Ri₃',
+  'c-ga1':'Ga₁','c-ga2':'Ga₂','c-ga3':'Ga₃',
+  'c-ma1':'Ma₁','c-ma2':'Ma₂','c-pa':'Pa',
+  'c-da1':'Dha₁','c-da2':'Dha₂','c-da3':'Dha₃',
+  'c-ni1':'Ni₁','c-ni2':'Ni₂','c-ni3':'Ni₃'
+};
+
+var KNOWN=[
+  {n:'Shankarabharana (Melakarta 29)',notes:['Sa','Ri₂','Ga₃','Ma₁','Pa','Dha₂','Ni₃']},
+  {n:'Kalyani (Melakarta 65)',notes:['Sa','Ri₂','Ga₃','Ma₂','Pa','Dha₂','Ni₃']},
+  {n:'Kharaharapriya (Melakarta 22)',notes:['Sa','Ri₂','Ga₂','Ma₁','Pa','Dha₂','Ni₂']},
+  {n:'Natabhairavi (Melakarta 20)',notes:['Sa','Ri₂','Ga₂','Ma₁','Pa','Dha₁','Ni₁']},
+  {n:'Mayamalavagoula (Melakarta 15)',notes:['Sa','Ri₁','Ga₃','Ma₁','Pa','Dha₁','Ni₃']},
+  {n:'Todi / Subhapantuvarali (Melakarta 45)',notes:['Sa','Ri₁','Ga₂','Ma₂','Pa','Dha₁','Ni₂']},
+  {n:'Hamsadhwani (pentatonic)',notes:['Sa','Ri₂','Ga₃','Pa','Ni₃']},
+  {n:'Mohanam (pentatonic)',notes:['Sa','Ri₂','Ga₃','Pa','Dha₂']},
+  {n:'Hindolam (pentatonic)',notes:['Sa','Ga₂','Ma₁','Dha₁','Ni₂']},
+  {n:'Bhupalam (pentatonic)',notes:['Sa','Ri₁','Ga₁','Pa','Dha₁']},
 ];
 
-function generateRaga() {
-  const selected = [];
-  for (const [key, label] of Object.entries(SWARA_MAP)) {
-    const el = document.getElementById('s-' + key);
-    if (el && el.checked) selected.push(label);
+function getSelected(){
+  var sel=[];
+  for(var id in SWARA_IDS){
+    var el=document.getElementById(id);
+    if(el && el.checked) sel.push(SWARA_IDS[id]);
   }
+  return sel;
+}
 
-  if (selected.length < 4) {
-    document.getElementById('creator-output').innerHTML =
-      '<span style="color:var(--gold-dim);">Please select at least 4 swaras to generate a raga.</span>';
+document.getElementById('genRagaBtn').addEventListener('click',function(){
+  var sel=getSelected();
+  if(sel.length<4){
+    document.getElementById('creatorOut').innerHTML='<span style="color:var(--gold-dim);">Please select at least 4 swaras.</span>';
     return;
   }
-
-  const name = document.getElementById('raga-name-input').value.trim() || 'Your Raga';
-
-  // Find similar known ragas
-  const similar = KNOWN_RAGAS.filter(r => {
-    const common = r.notes.filter(n => selected.includes(n)).length;
-    return common >= Math.min(r.notes.length, selected.length) - 1;
+  var name=document.getElementById('ragaNameInp').value.trim()||'Your Raga';
+  var aroha=['Sa'].concat(sel.filter(function(s){return s!=='Sa'&&s!=="Sa'";})).concat(["Sa'"]);
+  var avaroha=["Sa'"].concat(sel.filter(function(s){return s!=='Sa'&&s!=="Sa'";}).slice().reverse()).concat(['Sa']);
+  var type=sel.length<=5?'Audava (Pentatonic)':sel.length===6?'Shadava (Hexatonic)':'Sampurna (Heptatonic)';
+  var similar=KNOWN.filter(function(r){
+    var common=r.notes.filter(function(n){return sel.includes(n);}).length;
+    return common>=Math.min(r.notes.length,sel.length)-1;
   });
-
-  const arohana = ['Sa', ...selected.filter(s => s !== 'Sa' && s !== "Sa'"), "Sa'"].join(' — ');
-  const avarohana = ["Sa'", ...selected.filter(s => s !== 'Sa' && s !== "Sa'").reverse(), 'Sa'].join(' — ');
-
-  let html = `
-    <div style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);margin-bottom:12px;letter-spacing:2px;">✦ ${name.toUpperCase()}</div>
-    <div style="margin-bottom:8px;font-size:0.9rem;"><strong style="color:var(--teal);">Arohana:</strong> ${arohana}</div>
-    <div style="margin-bottom:8px;font-size:0.9rem;"><strong style="color:var(--teal);">Avarohana:</strong> ${avarohana}</div>
-    <div style="margin-bottom:8px;font-size:0.9rem;"><strong style="color:var(--teal);">Swaras (${selected.length}):</strong> ${selected.join(', ')}</div>
-    <div style="margin-bottom:8px;font-size:0.85rem;color:var(--text-dim);">Type: ${selected.length === 5 ? 'Audava (Pentatonic)' : selected.length === 6 ? 'Shadava (Hexatonic)' : selected.length >= 7 ? 'Sampurna (Heptatonic)' : 'Partial scale'}</div>`;
-
-  if (similar.length > 0) {
-    html += `<div style="margin-top:14px;font-size:0.85rem;color:var(--gold-dim);font-family:'Cinzel',serif;letter-spacing:1px;">SIMILAR KNOWN RAGAS</div>`;
-    similar.forEach(r => {
-      html += `<div style="margin-top:6px;font-size:0.85rem;">▸ <strong style="color:var(--gold-light);">${r.name}</strong> — ${r.notes.join(', ')} <em style="color:var(--text-dim);">(Melakarta ${r.melakarta})</em></div>`;
+  var html='<div style="font-family:Cinzel,serif;font-size:.78rem;color:var(--gold);margin-bottom:10px;letter-spacing:2px;">✦ '+escHTML(name.toUpperCase())+'</div>'+
+    '<div style="margin-bottom:7px;font-size:.9rem;"><strong style="color:var(--teal);">Arohana:</strong> '+aroha.join(' — ')+'</div>'+
+    '<div style="margin-bottom:7px;font-size:.9rem;"><strong style="color:var(--teal);">Avarohana:</strong> '+avaroha.join(' — ')+'</div>'+
+    '<div style="margin-bottom:7px;font-size:.9rem;"><strong style="color:var(--teal);">Type:</strong> '+type+' ('+sel.length+' notes)</div>';
+  if(similar.length){
+    html+='<div style="margin-top:12px;font-size:.8rem;color:var(--gold-dim);font-family:Cinzel,serif;letter-spacing:1px;">SIMILAR KNOWN RAGAS</div>';
+    similar.forEach(function(r){
+      html+='<div style="margin-top:5px;font-size:.85rem;">▸ <strong style="color:var(--gold-light);">'+r.n+'</strong> — '+r.notes.join(', ')+'</div>';
     });
   } else {
-    html += `<div style="margin-top:10px;font-size:0.85rem;color:var(--text-dim);font-style:italic;">This combination appears to be a novel raga — search the database to confirm.</div>`;
+    html+='<div style="margin-top:10px;font-size:.84rem;color:var(--text-dim);font-style:italic;">This combination appears to be a novel raga — search the database to explore similar scales.</div>';
   }
-
-  document.getElementById('creator-output').innerHTML = html;
-}
-
-function clearRaga() {
-  document.querySelectorAll('.swara-check input[type=checkbox]:not([disabled])').forEach(cb => cb.checked = false);
-  document.getElementById('raga-name-input').value = '';
-  document.getElementById('creator-output').innerHTML =
-    '<span style="color:var(--text-dim);font-style:italic;">Select swaras above and click Generate Raga…</span>';
-}
-
-function searchCreatedRaga() {
-  const selected = [];
-  for (const [key, label] of Object.entries(SWARA_MAP)) {
-    const el = document.getElementById('s-' + key);
-    if (el && el.checked) selected.push(label);
-  }
-  if (selected.length < 3) { alert('Please select some swaras first.'); return; }
-  const q = 'raga with swaras ' + selected.join(' ');
-  document.getElementById('home-search').value = q;
-  showTab('home', null);
-  setTimeout(() => homeSearch(), 100);
-}
-
-// ── UTILS ─────────────────────────────────────────────────────────────────
-function copyResult() {
-  const el = document.getElementById('result-output');
-  if (el) navigator.clipboard.writeText(el.innerText).then(() => alert('Result copied to clipboard!'));
-}
-
-function shareResult(query) {
-  if (navigator.share) {
-    navigator.share({ title: 'MadaMudra — ' + query, url: window.location.href });
-  } else {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copied to clipboard!');
-  }
-}
-
-function exportPDF() {
-  window.print();
-}
-
-// ── INIT ──────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  const lang = localStorage.getItem('mm_lang');
-  if (lang) document.getElementById('lang-sel').value = lang;
+  document.getElementById('creatorOut').innerHTML=html;
 });
+
+document.getElementById('clearRagaBtn').addEventListener('click',function(){
+  document.querySelectorAll('.sw-chk input:not([disabled])').forEach(function(cb){cb.checked=false;});
+  document.getElementById('ragaNameInp').value='';
+  document.getElementById('creatorOut').innerHTML='<span style="color:var(--text-dim);font-style:italic;">Select swaras above and click Generate Raga…</span>';
+});
+
+document.getElementById('searchRagaBtn').addEventListener('click',function(){
+  var sel=getSelected();
+  if(sel.length<3){alert('Select some swaras first.');return;}
+  var q='raga with notes '+sel.join(' ');
+  document.getElementById('homeQ').value=q;
+  goTab('home');
+  doSearch(q,document.getElementById('homeResult'));
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 7. EXPORT
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.getElementById('exportBtn').addEventListener('click',function(){window.print();});
 </script>
 </body>
 </html>
