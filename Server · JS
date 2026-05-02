@@ -1,0 +1,218 @@
+const express = require('express');
+const cors = require('cors');
+const axios = require('axios');
+const cheerio = require('cheerio');
+ 
+const app = express();
+app.use(cors());
+app.use(express.json());
+ 
+// ─── SOURCE DATABASE ────────────────────────────────────────────────────────
+const SOURCES = {
+  ragas: [
+    { url: 'https://ragajunglism.org/ragas/masterlist', name: 'Rāga Junglism Masterlist' },
+    { url: 'https://www.melakarta.com', name: 'Melakarta Chart' },
+    { url: 'https://ragamath.com', name: 'RagaMath' },
+    { url: 'https://amitray.com/the-84-ragas-of-indian-classical-music-a-complete-guide', name: 'Amit Ray - 84 Ragas' },
+    { url: 'https://web-harmonium.com/harmonium-notes', name: 'Web Harmonium Sargam' },
+    { url: 'https://chromatone.center/theory/scales/raga', name: 'Chromatone Raga Theory' },
+  ],
+  mantras: [
+    { url: 'https://www.vedadhara.com/english-topics-mantra-shastra', name: 'Vedadhara Mantra Shastra' },
+    { url: 'https://sanskritdocuments.org', name: 'Sanskrit Documents' },
+    { url: 'https://www.wisdomlib.org', name: 'Wisdom Lib' },
+    { url: 'https://mahakatha.com', name: 'Mahakatha' },
+    { url: 'https://manblunder.com', name: 'ManBlunder' },
+    { url: 'https://shlokam.org/shloka/lalitha-sahasranamam.htm', name: 'Lalitha Sahasranamam' },
+    { url: 'https://www.kamakoti.org/kamakoti/details/naradapurana12.html', name: 'Kamakoti - Narada Purana' },
+    { url: 'https://vedapurana.org', name: 'Veda Purana' },
+  ],
+  mudras: [
+    { url: 'https://natyashastra.culturalmusings.com', name: 'Natyashastra - Cultural Musings' },
+    { url: 'https://karanasrootmap.culturalmusings.com', name: 'Karanas Root Map' },
+    { url: 'https://natyashastraclassical-dance.culturalmusings.com', name: 'Natyashastra Classical Dance' },
+    { url: 'https://karanassacredsynthesis.culturalmusings.com', name: 'Karanas Sacred Synthesis' },
+    { url: 'https://www.exoticindiaart.com/article/the-108-poses-of-shiva-tandava-in-natya-shastra', name: 'Exotic India Art - 108 Poses' },
+  ],
+  karanas: [
+    { url: 'https://natyashastraclassical-dance.culturalmusings.com', name: 'Natyashastra Classical Dance' },
+    { url: 'https://karanasrootmap.culturalmusings.com', name: 'Karanas Root Map' },
+    { url: 'https://karanassacredsynthesis.culturalmusings.com', name: 'Karanas Sacred Synthesis' },
+    { url: 'https://www.exoticindiaart.com/article/the-108-poses-of-shiva-tandava-in-natya-shastra', name: 'Exotic India Art' },
+  ],
+  vedic: [
+    { url: 'https://vedicheritage.gov.in/introduction', name: 'Vedic Heritage Portal' },
+    { url: 'https://hindupedia.com/en/Veda', name: 'Hindupedia' },
+    { url: 'https://www.wisdomlib.org', name: 'Wisdom Lib' },
+    { url: 'https://www.vedadhara.com', name: 'Vedadhara' },
+    { url: 'https://vedyog.net', name: 'VedYog' },
+  ],
+  nakshatras: [
+    { url: 'https://completecelestialsynthesis.culturalmusings.com', name: 'Complete Celestial Synthesis' },
+    { url: 'https://unifiedtheory.culturalmusings.com', name: 'Unified Theory' },
+    { url: 'https://bioresonancemusings.culturalmusings.com', name: 'Bioresonance Musings' },
+  ],
+  dance: [
+    { url: 'https://natyashastraclassical-dance.culturalmusings.com', name: 'Natyashastra Classical Dance' },
+    { url: 'https://culturalmusings.com', name: 'Cultural Musings' },
+  ],
+  philosophy: [
+    { url: 'https://spiritualphilosophical.culturalmusings.com', name: 'Spiritual Philosophical' },
+    { url: 'https://masterconsciousprotocol.culturalmusings.com', name: 'Master Consciousness Protocol' },
+    { url: 'https://spandanashodha.culturalmusings.com', name: 'Spandana Shodha' },
+    { url: 'https://vedicmathematicsgeometry.culturalmusings.com', name: 'Vedic Mathematics & Geometry' },
+    { url: 'https://nada-chikitsa.culturalmusings.com', name: 'Nada Chikitsa' },
+  ],
+};
+ 
+// ─── KEYWORD → CATEGORY MAP ──────────────────────────────────────────────────
+function detectCategory(query) {
+  const q = query.toLowerCase();
+  if (/raga|raag|melakarta|thaat|swara|arohana|avarohana|carnatic|hindustani|scale|note/.test(q)) return 'ragas';
+  if (/mantra|shloka|beejakshara|tantra|yantra|puja|stotra|stotram|sahasranamam|vedic chant/.test(q)) return 'mantras';
+  if (/mudra|hasta|hand gesture|asamyuta|samyuta/.test(q)) return 'mudras';
+  if (/karana|natya|dance pose|shiva tandava|natyashastra/.test(q)) return 'karanas';
+  if (/nakshatra|constellation|star|zodiac|jyotish|astrology|celestial/.test(q)) return 'nakshatras';
+  if (/bharatanatyam|kuchipudi|odissi|kathak|manipuri|mohiniyattam|classical dance/.test(q)) return 'dance';
+  if (/veda|upanishad|brahman|advaita|philosophy|consciousness|chitta|manas|buddhi/.test(q)) return 'philosophy';
+  return 'vedic'; // default
+}
+ 
+// ─── FETCH & EXTRACT TEXT FROM A URL ────────────────────────────────────────
+async function fetchPageText(url) {
+  try {
+    const response = await axios.get(url, {
+      timeout: 8000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; nadaMudraBot/4.1; educational research)',
+        'Accept': 'text/html,application/xhtml+xml',
+      },
+    });
+    const $ = cheerio.load(response.data);
+ 
+    // Remove nav, footer, scripts, ads
+    $('nav, footer, script, style, header, .sidebar, .ads, .advertisement, iframe').remove();
+ 
+    // Extract main content
+    let text = '';
+    const mainSelectors = ['article', 'main', '.content', '.post-content', '.entry-content', '#content', '.main-content', 'body'];
+    for (const sel of mainSelectors) {
+      const found = $(sel).first().text();
+      if (found && found.trim().length > 200) {
+        text = found;
+        break;
+      }
+    }
+    if (!text) text = $('body').text();
+ 
+    // Clean whitespace
+    return text.replace(/\s+/g, ' ').trim().slice(0, 4000);
+  } catch (err) {
+    return null;
+  }
+}
+ 
+// ─── EXTRACT RELEVANT SENTENCES ─────────────────────────────────────────────
+function extractRelevant(text, query, maxChars = 600) {
+  if (!text) return '';
+  const keywords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 30);
+ 
+  const scored = sentences.map(s => {
+    const sl = s.toLowerCase();
+    const score = keywords.reduce((acc, kw) => acc + (sl.includes(kw) ? 1 : 0), 0);
+    return { s, score };
+  });
+ 
+  scored.sort((a, b) => b.score - a.score);
+ 
+  let result = '';
+  for (const { s } of scored) {
+    if ((result + s).length > maxChars) break;
+    result += s + '. ';
+  }
+  return result.trim() || sentences.slice(0, 3).join('. ');
+}
+ 
+// ─── BUILD 6-PARAGRAPH ANSWER ────────────────────────────────────────────────
+function buildAnswer(query, results) {
+  const lenses = [
+    { label: '🔵 Philosophical Viewpoint', key: 0 },
+    { label: '🟢 Yogic & Spiritual Viewpoint', key: 1 },
+    { label: '🟠 Neurological Viewpoint', key: 2 },
+    { label: '🔴 Scientific Viewpoint', key: 3 },
+    { label: '🟣 Astrophysical Viewpoint', key: 4 },
+    { label: '⚪ Historical & Heritage Context', key: 5 },
+  ];
+ 
+  // Distribute results across lenses
+  const paragraphs = lenses.map((lens, i) => {
+    const result = results[i % results.length];
+    if (!result || !result.text) {
+      return {
+        label: lens.label,
+        text: `From the ${lens.label.replace(/^[^\s]+ /, '')} — ${query} is a profound concept in Indian classical tradition. Further information can be found in the source links provided below.`,
+        source: null,
+      };
+    }
+    return {
+      label: lens.label,
+      text: result.text,
+      source: result.source,
+    };
+  });
+ 
+  return paragraphs;
+}
+ 
+// ─── MAIN SEARCH ENDPOINT ────────────────────────────────────────────────────
+app.post('/api/search', async (req, res) => {
+  const { query } = req.body;
+  if (!query || query.trim().length < 2) {
+    return res.status(400).json({ error: 'Query too short' });
+  }
+ 
+  const category = detectCategory(query);
+  const sources = SOURCES[category] || SOURCES.vedic;
+ 
+  // Fetch up to 6 sources in parallel
+  const fetchPromises = sources.slice(0, 6).map(async (src) => {
+    const text = await fetchPageText(src.url);
+    const relevant = extractRelevant(text, query);
+    return {
+      text: relevant || null,
+      source: { name: src.name, url: src.url },
+    };
+  });
+ 
+  const results = await Promise.all(fetchPromises);
+  const validResults = results.filter(r => r.text && r.text.length > 40);
+ 
+  if (validResults.length === 0) {
+    return res.json({
+      query,
+      category,
+      paragraphs: buildAnswer(query, results),
+      sources: sources.map(s => ({ name: s.name, url: s.url })),
+      note: 'Live fetch returned limited results. Please visit source links for detailed study.',
+    });
+  }
+ 
+  const paragraphs = buildAnswer(query, validResults.length >= 3 ? validResults : results);
+ 
+  res.json({
+    query,
+    category,
+    paragraphs,
+    sources: sources.map(s => ({ name: s.name, url: s.url })),
+    note: 'Results fetched from curated sacred knowledge sources. Visit source links for complete texts.',
+  });
+});
+ 
+// ─── HEALTH CHECK ────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({ status: 'nadaMudra 4.1 Backend Running', version: '4.1.0' });
+});
+ 
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`nadaMudra backend running on port ${PORT}`));
